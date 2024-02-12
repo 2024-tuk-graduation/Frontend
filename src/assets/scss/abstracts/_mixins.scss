@@ -1,0 +1,20 @@
+@mixin button($width, $height, $color) {
+  display: inline-block;
+  width: $width;
+  height: $height;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: $color;
+  background-color: lighten($color, 10%);
+  border: 2px solid darken($color, 10%);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($color, 10%);
+    border-color: darken($color, 20%);
+  }
+}
