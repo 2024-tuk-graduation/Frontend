@@ -1,0 +1,13 @@
+@use "sass:map";
+
+// Button-specific variables
+$navy: #0a0f76;
+
+/**
+ * Buttons
+ */
+
+.sign-button {
+  @include button(rem(430), rem(65), $navy);
+  border-radius: rem(20);
+}

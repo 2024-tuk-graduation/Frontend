@@ -1,7 +1,56 @@
 import React from "react";
+import useLoginFormStore from "@/store/store";
+import "../assets/scss/base/_common.scss";
+import "../assets/scss/pages/_login.scss";
+import sign_bg from "../assets/images/sign_bg.png";
 
-const Login = () => {
-  return <div>ë¡œê·¸ì¸</div>;
+const LoginForm: React.FC = () => {
+  const { username, password, setUsername, setPassword } = useLoginFormStore();
+
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // ·Î±×ÀÎ ·ÎÁ÷
+    console.log("Username:", username);
+    console.log("Password:", password);
+  };
+
+  return (
+    <div className="bg-container">
+      <div className="login-form-container">
+        {/* ·Î°í ¹× ¹è°æ */}
+        <img className="logo-form" src={sign_bg} alt="sign_bg" />
+        {/* ·Î±×ÀÎ Form */}
+        <form className="login-form" onSubmit={handleSubmit}>
+          <p className="login-text">Login</p>
+          <input
+            type="text"
+            value={username}
+            onChange={handleUsernameChange}
+            placeholder="·Î±×ÀÎ"
+            className="input-field"
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="ºñ¹Ğ¹øÈ£"
+            className="input-field"
+          />
+          <button type="submit" className="submit-button">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
-export default Login;
+export default LoginForm;
