@@ -1,67 +1,63 @@
 .login-form-container {
-  padding: 50px;
-  width: 77vw;
-  height: 70vh;
+  padding: 3.5rem;
+  width: 85%;
+  height: 100%;
   background-color: #fff;
-  border-radius: 20px;
+  border-radius: 2rem;
   display: flex;
   justify-content: center;
-  box-shadow: 4px 6px 4px 0px #888888;
+  box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
 }
 
+// 배경 이미지
 .logo-form {
-  padding: 20px;
-  width: 35%;
-  height: auto;
-  border-radius: 10px;
-  margin-right: 10px;
+  width: 32%;
+  margin-right: 1rem;
   overflow: hidden;
+  font-size: 5rem;
 }
 
 // 로그인 form
 .login-form {
   background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  width: 55%;
-  height: auto;
+  border-radius: 1rem;
+  width: 61%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
-  box-shadow: 0px 4px 4px 0px #888888;
+  align-items: center;
+  margin-left: 5rem;
+  box-shadow: 0rem 0.4rem 0.4rem 0rem #888888;
 }
 
 .login-text {
-  font-size: 2rem;
-  margin-left: 88px;
-  margin-bottom: 40px;
+  font-size: 3.5rem;
+  margin: 2rem;
   text-align: left;
 }
 
 .input-field {
-  width: 420px;
-  height: 40px;
-  padding: 10px;
+  width: 42rem;
+  height: 5.1rem;
+  padding: 1rem;
+  margin: 1rem;
   border: none;
-  border-radius: 20px;
-  margin: 10px auto;
-  font-size: 1.2rem;
+  border-radius: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .submit-button {
-  width: 440px;
-  height: 60px;
-  padding: 10px;
+  width: 42rem;
+  height: 6rem;
   background-color: #0a0f76;
   color: #fff;
   border: none;
-  border-radius: 20px;
-  box-shadow: 0px 3px 4px 0px #939393;
-  font-size: 1.5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0rem 0.3rem 0.4rem 0rem #939393;
+  font-size: 2.1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin: 40px auto;
+  margin: 2rem;
 }
 
 .submit-button:hover {
@@ -70,8 +66,6 @@
 
 .signup-text {
   font-size: 1rem;
-  text-align: center;
-  margin-top: 20px;
 }
 
 .signup-link {
