@@ -1,6 +1,6 @@
 import React from "react";
 import useLoginFormStore from "@/store/store";
-import sign_bg from "../assets/images/sign_bg.png";
+import bg from "../assets/images/bg.png";
 
 const Login: React.FC = () => {
   const { username, password, setUsername, setPassword } = useLoginFormStore();
@@ -28,10 +28,16 @@ const Login: React.FC = () => {
     <div className="bg-container">
       <div className="login-form-container">
         {/* 로고 및 이미지 */}
-        <img className="logo-img" src={sign_bg} alt="sign_bg" />
+
+        <div className="logo-container">
+          <img src={bg} alt="sign_bg" />
+        </div>
+
         {/* 로그인 Form */}
         <form className="login-form" onSubmit={handleSubmit}>
-          <p className="login-text">Login</p>
+          <div className="login-text-container">
+            <p className="login-text">Login</p>
+          </div>
           <input
             type="text"
             value={username}
