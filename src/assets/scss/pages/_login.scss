@@ -1,67 +1,68 @@
 .login-form-container {
-  padding: 50px;
-  width: 77vw;
-  height: 70vh;
-  background-color: #fff;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  box-shadow: 4px 6px 4px 0px #888888;
+  padding: 3.5rem;
+  width: 80%;
+  height: 65rem;
+  background-color: $white;
+  border-radius: 4rem;
+  box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
 }
 
-.logo-form {
-  padding: 20px;
-  width: 35%;
-  height: auto;
-  border-radius: 10px;
-  margin-right: 10px;
-  overflow: hidden;
+// 배경 이미지
+.logo-container {
+  width: calc(100% - 60rem);
+  height: 100%;
+  float: left;
+}
+.logo-container img {
+  width: 90%;
+  height: 100%;
+  object-fit: cover;
 }
 
 // 로그인 form
 .login-form {
-  background-color: #f4f4f4;
-  padding: 20px;
-  border-radius: 10px;
-  width: 55%;
-  height: auto;
+  background-color: $lightgray;
+  border-radius: 4rem;
+  width: 60rem;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
-  box-shadow: 0px 4px 4px 0px #888888;
+  align-items: center;
+  box-shadow: 0rem 0.4rem 0.4rem 0rem #888888;
+}
+.login-text-container {
+  width: 42rem;
 }
 
 .login-text {
-  font-size: 2rem;
-  margin-left: 88px;
-  margin-bottom: 40px;
+  font-size: 3.5rem;
+  margin-bottom: 3rem;
   text-align: left;
 }
 
 .input-field {
-  width: 420px;
-  height: 40px;
-  padding: 10px;
+  width: 42rem;
+  height: 5.1rem;
+  padding: 1rem;
+  margin: 1rem;
   border: none;
-  border-radius: 20px;
-  margin: 10px auto;
-  font-size: 1.2rem;
+  border-radius: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .submit-button {
-  width: 440px;
-  height: 60px;
-  padding: 10px;
-  background-color: #0a0f76;
-  color: #fff;
+  width: 42rem;
+  height: 6rem;
+  background-color: $navy;
+  color: $white;
   border: none;
-  border-radius: 20px;
-  box-shadow: 0px 3px 4px 0px #939393;
-  font-size: 1.5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0rem 0.3rem 0.4rem 0rem #939393;
+  font-size: 2.1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin: 40px auto;
+  margin: 2rem;
 }
 
 .submit-button:hover {
@@ -70,11 +71,10 @@
 
 .signup-text {
   font-size: 1rem;
-  text-align: center;
-  margin-top: 20px;
 }
 
 .signup-link {
-  color: blue;
+  color: $navy;
+  margin-left: 1rem;
   cursor: pointer;
 }
