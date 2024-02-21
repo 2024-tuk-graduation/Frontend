@@ -1,0 +1,22 @@
+.navbar-icon {
+  width: 4rem;
+  height: 4rem;
+  margin: 5rem;
+}
+
+.navbar-container {
+  height: 9.5rem;
+  border-top-left-radius: 4rem;
+  border-top-right-radius: 4rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $navy;
+}
+
+.navbar-Logo {
+  font-size: 5rem;
+  color: $white;
+  font-weight: 300;
+}

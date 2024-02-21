@@ -26,42 +26,43 @@ const Login: React.FC = () => {
 
   return (
     <div className="bg-container">
-      <div className="login-form-container">
+      <div className="container">
         {/* 로고 및 이미지 */}
-
-        <div className="logo-container">
-          <img src={bg} alt="sign_bg" />
-        </div>
-
-        {/* 로그인 Form */}
-        <form className="login-form" onSubmit={handleSubmit}>
-          <div className="login-text-container">
-            <p className="login-text">Login</p>
+        <div className="login-container">
+          <div className="logo-container">
+            <img src={bg} alt="sign_bg" />
           </div>
-          <input
-            type="text"
-            value={username}
-            onChange={handleUsernameChange}
-            placeholder="아이디"
-            className="input-field"
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="비밀번호"
-            className="input-field"
-          />
-          <button type="submit" className="submit-button">
-            Login
-          </button>
-          <p className="signup-text">
-            회원이 아니신가요?{""}
-            <span onClick={handleSignupClick} className="signup-link">
-              회원가입
-            </span>
-          </p>
-        </form>
+
+          {/* 로그인 Form */}
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="login-text-container">
+              <p className="login-text">Login</p>
+            </div>
+            <input
+              type="text"
+              value={username}
+              onChange={handleUsernameChange}
+              placeholder="아이디"
+              className="input-field"
+            />
+            <input
+              type="password"
+              value={password}
+              onChange={handlePasswordChange}
+              placeholder="비밀번호"
+              className="input-field"
+            />
+            <button type="submit" className="submit-button">
+              Login
+            </button>
+            <p className="signup-text">
+              회원이 아니신가요?{""}
+              <span onClick={handleSignupClick} className="signup-link">
+                회원가입
+              </span>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
