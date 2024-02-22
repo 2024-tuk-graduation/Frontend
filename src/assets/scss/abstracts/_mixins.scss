@@ -3,18 +3,16 @@
   width: $width;
   height: $height;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
   color: $color;
-  background-color: lighten($color, 10%);
-  border: 2px solid darken($color, 10%);
-  border-radius: 5px;
+  background-color: $color;
+  border-radius: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: darken($color, 10%);
-    border-color: darken($color, 20%);
+    background-color: lighten($color, 10%);
   }
 }
