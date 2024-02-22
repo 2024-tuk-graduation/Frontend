@@ -1,6 +1,6 @@
 import React from "react";
-import useLoginFormStore from "@/store/store";
 import bg from "../assets/images/bg.png";
+import { useLoginFormStore } from "@/store/loginFormState";
 
 const Login: React.FC = () => {
   const { username, password, setUsername, setPassword } = useLoginFormStore();
