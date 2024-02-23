@@ -1,5 +1,5 @@
 // 로그인 form
-.login-form {
+.signup-form {
   background-color: $lightgray;
   border-radius: 4rem;
   width: 60rem;
@@ -10,11 +10,11 @@
   align-items: center;
   box-shadow: 0rem 0.4rem 0.4rem 0rem #888888;
 }
-.login-text-container {
+.signup-text-container {
   width: 42rem;
 }
 
-.login-text {
+.signup-text {
   font-size: 3.5rem;
   margin-bottom: 3rem;
   text-align: left;
@@ -48,14 +48,4 @@
 
 .submit-button:hover {
   background-color: #2d33e0;
-}
-
-.signup-link-text {
-  font-size: 1.2rem;
-}
-
-.signup-link {
-  color: $navy;
-  margin-left: 1rem;
-  cursor: pointer;
 }
