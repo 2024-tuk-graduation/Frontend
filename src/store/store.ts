@@ -7,7 +7,6 @@ export interface LoginFormState {
   setPassword: (password: string) => void;
 }
 
-
 export const useLoginFormStore = create<LoginFormState>((set) => ({
   username: "",
   password: "",
