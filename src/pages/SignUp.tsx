@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSignUpFormStore } from "@/store/store";
 import bg from "../assets/images/bg.png";
+import defaultProfile from "../assets/images/defaultProfile.svg";
 
 const SignUp: React.FC = () => {
-  const { profileImage, nickname, username, password, setNickname, setProfileImage, setUsername, setPassword } =
-    useSignUpFormStore();
+  const { nickname, username, password, setNickname, setUsername, setPassword } = useSignUpFormStore();
+  const [profileImage, setProfileImage] = useState(defaultProfile);
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProfileImage(e.target.value);
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target) {
+          setProfileImage(e.target.result as string);
+        }
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +34,6 @@ const SignUp: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // 회원가입 로직 추가
-    console.log("Profile Image:", profileImage);
     console.log("Nickname:", nickname);
     console.log("Username:", username);
     console.log("Password:", password);
@@ -42,10 +50,21 @@ const SignUp: React.FC = () => {
         <div className="logo-container">
           <img src={bg} alt="bg" />
         </div>
-        {/* 로그인 Form */}
+        {/* 회원가입 Form */}
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="signup-text-container">
             <p className="signup-text">Sign Up</p>
+          </div>
+          {/* 프로필 이미지 */}
+          <div className="profile-container">
+            <img src={profileImage || defaultProfile} alt="Profile" className="profile-image" />
+            <div className="profile-button">
+              <button className="default-button">기본 프로필 선택</button>
+              <label htmlFor="file">
+                <div className="upload-button">프로필 등록하기</div>
+              </label>
+              <input type="file" name="file" id="file" accept="image/*" onChange={handleProfileImageChange}></input>
+            </div>
           </div>
           <input
             type="text"
