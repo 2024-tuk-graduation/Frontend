@@ -2,19 +2,27 @@
 .bg-container {
   background-color: $grey;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  //min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10rem 0;
+  &.editor {
+    padding: 4rem 0;
+  }
 }
 
 .container {
   width: 80%;
-  height: 80rem;
+  height: 90%;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
+  &.editor {
+    height: 100%;
+    width: 96%;
+  }
 }
 
 // 배경 이미지

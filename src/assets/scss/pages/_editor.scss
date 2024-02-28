@@ -1,0 +1,7 @@
+.editor-container {
+  height: calc(100% - $navbar);
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
+  width: 100%;
+}

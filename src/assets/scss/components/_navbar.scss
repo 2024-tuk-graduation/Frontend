@@ -2,21 +2,41 @@
   width: 4rem;
   height: 4rem;
   margin: 5rem;
+
+  &.editor {
+    width: 6rem;
+    height: 6rem;
+  }
 }
 
 .navbar-container {
   height: $navbar;
   border-top-left-radius: 4rem;
   border-top-right-radius: 4rem;
+  display: flex;
+  align-items: center;
+  background-color: $navy;
+}
+
+.navbar-default {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: $navy;
+}
+
+.navbar-editor {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .navbar-Logo {
   font-size: 5rem;
   color: $white;
   font-weight: 300;
+  &.editor {
+    margin-left: 38%;
+  }
 }
