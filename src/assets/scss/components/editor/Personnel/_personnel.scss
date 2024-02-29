@@ -1,11 +1,34 @@
 .personnel-container {
-  background-color: #00a6ff;
   height: 100%;
   width: $menu;
   z-index: 90;
   display: none;
-
+  border: 2px solid $gray;
   &.show {
     display: block;
   }
+}
+
+.personnel-label {
+  font-size: 2.3rem;
+  margin: 3rem 0 1rem 2rem;
+}
+
+.personnel-crown-icon {
+  width: 5rem;
+}
+
+.current-editor-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-viewers-container {
+  padding: 1rem 3rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
