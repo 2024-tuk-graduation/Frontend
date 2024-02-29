@@ -8,7 +8,6 @@ interface NavbarPropsType {
   page?: string;
 }
 const Navbar = ({ page }: NavbarPropsType) => {
-  console.log(page);
   return (
     <div className="navbar-container">
       {" "}

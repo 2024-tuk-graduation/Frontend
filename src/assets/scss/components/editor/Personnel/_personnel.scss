@@ -1,0 +1,11 @@
+.personnel-container {
+  background-color: #00a6ff;
+  height: 100%;
+  width: $menu;
+  z-index: 90;
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}

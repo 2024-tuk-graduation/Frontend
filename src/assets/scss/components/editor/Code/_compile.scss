@@ -1,0 +1,11 @@
+.compile-container {
+  background-color: #00a6ff;
+  height: 100%;
+  width: 35rem;
+  z-index: 90;
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}

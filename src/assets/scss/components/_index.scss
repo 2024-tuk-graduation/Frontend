@@ -4,4 +4,9 @@
 @import "./modal/baseModal";
 @import "./modal/createRoomModal";
 @import "./modal/entryRoomModal";
-@import "./editor/editorInfobar";
+@import "editor/Infobar/editorInfobar";
+@import "./editor/Code/codeEditor";
+@import "./editor/Chat/chat";
+@import "./editor/Code/compile";
+@import "./editor/Personnel/personnel";
+@import "./editor/editorRoundButton";
