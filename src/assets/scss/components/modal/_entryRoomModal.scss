@@ -1,0 +1,28 @@
+.entry-modal-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.entry-modal-title {
+  margin-top: 5rem;
+  font-weight: lighter;
+  font-size: 3rem;
+}
+
+.entry-modal-code-input-item {
+  background-color: $lightgray;
+  width: 5rem;
+  height: 7rem;
+  margin: 3rem 1rem 5rem 0;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: lighter;
+}
+
+.entry-modal-button {
+  @include button(20rem, 2rem, $navy);
+  color: $white;
+  font-weight: normal;
+}

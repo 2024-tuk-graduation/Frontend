@@ -12,8 +12,10 @@
   "dependencies": {
     "@tanstack/react-query": "^5.18.0",
     "@tanstack/react-query-devtools": "^5.18.0",
+    "@types/react-modal": "^3.16.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
     "sass": "^1.70.0",
     "vite-tsconfig-paths": "^4.3.1",
