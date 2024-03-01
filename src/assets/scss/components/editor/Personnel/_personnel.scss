@@ -1,10 +1,10 @@
 .personnel-container {
-  height: 98rem;
+  height: 95rem;
   width: $menu;
-  overflow: scroll;
   z-index: 90;
   display: none;
   border: 2px solid $gray;
+  overflow: hidden;
   &.show {
     display: block;
   }
