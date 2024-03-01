@@ -21,6 +21,15 @@
   font-weight: lighter;
 }
 
+.entry-modal-nickname-input-item {
+  width: 15rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  padding: 1rem;
+  background-color: $lightgray;
+}
+
 .entry-modal-button {
   @include button(20rem, 2rem, $navy);
   color: $white;
