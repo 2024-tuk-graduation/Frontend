@@ -223,10 +223,6 @@ input {
   color: #ffffff;
   font-weight: 300;
 }
-.navbar-Logo.editor {
-  margin-left: 38%;
-}
-
 .selectRoom-btn-container {
   margin: 5rem;
   background-color: #db778f;
@@ -309,7 +305,7 @@ input {
 
 .editor-save-button {
   display: inline-block;
-  width: 16rem;
+  width: 10rem;
   height: 3rem;
   padding: 10px 20px;
   font-size: 1.5rem;
@@ -321,6 +317,7 @@ input {
   cursor: pointer;
   transition: all 0.3s ease;
   color: #ffffff;
+  margin-right: 2rem;
   font-weight: normal;
 }
 .editor-save-button:hover {
@@ -408,8 +405,9 @@ input {
 }
 
 .personnel-container {
-  height: 100%;
+  height: 98rem;
   width: 53rem;
+  overflow: scroll;
   z-index: 90;
   display: none;
   border: 2px solid #e2e4e6;
@@ -469,10 +467,10 @@ input {
   left: 3rem;
 }
 .editor-round-button-container.personnel {
-  right: 3rem;
+  right: 6rem;
 }
 .editor-round-button-container.chat {
-  right: 12.5rem;
+  right: 15rem;
 }
 
 .menubar-container {
@@ -628,14 +626,15 @@ input {
   height: calc(100% - 9.5rem);
   display: flex;
   flex-direction: column;
-  padding: 3rem;
+  padding: 3rem 3rem 7rem 3rem;
   width: 100%;
 }
 
 .editor-detail-container {
   width: 100%;
-  margin-top: 2rem;
-  height: 100%;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  height: calc(100% - 5rem);
   display: flex;
 }
 

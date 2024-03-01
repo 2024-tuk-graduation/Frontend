@@ -1,6 +1,7 @@
 .editor-save-button {
-  @include button(16rem, 3rem, $navy);
+  @include button(10rem, 3rem, $navy);
   color: $white;
+  margin-right: 2rem;
   font-weight: normal;
 }
 
