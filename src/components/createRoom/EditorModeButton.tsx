@@ -11,7 +11,7 @@ const EditorModeButton = ({ img, title, mode }: EditorModeButtonPropsType) => {
   const currentMode = useSelectModeState();
   const isActive = currentMode === mode;
 
-  console.log();
+  console.log("dfd");
   return (
     <div
       className={`editor-mode-button-container ${isActive ? "active" : ""}`}
