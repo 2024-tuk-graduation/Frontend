@@ -9,12 +9,14 @@
   padding: 10rem 0;
 }
 
+// 태블릿 형식 배경
 .container {
   width: 80%;
   height: 80rem;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
+  padding: 2.5rem;
 }
 
 // 배경 이미지
@@ -22,4 +24,9 @@
   width: calc(100% - 60rem);
   height: 100%;
   float: left;
+}
+.logo-container img {
+  width: 90%;
+  height: 100%;
+  object-fit: cover;
 }
