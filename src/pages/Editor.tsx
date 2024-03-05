@@ -18,8 +18,8 @@ const Editor = () => {
         <div className="editor-container">
           <EditorInfobar />
           <div className="editor-detail-container">
-            <Compile />
             <div className="edit-area">
+              <Compile />
               <EditorRoundButton handleClick={setCompileMenu} img={codeIcon} title={"code"} />
               <EditorRoundButton handleClick={() => setPersonMenu("chat")} img={chatIcon} title={"chat"} />
               <EditorRoundButton
