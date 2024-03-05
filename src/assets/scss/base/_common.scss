@@ -10,12 +10,12 @@
 
 .container {
   width: 80%;
-  height: 80rem;
+  height: 75rem;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
   &.editor {
-    height: 90rem;
+    height: 80rem;
     width: 95%;
   }
 }

@@ -17,7 +17,7 @@ const CodeEditor = () => {
     <div className="code-editor-container">
       <Editor
         theme="theme"
-        height="72rem"
+        height="63rem"
         width="99%"
         language="python"
         defaultValue="#코드를 입력해주세용용용용"
