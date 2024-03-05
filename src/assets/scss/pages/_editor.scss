@@ -1,0 +1,23 @@
+.editor-container {
+  height: calc(100% - $navbar);
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 3rem 7rem 3rem;
+
+  width: 100%;
+}
+
+.editor-detail-container {
+  width: 100%;
+  margin-top: 3rem;
+  // height: 100%;
+  margin-bottom: 3rem;
+  height: calc(100% - 5rem);
+  display: flex;
+}
+
+.edit-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
