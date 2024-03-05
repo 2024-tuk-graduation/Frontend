@@ -1,10 +1,24 @@
 import React, { ChangeEvent, useState } from "react";
 import BaseModal from "./BaseModal";
 import { useEntryModalState } from "@/store/modalStore";
+import { entryApi } from "@/hooks/services/mutations/useEntryMutation";
+import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 
 const EntryModal = () => {
   const entryModal = useEntryModalState();
 
+  const onEntrySuccess = () => {
+    console.log("Entry API success");
+  };
+  const onEntryError = () => {
+    console.log("Entry API Error");
+  };
+
+  const { mutation: entryMutation } = useGenericMutation({
+    mutationFn: entryApi,
+    onSuccessCb: onEntrySuccess,
+    onErrorCb: onEntryError,
+  });
   const [codeInput, setCodeInput] = useState({
     input1: "",
     input2: "",
@@ -28,6 +42,15 @@ const EntryModal = () => {
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(codeInput);
+    console.log(nickname);
+    const uuid: string = Object.values(codeInput).join("");
+    console.log(uuid);
+    const code = {
+      entranceCode: uuid,
+      nickname: nickname,
+    };
+    entryMutation.mutate(code);
   };
 
   return (
