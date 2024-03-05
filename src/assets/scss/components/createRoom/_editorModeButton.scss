@@ -1,0 +1,30 @@
+.editor-mode-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 17rem;
+  margin-left: 3rem;
+  height: 13rem;
+  border-radius: 3rem;
+  flex-direction: column;
+  background-color: lighten($darkpink, 20%);
+  box-shadow: 0 3px 5px 0 rgb(0, 0, 0, 0.25); // x , y, blur ,spread
+  &:hover {
+    cursor: pointer;
+  }
+}
+.editor-mode-button-container.active {
+  background-color: $darkpink;
+  box-shadow: inset 2px 3px 8px 0 rgb(0, 0, 0, 0.45);
+}
+
+.editor-mode-button-img {
+  width: 4.4rem;
+}
+
+.editor-mode-button-text {
+  font-size: 2rem;
+  font-weight: lighter;
+  margin-top: 1rem;
+  color: $white;
+}

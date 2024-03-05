@@ -1,0 +1,88 @@
+.createRoom-container {
+  height: calc(100% - $navbar);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.createRoom-editorButton-container {
+  width: 80%;
+  padding: 3rem 5rem 3rem 5rem;
+  justify-content: space-between;
+  display: flex;
+}
+
+.createRoom-editorButton-detail {
+  width: 80%;
+  height: 40rem;
+  background-color: $lightgray;
+  border-radius: 2rem;
+  box-shadow: inset 0 3px 5px 0 rgb(0, 0, 0, 0.25); // x , y, blur ,spread
+}
+.createRoom-input-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 8rem 2rem 0;
+}
+
+.createRoom-roomName-container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+.createRoom-personnal-container {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.createRoom-label {
+  font-size: 1.5rem;
+  margin-right: 2rem;
+  margin-left: 5rem;
+}
+
+.createRoom-personnal {
+  font-size: 4rem;
+  font-weight: lighter;
+  width: 2rem;
+  margin: 0 4rem 0 4rem;
+}
+.createRoom-roomName-input {
+  font-size: 1.3rem;
+  width: 25rem;
+  border-radius: 3rem;
+  padding: 1rem;
+  box-shadow: inset 0 3px 5px 0 rgb(0, 0, 0, 0.25); // x , y, blur ,spread
+  outline: none;
+}
+
+.createRoom-arrow-button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  position: relative;
+  background-color: $navy;
+  cursor: pointer;
+  box-shadow: 1px 3px rgba(0, 0, 0, 0.5);
+  transition-duration: 0.3s; //버튼 클릭시 동적으로 0.3초 동안 구현
+  &:hover {
+    background-color: lighten($navy, 10%);
+  }
+  &:active {
+    box-shadow: none;
+    margin-left: 1px;
+    margin-top: 3px;
+  }
+  img {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    width: 38%;
+  }
+  &.increase img {
+    transform: rotate(180deg);
+    left: 1.1rem;
+  }
+}
