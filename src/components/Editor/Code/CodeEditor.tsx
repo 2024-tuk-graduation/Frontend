@@ -17,11 +17,11 @@ const CodeEditor = () => {
     <div className="code-editor-container">
       <Editor
         theme="theme"
-        height="95rem"
+        height="72rem"
         width="99%"
         language="python"
         defaultValue="#코드를 입력해주세용용용용"
-        options={{ fontSize: 20, lineHeight: 23 }}
+        options={{ fontSize: 15, lineHeight: 20 }}
       />
     </div>
   );

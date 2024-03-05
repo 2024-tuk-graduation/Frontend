@@ -1,14 +1,13 @@
 .editor-save-button {
-  @include button(10rem, 3rem, $navy);
+  @include button(9rem, 2rem, $navy);
   color: $white;
-  margin-right: 2rem;
   font-weight: normal;
 }
 
 .editor-infobar-container {
   width: 100%;
-  height: 5rem;
   display: flex;
+
   align-items: flex-end;
   justify-content: space-between;
 }
@@ -16,6 +15,7 @@
 .editor-switch {
   position: relative;
   width: 27rem;
+  margin-left: 3rem;
   display: flex;
   background-color: $lightgray;
   border-radius: 1.5rem;
@@ -26,7 +26,7 @@
     justify-content: center;
     align-items: center;
     width: 9rem;
-    height: 3.5rem; // indicator와 같은 높이로 설정
+    height: 3.2rem; // indicator와 같은 높이로 설정
     font-size: 1.5rem;
     cursor: pointer;
     transition: color 200ms ease-out;
@@ -38,7 +38,7 @@
   }
   &__indicator {
     width: 9rem;
-    height: 3.5rem;
+    height: 3.2rem;
     position: absolute;
     top: 0;
     border-radius: 1.5rem;
