@@ -1,14 +1,14 @@
 .editor-round-button-container {
   position: absolute;
   z-index: 99;
-  bottom: 4rem;
+  bottom: 2rem;
   div {
     position: relative;
     cursor: pointer;
     background-color: $darkpink;
     border-radius: 50%;
-    width: 7rem;
-    height: 7rem;
+    width: 5rem;
+    height: 5rem;
     box-shadow: 2px 4px 4px 0 rgb(0, 0, 0, 0.3); // x , y, blur ,spread
     &:hover {
       background-color: lighten($darkpink, 20%);
@@ -29,6 +29,6 @@
     right: 6rem;
   }
   &.chat {
-    right: 15rem;
+    right: 13rem;
   }
 }

@@ -1,11 +1,9 @@
 .navbar-icon {
   width: 4rem;
-  height: 4rem;
   margin: 5rem;
 
   &.editor {
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
   }
 }
 
@@ -37,5 +35,6 @@
   color: $white;
   font-weight: 300;
   &.editor {
+    font-size: 3.5rem;
   }
 }

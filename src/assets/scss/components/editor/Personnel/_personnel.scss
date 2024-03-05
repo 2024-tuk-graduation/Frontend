@@ -1,5 +1,5 @@
 .personnel-container {
-  height: 95rem;
+  height: 72rem;
   width: $menu;
   z-index: 90;
   display: none;
@@ -11,12 +11,12 @@
 }
 
 .personnel-label {
-  font-size: 2.3rem;
-  margin: 3rem 0 1rem 2rem;
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem 1.5rem;
 }
 
 .personnel-crown-icon {
-  width: 5rem;
+  width: 3rem;
 }
 
 .current-editor-container {
@@ -27,7 +27,7 @@
 }
 
 .current-viewers-container {
-  padding: 1rem 3rem;
+  padding-top: 1.5rem;
   width: 100%;
   display: flex;
   flex-wrap: wrap;

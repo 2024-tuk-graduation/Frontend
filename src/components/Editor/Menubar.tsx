@@ -6,7 +6,7 @@ const Menubar = () => {
     <div className="menubar-container">
       <p>참여인원(3/6)</p>
       <div>
-        <p className="menubar-entry-code">AJ25B8</p>
+        <p>AJ25B8</p>
         <div>
           <img className="menubar-copyIcon" src={copyIcon} alt="복사하기" />
         </div>
