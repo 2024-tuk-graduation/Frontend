@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
-// import * as StompJs from "@stomp/stompjs";
 import Stomp from "webstomp-client";
 
 const webSocketUrl = "ws://43.201.187.179:8080/ws";
@@ -14,7 +13,8 @@ const CodeEditor = () => {
   const connectStomp = () => {
     stompClient.connect(
       {},
-      () => {
+      (res: any) => {
+        console.log(res);
         // connect 완료
       },
       () => {
