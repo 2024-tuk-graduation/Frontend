@@ -1,7 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
+import Stomp from "webstomp-client";
+
+const webSocketUrl = import.meta.env.VITE_SOCKET_URL;
+
+const WebSocketContext = React.createContext<any>(Stomp.over(new WebSocket(webSocketUrl), { debug: false }));
+export { WebSocketContext };
 
 const CodeEditor = () => {
+  const stompClient = useContext(WebSocketContext);
+
+  const connectStomp = () => {
+    stompClient.connect(
+      {},
+      (res: any) => {
+        console.log(res);
+        // connect 완료
+      },
+      () => {
+        console.error("Can't Connect Stomp");
+      }
+    );
+  };
+
   const monaco = useMonaco();
   useEffect(() => {
     if (monaco) {
@@ -12,7 +33,11 @@ const CodeEditor = () => {
         })
         .then(() => monaco.editor.setTheme("theme"));
     }
-  }, [monaco]);
+    if (stompClient.connected === false) {
+      connectStomp();
+    }
+  }, []);
+
   return (
     <div className="code-editor-container">
       <Editor

@@ -11,17 +11,21 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.24.8",
     "@tanstack/react-query-devtools": "^5.18.0",
     "@types/react-modal": "^3.16.3",
-    "monaco-themes": "^0.4.4",
     "axios": "^1.6.7",
+    "monaco-themes": "^0.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
     "sass": "^1.70.0",
+    "sockjs": "^0.3.24",
     "vite-tsconfig-paths": "^4.3.1",
+    "websocket": "^1.0.34",
+    "webstomp-client": "^1.2.6",
     "zustand": "^4.5.0"
   },
   "devDependencies": {
