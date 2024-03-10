@@ -1,15 +1,14 @@
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from "axios";
 
 const BASE_URL = import.meta.env.VITE_APP_API_URL;
 
 // 인터셉터 추가 함수
 function Interceptors(instance: AxiosInstance) {
-
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token = localStorage.getItem("accessToken");
       if (token) {
-        config.headers['Authorization'] = token;
+        config.headers["Authorization"] = token;
       }
       return config;
     },
@@ -22,7 +21,7 @@ const axiosInstance = (auth: boolean) => {
     baseURL: BASE_URL,
     timeout: 15000,
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   });
 
