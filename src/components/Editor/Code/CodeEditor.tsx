@@ -33,9 +33,6 @@ const CodeEditor = () => {
         })
         .then(() => monaco.editor.setTheme("theme"));
     }
-  }, [monaco]);
-
-  useEffect(() => {
     if (stompClient.connected === false) {
       connectStomp();
     }
