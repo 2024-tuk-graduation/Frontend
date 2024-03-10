@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import Stomp from "webstomp-client";
 
-const webSocketUrl = "ws://43.201.187.179:8080/ws";
+const webSocketUrl = import.meta.env.VITE_SOCKET_URL;
 
 const WebSocketContext = React.createContext<any>(Stomp.over(new WebSocket(webSocketUrl), { debug: false }));
 export { WebSocketContext };
@@ -22,42 +22,6 @@ const CodeEditor = () => {
       }
     );
   };
-
-  // const connect = () => {
-  //   try {
-  //     const clientdata = new StompJs.Client({
-  //       brokerURL: "http://43.201.187.179:8080/ws",
-  //       connectHeaders: {
-  //         login: "",
-  //         passcode: "password",
-  //       },
-  //       debug: function (str) {
-  //         console.log(str);
-  //       },
-  //       reconnectDelay: 5000, // 자동 재 연결
-  //       heartbeatIncoming: 4000,
-  //       heartbeatOutgoing: 4000,
-  //     });
-
-  //     // // 구독
-  //     // clientdata.onConnect = function () {
-  //     //   clientdata.subscribe("/sub/channels/", callback);
-  //     // };
-
-  //     clientdata.activate(); // 클라이언트 활성화
-
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // const disConnect = () => {
-  //   // 연결 끊기
-  //   if (client === null) {
-  //     return;
-  //   }
-  //   client.deactivate();
-  // };
 
   const monaco = useMonaco();
   useEffect(() => {
