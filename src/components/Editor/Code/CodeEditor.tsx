@@ -17,8 +17,8 @@ const CodeEditor = () => {
         console.log(res);
         // connect 완료
       },
-      () => {
-        console.error("Can't Connect Stomp");
+      (err: any) => {
+        console.log(err);
       }
     );
   };
@@ -27,7 +27,7 @@ const CodeEditor = () => {
   useEffect(() => {
     if (monaco) {
       import("monaco-themes/themes/Tomorrow.json")
-        // import("monaco-themes/themes/Brilliance Black.json")
+        // import("monaco-themes/themes/Amy.json")
         .then((data) => {
           monaco.editor.defineTheme("theme", data);
         })
@@ -36,7 +36,7 @@ const CodeEditor = () => {
     if (stompClient.connected === false) {
       connectStomp();
     }
-  }, []);
+  }, [monaco]);
 
   return (
     <div className="code-editor-container">
