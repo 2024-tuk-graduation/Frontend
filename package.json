@@ -23,6 +23,7 @@
     "react-router-dom": "^6.21.3",
     "sass": "^1.70.0",
     "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.1",
     "vite-tsconfig-paths": "^4.3.1",
     "websocket": "^1.0.34",
     "webstomp-client": "^1.2.6",
@@ -31,6 +32,7 @@
   "devDependencies": {
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/sockjs-client": "^1.5.4",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
