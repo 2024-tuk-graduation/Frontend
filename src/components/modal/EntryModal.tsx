@@ -1,14 +1,25 @@
 import React, { ChangeEvent, useState } from "react";
 import BaseModal from "./BaseModal";
+import { useNavigate } from "react-router-dom";
 import { useEntryModalState } from "@/store/modalStore";
 import { entryApi } from "@/hooks/services/mutations/useEntryMutation";
 import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 
 const EntryModal = () => {
   const entryModal = useEntryModalState();
+  const navigate = useNavigate();
 
-  const onEntrySuccess = () => {
+  const onEntrySuccess = (data: any) => {
     console.log("Entry API success");
+    localStorage.setItem("NickName", nickname);
+    console.log(data);
+    navigate(`/editor/1a2s3d`, {
+      state: {
+        hostNickName: data.data.hostNickname,
+        currentPersonnel: data.data.participantCount,
+        personnelInfo: data.data.participantNicknames,
+      },
+    });
   };
   const onEntryError = () => {
     console.log("Entry API Error");
