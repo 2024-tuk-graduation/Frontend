@@ -26,12 +26,6 @@ const CodeEditor = () => {
     });
   };
 
-  const handleEditorClick = () => {
-    // if (host !== localStorage.getItem("NickName")) {
-    //   console.log("호스트만 입력할 수 있습니다");
-    // }
-  };
-
   useEffect(() => {
     setEdit(true);
     if (monaco) {
@@ -59,7 +53,7 @@ const CodeEditor = () => {
   // }, [stompClient.connected]);
 
   return (
-    <div onClick={handleEditorClick} className="code-editor-container">
+    <div className="code-editor-container">
       <Editor
         theme="theme"
         height="63rem"
