@@ -1,4 +1,4 @@
-import { usePersonMenuState } from "@/store/EditorMenuStore";
+import { usePersonMenuState } from "@/store/editorMenuStore";
 import React from "react";
 
 const Chat = () => {

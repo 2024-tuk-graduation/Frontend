@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 import homeIcon from "@/assets/images/home.svg";
 import profileIcon from "@/assets/images/user.svg";
 import backIcon from "@/assets/images/back.svg";
+import { useRoomNameState } from "@/store/editorRoomInfoStore";
 
 interface NavbarPropsType {
   page?: string;
 }
 const Navbar = ({ page }: NavbarPropsType) => {
+  const roomName = useRoomNameState();
   return (
     <div className="navbar-container">
       {" "}
@@ -17,7 +19,7 @@ const Navbar = ({ page }: NavbarPropsType) => {
             {" "}
             <img className="navbar-icon editor" src={backIcon} alt={"뒤로가기"} />
           </Link>
-          <h1 className="navbar-Logo editor">RoomName</h1>
+          <h1 className="navbar-Logo editor">{roomName}</h1>
         </div>
       ) : (
         <div className="navbar-default">

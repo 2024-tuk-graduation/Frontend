@@ -1,4 +1,4 @@
-import { useCompileMenuState, useEditorMenuActions } from "@/store/EditorMenuStore";
+import { useCompileMenuState, useEditorMenuActions } from "@/store/editorMenuStore";
 import React from "react";
 
 const Compile = () => {
