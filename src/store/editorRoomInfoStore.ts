@@ -34,7 +34,7 @@ interface useEditorRoomInfoStoreType {
   entranceCode:"1a2s3d",
   host:"",
   language:"",
-  roomName:"종설기방",
+  roomName:"티노조아방",
   maxPersonnel:6,
   currentPersonnel:0,
   personnelInfo:[],
