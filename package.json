@@ -21,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.21.3",
+    "react-toastify": "^10.0.4",
     "sass": "^1.70.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",
