@@ -9,13 +9,13 @@
 }
 
 .container {
-  width: 80%;
-  height: 75rem;
+  width: 75%;
+  height: 90rem;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
   &.editor {
-    height: 80rem;
+    height: 95rem;
     width: 95%;
   }
 }
