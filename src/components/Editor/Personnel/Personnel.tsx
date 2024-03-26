@@ -22,6 +22,7 @@ const Personnel = () => {
 
   const location = useLocation();
   const { setCurrentPersonnel, setPersonnelInfo, resetPersonnelInfo, setHost } = useEditorRoomInfoActions();
+
   const initialCurrentPersonnel = location.state.currentPersonnel;
   const initialPersonnelInfo = location.state.personnelInfo;
   const initialHost = location.state.hostNickName;
@@ -34,6 +35,7 @@ const Personnel = () => {
     setCurrentPersonnel(initialCurrentPersonnel);
     resetPersonnelInfo();
     setHost(initialHost);
+
     initialPersonnelInfo.forEach((name: string, index: number) => {
       const img = imgs[index % imgs.length]; // imgs 배열의 길이로 인덱스를 나누어 반복 사용
       setPersonnelInfo(name, img);
