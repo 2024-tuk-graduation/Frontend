@@ -8,7 +8,7 @@ const Menubar = () => {
   const currentPersonnel = useCurrentPersonnelState();
   return (
     <div className="menubar-container">
-      <p>{`참여인원(${currentPersonnel - 1}/${maxPersonnel})`}</p>
+      <p>{`참여인원(${currentPersonnel}/${maxPersonnel})`}</p>
       <div>
         <p>{entryCode}</p>
         <div>

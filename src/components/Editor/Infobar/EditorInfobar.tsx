@@ -9,6 +9,7 @@ const EditorInfobar = () => {
   };
 
   const mode = ["blank", "pdf", "code"];
+
   return (
     <div className="editor-infobar-container">
       <div className="editor-switch">

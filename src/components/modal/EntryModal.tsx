@@ -11,10 +11,12 @@ const EntryModal = () => {
 
   const onEntrySuccess = (data: any) => {
     console.log("Entry API success");
-    localStorage.setItem("NickName", nickname);
+    //localStorage.setItem("NickName", nickname);
+
     console.log(data);
     navigate(`/editor/1a2s3d`, {
       state: {
+        myNickName: nickname,
         hostNickName: data.data.hostNickname,
         currentPersonnel: data.data.participantCount,
         personnelInfo: data.data.participantNicknames,
@@ -30,6 +32,7 @@ const EntryModal = () => {
     onSuccessCb: onEntrySuccess,
     onErrorCb: onEntryError,
   });
+
   const [codeInput, setCodeInput] = useState({
     input1: "",
     input2: "",
