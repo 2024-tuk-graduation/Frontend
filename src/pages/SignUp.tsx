@@ -62,41 +62,6 @@ const SignUp: React.FC = () => {
       // 회원가입 실패 시 오류 처리
     }
   };
-  //   e.preventDefault();
-
-  //   try {
-  //     // 회원가입 요청 시에 JSON으로 전송할 객체 생성
-  //     const UserObject = {
-  //       nickname: nickname,
-  //       username: username,
-  //       password: password,
-  //     };
-
-  //     // FormData 객체 생성
-  //     const formData = new FormData();
-  //     formData.append("multipartFile", file, file.name);
-  //     const jsonStr = JSON.stringify(UserObject);
-  //     formData.append("memberCreateRequest", new Blob([jsonStr], { type: "application/json" }));
-
-  //     // // 파일 추가
-  //     // if (file) {
-  //     //   formData.append("multipartFile", file, file.name);
-  //     // }
-
-  //     const response = await axios.post(baseURL, formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data", // 파일 전송 시에는 multipart/form-data로 설정
-  //         accept: "application/json", // 수신 헤더에 accept 추가
-  //       },
-  //     });
-  //     console.log("회원가입 성공:", response);
-  //     // 회원가입 성공 후 작업
-  //     window.location.href = "/login";
-  //   } catch (error) {
-  //     console.error("회원가입 실패:", error);
-  //     // 회원가입 실패 시 오류 처리
-  //   }
-  // };
 
   return (
     <div className="bg-container">

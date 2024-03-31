@@ -1,18 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import bg from "../assets/images/bg.png";
-import { useLoginFormStore } from "@/store/loginFormState";
+// import { useLoginFormStore } from "@/store/loginFormState";
 import axios from "axios";
 
 const Login: React.FC = () => {
-  const { username, password, setUsername, setPassword } = useLoginFormStore();
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
+  // const { username, password, setUsername, setPassword } = useLoginFormStore();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const baseURL = "http://localhost:8080/api/v1/member/login";
 
@@ -23,9 +17,10 @@ const Login: React.FC = () => {
         username: username,
         password: password,
       });
-      console.log("로그인 성공:", response);
+      console.log("로그인 성공!!:", response);
+      window.location.href = "/selectRoom";
     } catch (error) {
-      console.error("로그인 실패:", error);
+      console.error("로그인 실패!!:", error);
     }
 
     console.log("Username:", username);
@@ -53,14 +48,14 @@ const Login: React.FC = () => {
             <input
               type="text"
               value={username}
-              onChange={handleUsernameChange}
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="아이디"
               className="input-field"
             />
             <input
               type="password"
               value={password}
-              onChange={handlePasswordChange}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="비밀번호"
               className="input-field"
             />
