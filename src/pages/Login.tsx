@@ -1,6 +1,7 @@
 import React from "react";
 import bg from "../assets/images/bg.png";
 import { useLoginFormStore } from "@/store/loginFormState";
+import axios from "axios";
 
 const Login: React.FC = () => {
   const { username, password, setUsername, setPassword } = useLoginFormStore();
@@ -13,9 +14,20 @@ const Login: React.FC = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const baseURL = "http://localhost:8080/api/v1/member/login";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 로그인 로직 추가
+    try {
+      const response = await axios.post(baseURL, {
+        username: username,
+        password: password,
+      });
+      console.log("로그인 성공:", response);
+    } catch (error) {
+      console.error("로그인 실패:", error);
+    }
+
     console.log("Username:", username);
     console.log("Password:", password);
   };
