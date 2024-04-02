@@ -1,0 +1,19 @@
+.code-mode-language-area {
+  margin: 3rem 0;
+  width: 100%;
+
+  p {
+    margin-bottom: 1rem;
+  }
+}
+
+.code-mode-language-choose {
+  width: 100%;
+  padding: 0.3rem;
+  display: flex;
+  overflow-x: scroll;
+}
+
+.code-mode-language-choose::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
