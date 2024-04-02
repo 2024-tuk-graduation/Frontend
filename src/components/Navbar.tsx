@@ -11,7 +11,7 @@ interface NavbarPropsType {
 const Navbar = ({ page }: NavbarPropsType) => {
   const roomName = useRoomNameState();
   return (
-    <div className="navbar-container">
+    <div className={`navbar-container ${page}`}>
       {" "}
       {page === "editor" ? (
         <div className="navbar-editor">

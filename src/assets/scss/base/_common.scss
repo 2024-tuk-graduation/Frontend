@@ -15,8 +15,10 @@
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
   &.editor {
-    height: 95rem;
-    width: 95%;
+    border-radius: 0;
+    width: 100%;
+    height: 100vh;
+    box-shadow: 0;
   }
 }
 
