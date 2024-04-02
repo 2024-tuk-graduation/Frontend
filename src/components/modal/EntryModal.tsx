@@ -1,9 +1,37 @@
 import React, { ChangeEvent, useState } from "react";
 import BaseModal from "./BaseModal";
+import { useNavigate } from "react-router-dom";
 import { useEntryModalState } from "@/store/modalStore";
+import { entryApi } from "@/hooks/services/mutations/useEntryMutation";
+import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 
 const EntryModal = () => {
   const entryModal = useEntryModalState();
+  const navigate = useNavigate();
+
+  const onEntrySuccess = (data: any) => {
+    console.log("Entry API success");
+    //localStorage.setItem("NickName", nickname);
+
+    console.log(data);
+    navigate(`/editor/1a2s3d`, {
+      state: {
+        myNickName: nickname,
+        hostNickName: data.data.hostNickname,
+        currentPersonnel: data.data.participantCount,
+        personnelInfo: data.data.participantNicknames,
+      },
+    });
+  };
+  const onEntryError = () => {
+    console.log("Entry API Error");
+  };
+
+  const { mutation: entryMutation } = useGenericMutation({
+    mutationFn: entryApi,
+    onSuccessCb: onEntrySuccess,
+    onErrorCb: onEntryError,
+  });
 
   const [codeInput, setCodeInput] = useState({
     input1: "",
@@ -14,6 +42,7 @@ const EntryModal = () => {
     input6: "",
   });
 
+  const [nickname, setNickname] = useState("");
   const onCodehandler = (e: ChangeEvent<HTMLInputElement>) => {
     setCodeInput({
       ...codeInput,
@@ -21,14 +50,28 @@ const EntryModal = () => {
     });
   };
 
+  const onNicknamehandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
+
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log(codeInput);
+    console.log(nickname);
+    const uuid: string = Object.values(codeInput).join("");
+    console.log(uuid);
+    const code = {
+      entranceCode: uuid,
+      nickname: nickname,
+    };
+    entryMutation.mutate(code);
   };
 
   return (
     <BaseModal isOpen={entryModal} type={"entry"}>
       <form onSubmit={onSubmitHandler} className="entry-modal-container">
         <h1 className="entry-modal-title">입장코드</h1>
+
         <div>
           {Object.values(codeInput).map((value, index) => (
             <input
@@ -43,6 +86,7 @@ const EntryModal = () => {
             />
           ))}
         </div>
+        <input className="entry-modal-nickname-input-item" value={nickname} onChange={onNicknamehandler} />
         <button className="entry-modal-button">입장하기</button>
       </form>
     </BaseModal>

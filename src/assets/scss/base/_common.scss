@@ -1,22 +1,25 @@
 // 가장 밑에 있는 기본 배경
 .bg-container {
-  background-color: $grey;
+  background-color: $gray;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10rem 0;
 }
 
 // 태블릿 형식 배경
 .container {
-  width: 80%;
-  height: 80rem;
+  width: 75%;
+  height: 70rem;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
-  padding: 2.5rem;
+  &.editor {
+    height: 95rem;
+    width: 95%;
+  }
+
 }
 
 // 배경 이미지
