@@ -40,11 +40,11 @@ const SignUp: React.FC = () => {
       const formData = new FormData();
 
       // 이미지 파일 추가
-      formData.append("multipartFile", file, file.name);
+      formData.append("part", file, file.name);
 
       // 회원가입 요청에 필요한 JSON 데이터 추가
       const jsonStr = JSON.stringify(UserObject);
-      formData.append("memberCreateRequest", new Blob([jsonStr], { type: "application/json" }));
+      formData.append("data", new Blob([jsonStr], { type: "application/json" }));
 
       // 서버에 요청 보내기
       const response = await axios.post(baseURL, formData, {

@@ -18,7 +18,7 @@ const Login: React.FC = () => {
         password: password,
       });
       console.log("로그인 성공!!:", response);
-      window.location.href = "/selectRoom";
+      window.location.href = "/selectRoom"; // 로그인 성공 시 방 선택 페이지로 이동
     } catch (error) {
       console.error("로그인 실패!!:", error);
     }
