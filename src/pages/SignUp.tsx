@@ -75,6 +75,7 @@ const SignUp: React.FC = () => {
           </div>
           <div className="profile-container">
             <img src={file ? URL.createObjectURL(file) : defaultProfile} alt="Profile" className="profile-image" />
+
             <div className="profile-button">
               <button className="default-button">기본 프로필 선택</button>
               <label htmlFor="file">

@@ -8,16 +8,18 @@
   align-items: center;
 }
 
+// 태블릿 형식 배경
 .container {
-  width: 80%;
-  height: 75rem;
+  width: 75%;
+  height: 70rem;
   background-color: $white;
   border-radius: 4rem;
   box-shadow: 0.4rem 0.6rem 0.4rem 0rem #888888;
   &.editor {
-    height: 80rem;
+    height: 95rem;
     width: 95%;
   }
+
 }
 
 // 배경 이미지
@@ -25,4 +27,9 @@
   width: calc(100% - 60rem);
   height: 100%;
   float: left;
+}
+.logo-container img {
+  width: 90%;
+  height: 100%;
+  object-fit: cover;
 }

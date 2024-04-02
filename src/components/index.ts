@@ -6,12 +6,12 @@ import EntryModal from "./modal/EntryModal";
 import EditorInfobar from "./Editor/Infobar/EditorInfobar"
 import CodeEditor from "./Editor/Code/CodeEditor"
 import EditorRoundButton from "./Editor/EditorRoundButton"
-import BlankScreenModeSelect from "./createRoom/BlankScreenModeSelect";
-import CodeModeSelect from "./createRoom/CodeModeSelect";
-import EditorModeButton from "./createRoom/EditorModeButton";
-import PdfModeSelect from "./createRoom/PdfModeSelect";
+import BlankScreenModeCreate from "./createRoom/BlankScreenModeCreate";
+import CodeModeCreate from "./createRoom/CodeModeCreate";
+import EditorMode from "./createRoom/EditorMode";
+import PdfModeCreate from "./createRoom/PdfModeCreate";
 
 
 
-export {Navbar,Button ,SelectButton, BaseModal,EntryModal,EditorInfobar, CodeEditor, EditorRoundButton ,BlankScreenModeSelect ,CodeModeSelect ,EditorModeButton ,PdfModeSelect };
+export {Navbar,Button ,SelectButton, BaseModal,EntryModal,EditorInfobar, CodeEditor, EditorRoundButton ,BlankScreenModeCreate ,CodeModeCreate ,EditorMode ,PdfModeCreate };
 
