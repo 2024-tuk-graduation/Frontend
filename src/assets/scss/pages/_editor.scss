@@ -2,9 +2,11 @@
   height: calc(100% - $navbar);
   display: flex;
   flex-direction: column;
-  padding: 2.5rem 2rem;
-
+  padding: 1.4rem 1.2rem;
   width: 100%;
+  &.editor {
+    height: calc(100% - $editornavbar);
+  }
 }
 
 .editor-detail-container {

@@ -10,8 +10,10 @@ import BlankScreenModeCreate from "./createRoom/BlankScreenModeCreate";
 import CodeModeCreate from "./createRoom/CodeModeCreate";
 import EditorMode from "./createRoom/EditorMode";
 import PdfModeCreate from "./createRoom/PdfModeCreate";
-
-
-
-export {Navbar,Button ,SelectButton, BaseModal,EntryModal,EditorInfobar, CodeEditor, EditorRoundButton ,BlankScreenModeCreate ,CodeModeCreate ,EditorMode ,PdfModeCreate };
+import Record from "./Editor/Infobar/Record"
+import AddFile from "./Editor/Infobar/AddFile";
+import EntranceCode from "./Editor/Infobar/EntranceCode";
+import Save from "./Editor/Infobar/Save";
+import Time from "./Editor/Infobar/Time"
+export {AddFile ,EntranceCode,Save,Time,Navbar,Button ,SelectButton, BaseModal,EntryModal,EditorInfobar, CodeEditor, EditorRoundButton ,BlankScreenModeCreate ,CodeModeCreate ,EditorMode ,PdfModeCreate,Record };
 

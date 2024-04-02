@@ -16,7 +16,7 @@ const Editor = () => {
     <WebSocketConnnect>
       <div className="container editor">
         <Navbar page={"editor"} />
-        <div className="editor-container">
+        <div className="editor-container editor">
           <EditorInfobar />
           <div className="editor-detail-container">
             <div className="edit-area">

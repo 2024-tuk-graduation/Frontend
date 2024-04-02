@@ -1,5 +1,5 @@
 .editor-save-button {
-  @include button(9rem, 2rem, $navy);
+  @include button(13rem, 1.5rem, $navy);
   color: $white;
   font-weight: normal;
 }
@@ -7,37 +7,39 @@
 .editor-infobar-container {
   width: 100%;
   display: flex;
-
   align-items: flex-end;
   justify-content: space-between;
+  div:first-of-type {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .editor-switch {
   position: relative;
-  width: 27rem;
-  margin-left: 3rem;
+  width: 24rem;
+  height: 3.2rem;
   display: flex;
   background-color: $lightgray;
   border-radius: 1.5rem;
   overflow: hidden;
-
   &__label {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 9rem;
+    width: 8rem;
     height: 3.2rem; // indicator와 같은 높이로 설정
     font-size: 1.5rem;
     cursor: pointer;
     transition: color 200ms ease-out;
-    color: #000; // 기본 색상
+    color: #a2a2a2; // 기본 색상
     z-index: 10;
     &.selected {
       color: $white;
     }
   }
   &__indicator {
-    width: 9rem;
+    width: 8rem;
     height: 3.2rem;
     position: absolute;
     top: 0;
@@ -46,11 +48,12 @@
       transform 600ms cubic-bezier(0.02, 0.94, 0.09, 0.97),
       background 300ms cubic-bezier(0.17, 0.67, 0.14, 1.03);
     background: $navy;
-
-    input[type="radio"] {
-      display: none;
-    }
   }
+
+  input[type="radio"] {
+    display: none;
+  }
+
   // 각 라디오 버튼 선택 시 indicator 위치 조정 및 라벨 색상 변경
   input#blank:checked ~ .editor-switch__indicator {
     transform: translate3d(0%, 0, 0);
@@ -61,4 +64,12 @@
   input#code:checked ~ .editor-switch__indicator {
     transform: translate3d(200%, 0, 0); // 전체 너비의 2/3 이동
   }
+}
+
+.editor-infobar-buttons {
+  display: flex;
+  margin-left: 4rem;
+  box-shadow: 1px 2px 3px 0 rgba(0, 0, 0, 0.3);
+  width: 44rem;
+  height: 5rem;
 }
