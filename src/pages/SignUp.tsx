@@ -1,63 +1,81 @@
 import React, { useState } from "react";
-import { useSignUpFormStore } from "@/store/store";
 import bg from "../assets/images/bg.png";
-import defaultProfile from "../assets/images/defaultProfile.svg";
+import defaultProfile from "../assets/images/default_profile.svg";
+import axios from "axios";
 
 const SignUp: React.FC = () => {
-  const { nickname, username, password, setNickname, setUsername, setPassword } = useSignUpFormStore();
-  const [profileImage, setProfileImage] = useState(defaultProfile);
+  const [nickname, setNickname] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [file, setFile] = useState<File>(); // 파일 상태 변경
+
+  const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/signup`;
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        if (e.target) {
-          setProfileImage(e.target.result as string);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile); // 파일 상태 업데이트
     }
   };
 
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
-  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // 회원가입 로직 추가
-    console.log("Nickname:", nickname);
-    console.log("Username:", username);
-    console.log("Password:", password);
-  };
 
-  const handleSubmitClick = () => {
-    window.location.href = "/login"; // 로그인 페이지로 이동
+    try {
+      // 이미지 파일이 선택되었는지 확인
+      // TODO : 이미지 파일이 선택되지 않았을 때의 처리 추가 ( default 이미지로 보내주기 )
+      if (!file) {
+        console.error("파일이 선택되지 않았습니다.");
+        return;
+      }
+
+      // 회원가입 요청 시에 JSON으로 전송할 객체 생성
+      const UserObject = {
+        nickname: nickname,
+        username: username,
+        password: password,
+      };
+
+      // FormData 객체 생성
+      const formData = new FormData();
+
+      // 이미지 파일 추가
+      formData.append("part", file, file.name);
+
+      // 회원가입 요청에 필요한 JSON 데이터 추가
+      const jsonStr = JSON.stringify(UserObject);
+      formData.append("data", new Blob([jsonStr], { type: "application/json" }));
+
+      // 서버에 요청 보내기
+      const response = await axios.post(serverURL, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // 파일 전송 시에는 multipart/form-data로 설정
+          accept: "application/json", // 수신 헤더에 accept 추가
+        },
+      });
+
+      console.log("회원가입 성공:", response);
+      // 회원가입 성공 후 작업
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("회원가입 실패:", error);
+      // 회원가입 실패 시 오류 처리
+    }
   };
 
   return (
     <div className="bg-container">
       <div className="container">
-        {/* 로고 및 이미지 */}
         <div className="logo-container">
           <img src={bg} alt="bg" />
         </div>
-        {/* 회원가입 Form */}
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="signup-text-container">
             <p className="signup-text">Sign Up</p>
           </div>
-          {/* 프로필 이미지 */}
           <div className="profile-container">
-            <img src={profileImage || defaultProfile} alt="Profile" className="profile-image" />
+            <img src={file ? URL.createObjectURL(file) : defaultProfile} alt="Profile" className="profile-image" />
+
             <div className="profile-button">
               <button className="default-button">기본 프로필 선택</button>
               <label htmlFor="file">
@@ -69,25 +87,25 @@ const SignUp: React.FC = () => {
           <input
             type="text"
             value={nickname}
-            onChange={handleNicknameChange}
+            onChange={(e) => setNickname(e.target.value)}
             placeholder="닉네임"
             className="input-field"
           />
           <input
             type="text"
             value={username}
-            onChange={handleUsernameChange}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="아이디"
             className="input-field"
           />
           <input
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호"
             className="input-field"
           />
-          <button type="submit" className="submit-button" onClick={handleSubmitClick}>
+          <button type="submit" className="submit-button">
             Sign Up
           </button>
         </form>
