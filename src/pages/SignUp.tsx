@@ -9,7 +9,7 @@ const SignUp: React.FC = () => {
   const [password, setPassword] = useState("");
   const [file, setFile] = useState<File>(); // 파일 상태 변경
 
-  const baseURL = "http://localhost:8080/api/v1/member/signup";
+  const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/signup`;
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -47,7 +47,7 @@ const SignUp: React.FC = () => {
       formData.append("data", new Blob([jsonStr], { type: "application/json" }));
 
       // 서버에 요청 보내기
-      const response = await axios.post(baseURL, formData, {
+      const response = await axios.post(serverURL, formData, {
         headers: {
           "Content-Type": "multipart/form-data", // 파일 전송 시에는 multipart/form-data로 설정
           accept: "application/json", // 수신 헤더에 accept 추가

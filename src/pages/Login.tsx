@@ -8,12 +8,12 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const baseURL = "http://localhost:8080/api/v1/member/login";
+  const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/login`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(baseURL, {
+      const response = await axios.post(serverURL, {
         username: username,
         password: password,
       });
