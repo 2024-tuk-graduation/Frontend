@@ -63,7 +63,7 @@ const CodeEditor = () => {
   }, [stompClient.connected]);
 
   return (
-    <div style={{ border: "solid 1px #ececec", width: "99%" }}>
+    <div style={{ border: "solid 1px #ececec", width: "100%" }}>
       <Editor
         theme="theme"
         height="50rem"

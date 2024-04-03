@@ -11,7 +11,8 @@
 
 .editor-detail-container {
   width: 100%;
-  height: 100%;
+  //background-color: salmon;
+  height: calc(100% - 10rem);
   display: flex;
 }
 
@@ -32,8 +33,9 @@
   flex-direction: column;
 }
 
-.mode-editor-container {
+.button-editor-container {
   position: relative;
+  width: 99%;
 }
 .editor-WhiteBoard-QnA-area {
   display: flex;
