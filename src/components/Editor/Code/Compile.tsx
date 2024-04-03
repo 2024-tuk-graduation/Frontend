@@ -1,14 +1,11 @@
-import { useCompileMenuState, useEditorMenuActions } from "@/store/editorMenuStore";
 import React from "react";
+import { DefaultMenubar } from "..";
 
 const Compile = () => {
-  const compileMenu = useCompileMenuState();
-  const { setCompileMenu } = useEditorMenuActions();
-
   return (
-    <div className={`compile-container ${compileMenu ? "show" : ""}`}>
-      <p>컴파일</p>
-      <div onClick={setCompileMenu}>X</div>
+    <div>
+      {" "}
+      <DefaultMenubar title="컴파일" />
     </div>
   );
 };

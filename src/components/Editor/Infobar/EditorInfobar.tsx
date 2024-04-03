@@ -5,22 +5,27 @@ import Record from "./Record";
 import AddFile from "./AddFile";
 import Time from "./Time";
 import Save from "./Save";
+import { useEditorRoomInfoActions, useModeState } from "@/store/editorRoomInfoStore";
 
 const EditorInfobar = () => {
-  const [checkedValue, setCheckedValue] = useState("blank");
+  // const [checkedValue, setCheckedValue] = useState("blank");
+
+  const { setMode } = useEditorRoomInfoActions();
+  const mode = useModeState();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedValue(event.target.value);
+    // setCheckedValue(event.target.value);
+    setMode(event.target.value);
   };
 
-  const mode = ["blank", "pdf", "code"];
+  const modeContent = ["blank", "pdf", "code"];
 
   return (
     <div className="editor-infobar-container">
       <div>
         <div className="editor-switch">
-          {mode.map((i) => (
-            <RadioButton key={i} checkedValue={checkedValue} onChange={handleChange} mode={i} />
+          {modeContent.map((i) => (
+            <RadioButton key={i} checkedValue={mode} onChange={handleChange} mode={i} />
           ))}
           <div className="editor-switch__indicator" />
         </div>

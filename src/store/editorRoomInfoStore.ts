@@ -1,20 +1,26 @@
 import { create } from "zustand";
+import { Mode } from "./selectModeStore";
 interface personType {
   name: string;
   img: string;
 }
+
+interface CodeFileItem {
+  fileName : string;
+
+}
+
 
 interface useEditorRoomInfoStoreType {
   entranceCode:string,
   host:string,
   language:string,
   roomName:string,
+  mode:Mode,
   maxPersonnel:number,
   currentPersonnel:number,
   personnelInfo: personType [],
-
-
-
+  codeFileList: CodeFileItem [],
 
   actions : {
     setEntranceCode: (newState : string) => void;
@@ -24,8 +30,8 @@ interface useEditorRoomInfoStoreType {
     setCurrentPersonnel:(newState : number) => void;
     setPersonnelInfo: (name : string ,img : string) => void;
     resetPersonnelInfo:() =>void;
+    setMode:(newState : Mode)=> void;
 
-  
   }
 }
 
@@ -38,7 +44,10 @@ interface useEditorRoomInfoStoreType {
   maxPersonnel:6,
   currentPersonnel:0,
   personnelInfo:[],
-
+  mode:"blank",
+  codeFileList : [{
+    fileName : "example1.js"
+  }],
 
   actions : { 
     setEntranceCode: (newState) => {
@@ -63,6 +72,9 @@ interface useEditorRoomInfoStoreType {
       ]
      }));
     },
+    setMode: (newState) => {
+      set(() => ({  mode : newState }));
+    },
 
     resetPersonnelInfo : () =>{
       set((prevState) => ({
@@ -83,6 +95,8 @@ export const useRoomNameState= () =>useEditorRoomInfoStore ((state) => state.roo
 export const useCurrentPersonnelState= () =>useEditorRoomInfoStore ((state) => state.currentPersonnel)
 export const useMaxPersonnelState= () =>useEditorRoomInfoStore ((state) => state.maxPersonnel)
 export const usePersonnelInfoState= () =>useEditorRoomInfoStore ((state) => state.personnelInfo)
+export const useModeState= () =>useEditorRoomInfoStore ((state) => state.mode)
+export const useCodeFileListState= () =>useEditorRoomInfoStore ((state) => state.codeFileList)
 
 
 

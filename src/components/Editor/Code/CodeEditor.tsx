@@ -62,19 +62,19 @@ const CodeEditor = () => {
   }, [stompClient.connected]);
 
   return (
-    <div className="code-editor-container">
+    <div style={{ border: "solid 1px #ececec", width: "99%" }}>
       <Editor
         theme="theme"
-        height="63rem"
-        width="99%"
+        height="50rem"
+        width="100%"
         language="python"
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
         defaultValue="#코드를 입력해주세용용용용"
-        options={{ fontSize: 15, lineHeight: 20, readOnly: edit }}
+        options={{ border: "#000", fontSize: 10, lineHeight: 20, readOnly: edit }}
       />
-      <ToastContainer />
     </div>
+    // <ToastContainer />
   );
 };
 

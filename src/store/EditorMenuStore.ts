@@ -8,9 +8,7 @@ interface personMenuType {
 
 interface  useEditorMenuStoreType {
   personMenu: personMenuType;
-  compileMenu : boolean
   actions : {
-    setCompileMenu: () => void;
     setPersonMenu: (menu: keyof personMenuType) => void;
   }
 }
@@ -18,14 +16,14 @@ interface  useEditorMenuStoreType {
 
 
  const useEditorMenuStore = create<useEditorMenuStoreType>((set) => ({
-  compileMenu: false,
+
   personMenu: {
     chat: false,
     personnel: false,
   },
 
   actions : { 
-    setCompileMenu: () => set((state) => ({ compileMenu: !state.compileMenu })),
+ 
     setPersonMenu: (menu) =>
     set((state) => ({
       personMenu: {
@@ -38,7 +36,6 @@ interface  useEditorMenuStoreType {
 
 }));
 
-export const useCompileMenuState= () => useEditorMenuStore((state) => state.compileMenu)
 export const usePersonMenuState= () => useEditorMenuStore((state) => state.personMenu)
 
 
