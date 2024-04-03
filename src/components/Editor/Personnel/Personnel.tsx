@@ -1,6 +1,6 @@
 import { usePersonMenuState } from "@/store/editorMenuStore";
 import React, { useContext, useEffect } from "react";
-import Menubar from "../Menubar";
+import Menubar from "../PersonMenubar";
 import crownIcon from "@/assets/images/crown.svg";
 import img1 from "@/assets/images/example/img1.png";
 import img2 from "@/assets/images/example/img2.jpeg";

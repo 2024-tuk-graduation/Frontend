@@ -7,8 +7,8 @@
     cursor: pointer;
     background-color: $darkpink;
     border-radius: 50%;
-    width: 5rem;
-    height: 5rem;
+    width: 3.5rem;
+    height: 3.5rem;
     box-shadow: 2px 4px 4px 0 rgb(0, 0, 0, 0.3); // x , y, blur ,spread
     &:hover {
       background-color: lighten($darkpink, 20%);
@@ -19,16 +19,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 1.8rem;
     transform: translate(-50%, -50%);
   }
 
-  &.code {
-    left: 3rem;
-  }
   &.personnel {
-    right: 6rem;
+    right: 5rem;
   }
   &.chat {
-    right: 13rem;
+    right: 10rem;
   }
 }
