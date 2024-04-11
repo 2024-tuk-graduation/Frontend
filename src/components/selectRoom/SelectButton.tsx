@@ -2,6 +2,7 @@ import React from "react";
 import { useModalActions } from "@/store/modalStore";
 import { EntryModal } from "..";
 import { useNavigate } from "react-router-dom";
+
 type SelectButtonProps = {
   img: string;
   title: string;
@@ -11,7 +12,7 @@ const SelectButton = ({ img, title }: SelectButtonProps) => {
   const navigate = useNavigate();
 
   const handleOpen = () => {
-    title === "방 입장하기" ? setModalOpen("entry") : navigate("/edit");
+    title === "방 입장하기" ? setModalOpen("entry") : navigate("/createRoom");
   };
   return (
     <div>

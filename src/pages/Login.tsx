@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import bg from "../assets/images/bg.png";
-// import { useLoginFormStore } from "@/store/loginFormState";
 import axios from "axios";
 
 const Login: React.FC = () => {
@@ -39,36 +38,6 @@ const Login: React.FC = () => {
           <div className="logo-container">
             <img src={bg} alt="sign_bg" />
           </div>
-
-          {/* 로그인 Form */}
-          <form className="login-form" onSubmit={handleSubmit}>
-            <div className="login-text-container">
-              <p className="login-text">Login</p>
-            </div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="아이디"
-              className="input-field"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호"
-              className="input-field"
-            />
-            <button type="submit" className="submit-button">
-              Login
-            </button>
-            <p className="signup-text">
-              회원이 아니신가요?{""}
-              <span onClick={handleSignupClick} className="signup-link">
-                회원가입
-              </span>
-            </p>
-          </form>
         </div>
         {/* 로그인 Form */}
         <form className="login-form" onSubmit={handleSubmit}>
@@ -78,14 +47,14 @@ const Login: React.FC = () => {
           <input
             type="text"
             value={username}
-            onChange={handleUsernameChange}
+            onChange={(e) => setUsername(e.target.value)}
             placeholder="아이디"
             className="input-field"
           />
           <input
             type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
             placeholder="비밀번호"
             className="input-field"
           />
