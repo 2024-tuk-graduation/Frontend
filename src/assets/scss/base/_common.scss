@@ -21,7 +21,6 @@
     height: 100vh;
     box-shadow: 0;
   }
-
 }
 
 // 배경 이미지
@@ -34,4 +33,16 @@
   width: 90%;
   height: 100%;
   object-fit: cover;
+}
+
+@font-face {
+  font-family: "SUITE";
+  src: local("../assets/font/SUITE-woff2/SUITE-Regular.woff2") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  font-family: "SUITE";
 }
