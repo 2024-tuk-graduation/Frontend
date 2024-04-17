@@ -7,11 +7,19 @@ const Login: React.FC = () => {
   // const { username, password, setUsername, setPassword } = useLoginFormStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/login`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 필드가 비어있는지 확인
+    if (!username || !password) {
+      setErrorMessage("모든 필드를 입력해주세요.");
+      return;
+    }
+
     try {
       const response = await axios.post(serverURL, {
         username: username,
@@ -21,6 +29,7 @@ const Login: React.FC = () => {
       window.location.href = "/selectRoom"; // 로그인 성공 시 방 선택 페이지로 이동
     } catch (error) {
       console.error("로그인 실패!!:", error);
+      setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
 
     console.log("Username:", username);
@@ -57,6 +66,7 @@ const Login: React.FC = () => {
             placeholder="비밀번호"
             className="login-input-field"
           />
+          <p className="login-error-message">{errorMessage}</p>
           <button type="submit" className="login-submit-button">
             Login
           </button>
