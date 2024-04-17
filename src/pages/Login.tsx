@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import bg from "../assets/images/bg.png";
-// import { useLoginFormStore } from "@/store/loginFormState";
 import axios from "axios";
 
 const Login: React.FC = () => {
