@@ -1,3 +1,4 @@
+
 import { EditorMode, Navbar } from "@/components";
 import blankIcon from "@/assets/images/blank.svg";
 import pdfIcon from "@/assets/images/pdf.svg";
@@ -61,6 +62,7 @@ const CreateRoom = () => {
     });
     console.log(formData);
     createRoomMutation.mutate(formData);
+
   };
 
   return (

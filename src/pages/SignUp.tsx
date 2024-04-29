@@ -8,6 +8,7 @@ const SignUp: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [file, setFile] = useState<File>(); // 파일 상태 변경
+  const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 변경
 
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/signup`;
 
@@ -21,14 +22,49 @@ const SignUp: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      // 이미지 파일이 선택되었는지 확인
-      // TODO : 이미지 파일이 선택되지 않았을 때의 처리 추가 ( default 이미지로 보내주기 )
-      if (!file) {
-        console.error("파일이 선택되지 않았습니다.");
-        return;
-      }
+    /*
+     *   유효성 검사 추가
+     *   - 닉네임, 아이디, 비밀번호 길이 및 형식 확인
+     *   - 테스트할 때는 주석 처리해주세요!
+     */
+    // 필드가 비어있는지 확인
+    if (!nickname || !username || !password) {
+      setErrorMessage("모든 필드를 입력해주세요.");
+      return;
+    }
 
+    // 닉네임 유효성 검사
+    const nicknameRegex = /^[a-zA-Z가-힣0-9]{2,8}$/;
+    if (!nicknameRegex.test(nickname)) {
+      setErrorMessage("닉네임은 영문, 한글, 숫자로 구성된 2~8글자여야 합니다.");
+      return;
+    }
+
+    // 아이디 유효성 검사
+    const usernameRegex = /^[a-zA-Z0-9]{4,12}$/;
+    if (!usernameRegex.test(username)) {
+      setErrorMessage("아이디는 영문 대/소문자, 숫자로 구성된 4~12글자여야 합니다.");
+      return;
+    }
+
+    // 비밀번호 유효성 검사
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("비밀번호는 영문 대/소문자, 숫자, 특수문자(@$!%*?&)로 구성된 8~16글자여야 합니다.");
+      return;
+    }
+
+    // 이미지 파일이 선택되었는지 확인
+    // TODO : 이미지 파일이 선택되지 않았을 때의 처리 추가 ( default 이미지로 보내주기 )
+    if (!file) {
+      setErrorMessage("파일이 선택되지 않았습니다.");
+      return;
+    }
+
+    /*
+     *   post 요청
+     */
+    try {
       // 회원가입 요청 시에 JSON으로 전송할 객체 생성
       const UserObject = {
         nickname: nickname,
@@ -106,6 +142,7 @@ const SignUp: React.FC = () => {
             placeholder="비밀번호"
             className="input-field"
           />
+          <p className="error-message">{errorMessage}</p>
           <button type="submit" className="submit-button">
             Sign Up
           </button>

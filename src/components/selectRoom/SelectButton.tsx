@@ -2,6 +2,7 @@ import React from "react";
 import { useModalActions } from "@/store/modalStore";
 import { EntryModal } from "..";
 import { useNavigate } from "react-router-dom";
+
 type SelectButtonProps = {
   img: string;
   title: string;
