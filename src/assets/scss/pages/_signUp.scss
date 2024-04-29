@@ -95,6 +95,13 @@
   background-color: white;
 }
 
+.error-message {
+  color: red;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 1.5rem;
+}
+
 .submit-button {
   width: 40rem;
   height: 6.5rem;
@@ -111,3 +118,5 @@
 .submit-button:hover {
   background-color: #2d33e0;
 }
+
+// TODO : Button hover effect 중복 코드 제거하기
