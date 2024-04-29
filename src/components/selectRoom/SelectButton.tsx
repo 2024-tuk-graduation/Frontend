@@ -8,10 +8,11 @@ type SelectButtonProps = {
 };
 const SelectButton = ({ img, title }: SelectButtonProps) => {
   const { setModalOpen } = useModalActions();
+
   const navigate = useNavigate();
 
   const handleOpen = () => {
-    title === "방 입장하기" ? setModalOpen("entry") : navigate("/edit");
+    title === "방 입장하기" ? setModalOpen("entry") : navigate("/createRoom");
   };
   return (
     <div>

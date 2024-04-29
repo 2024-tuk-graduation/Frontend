@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import bg from "../assets/images/bg.png";
+import { useCookies } from "react-cookie";
 // import { useLoginFormStore } from "@/store/loginFormState";
 import axios from "axios";
 
 const Login: React.FC = () => {
-  // const { username, password, setUsername, setPassword } = useLoginFormStore();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/login`;
+  const [, setCookie] = useCookies(["rememberId"]);
 
+  const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/login`;
+  const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post(serverURL, {
-        username: username,
-        password: password,
-      });
-      console.log("로그인 성공!!:", response);
-      window.location.href = "/selectRoom"; // 로그인 성공 시 방 선택 페이지로 이동
+      await axios.post(
+        serverURL,
+        {
+          username: username,
+          password: password,
+        },
+        { withCredentials: true }
+      );
+
+      alert("로그인 성공");
+      window.location.href = "/selectRoom";
+      setCookie("rememberId", String(username), { path: "/" });
     } catch (error) {
       console.error("로그인 실패!!:", error);
     }
@@ -39,36 +53,6 @@ const Login: React.FC = () => {
           <div className="logo-container">
             <img src={bg} alt="sign_bg" />
           </div>
-
-          {/* 로그인 Form */}
-          <form className="login-form" onSubmit={handleSubmit}>
-            <div className="login-text-container">
-              <p className="login-text">Login</p>
-            </div>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="아이디"
-              className="input-field"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="비밀번호"
-              className="input-field"
-            />
-            <button type="submit" className="submit-button">
-              Login
-            </button>
-            <p className="signup-text">
-              회원이 아니신가요?{""}
-              <span onClick={handleSignupClick} className="signup-link">
-                회원가입
-              </span>
-            </p>
-          </form>
         </div>
         {/* 로그인 Form */}
         <form className="login-form" onSubmit={handleSubmit}>

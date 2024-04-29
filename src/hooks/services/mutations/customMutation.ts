@@ -20,7 +20,7 @@ export function useGenericMutation<TData, TError, TVariables>({
     onSuccess: (data) => {
       console.log("성공",data);
       if (onSuccessCb) onSuccessCb(data);
-    },
+    }, 
     onError: (error) => {
       console.error(error);
       if (onErrorCb) onErrorCb();

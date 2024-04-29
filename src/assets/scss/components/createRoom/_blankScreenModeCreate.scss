@@ -24,3 +24,7 @@
     display: none; /* 크롬, 사파리, 오페라, 엣지 */
   }
 }
+
+.template-selected {
+  border: 2px solid lighten($navy, 30%);
+}

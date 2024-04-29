@@ -1,30 +1,68 @@
-import { BlankScreenModeSelect, CodeModeSelect, EditorMode, Navbar, PdfModeSelect } from "@/components";
+import { EditorMode, Navbar } from "@/components";
 import blankIcon from "@/assets/images/blank.svg";
 import pdfIcon from "@/assets/images/pdf.svg";
 import codeIcon from "@/assets/images/code.svg";
 import arrow from "@/assets/images/arrow.svg";
 import React, { ChangeEvent } from "react";
-import { useSelectModeActions, useSelectPersonnelState, useSelectRoomNameState } from "@/store/selectModeStore";
-
+import { useCreateRoomDataActions, useCreateRoomDataState } from "@/store/createRoomStore";
+import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
+import { createRoomApi } from "@/hooks/services/mutations/useCreateRoom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useEditorRoomInfoActions } from "@/store/editorRoomInfoStore";
+import { useFileUpload } from "@/hooks";
 const CreateRoom = () => {
-  const roomName = useSelectRoomNameState();
-  const personnal = useSelectPersonnelState();
-  const { increasePersonnal, decreasePersonnal, setName } = useSelectModeActions();
+  const roomData = useCreateRoomDataState();
+  const { increasePersonnal, decreasePersonnal, setCreateRoomName } = useCreateRoomDataActions();
+  const { setEntranceCode } = useEditorRoomInfoActions();
+  const navigate = useNavigate();
+  const onEntrySuccess = (data: any) => {
+    const newData = data.data.data;
+    setEntranceCode(newData.entranceCode);
+    navigate(`/editor/${newData.entranceCode}`);
+  };
+  const onEntryError = () => {
+    console.log("createRoom API Error");
+  };
+  const { mutation: createRoomMutation } = useGenericMutation({
+    mutationFn: createRoomApi,
+    onSuccessCb: onEntrySuccess,
+    onErrorCb: onEntryError,
+  });
 
   const onRoomNamehandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    setCreateRoomName(e.target.value);
   };
 
   const onDecreaseHandle = () => {
-    if (personnal > 1) {
+    if (roomData.personnelCount > 1) {
       decreasePersonnal();
     }
   };
   const onIncreaseHandle = () => {
-    if (personnal < 6) {
+    if (roomData.personnelCount < 6) {
       increasePersonnal();
     }
   };
+
+  const onCreateRoomHandler = () => {
+    const UserObject = {
+      language: roomData.codeUrls.language,
+      template: roomData.template,
+      personnelCount: roomData.personnelCount,
+      roomName: roomData.roomName,
+    };
+
+    const formData = useFileUpload({
+      // files: roomData.pdfUrls,
+      files: [...roomData.codeUrls.urls, ...roomData.pdfUrls],
+      fileTitle: "uploadFiles",
+      data: UserObject,
+    });
+    console.log(formData);
+    createRoomMutation.mutate(formData);
+  };
+
   return (
     <div className="bg-container">
       <div className="container">
@@ -36,7 +74,7 @@ const CreateRoom = () => {
               className="createRoom-roomName-input"
               type="text"
               onChange={onRoomNamehandler}
-              value={roomName}
+              value={roomData.roomName}
               required
               maxLength={10}
               placeholder="방 이름을 입력해주세요"
@@ -50,7 +88,7 @@ const CreateRoom = () => {
                 <img src={arrow} alt="감소" />
               </div>
             </button>
-            <p className="createRoom-personnal">{personnal}</p>
+            <p className="createRoom-personnal">{roomData.personnelCount}</p>
             <button onClick={() => onIncreaseHandle()}>
               <div className="createRoom-arrow-button increase">
                 <img src={arrow} alt="증가" />
@@ -62,6 +100,11 @@ const CreateRoom = () => {
             <EditorMode img={pdfIcon} title={"pdf"} mode="pdf" />
             <EditorMode img={codeIcon} title={"code"} mode="code" />
           </div>{" "}
+          <div className="createRoom-button-container">
+            <button onClick={onCreateRoomHandler} className="createRoom-button">
+              방 생성하기
+            </button>
+          </div>
         </div>
       </div>
     </div>

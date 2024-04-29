@@ -55,6 +55,7 @@ const SignUp: React.FC = () => {
       });
 
       console.log("회원가입 성공:", response);
+      alert("회원가입 성공");
       // 회원가입 성공 후 작업
       window.location.href = "/login";
     } catch (error) {
