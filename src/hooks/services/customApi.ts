@@ -19,10 +19,7 @@ function Interceptors(instance: AxiosInstance) {
 const axiosInstance = (auth: boolean) => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    timeout: 15000,
-    headers: {
-      "Content-Type": "application/json",
-    },
+    withCredentials: true,
   });
 
   if (auth) {

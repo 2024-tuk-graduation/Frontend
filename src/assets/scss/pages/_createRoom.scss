@@ -7,13 +7,13 @@
 .createRoom-editor-mode-container {
   display: flex;
   justify-content: space-between;
-  margin: 5rem;
+  margin: 5rem 5rem 4rem 5rem;
 }
 
 .createRoom-personnal-container {
   flex-direction: row;
   display: flex;
-  margin-top: 5rem;
+  margin-top: 3rem;
   align-items: center;
 }
 
@@ -65,4 +65,15 @@
     transform: rotate(180deg);
     left: 1.1rem;
   }
+}
+
+.createRoom-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.createRoom-button {
+  @include button(20rem, 2rem, $navy);
+  color: $white;
+  font-weight: normal;
 }

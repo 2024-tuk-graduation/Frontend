@@ -1,14 +1,6 @@
 import { create } from "zustand";
-import { Mode } from "./selectModeStore";
-interface personType {
-  name: string;
-  img: string;
-}
+import { Mode } from "@/types/Mode";
 
-interface CodeFileItem {
-  fileName : string;
-
-}
 
 
 interface useEditorRoomInfoStoreType {
@@ -16,11 +8,13 @@ interface useEditorRoomInfoStoreType {
   host:string,
   language:string,
   roomName:string,
+  template: number,
   mode:Mode,
   maxPersonnel:number,
   currentPersonnel:number,
-  personnelInfo: personType [],
-  codeFileList: CodeFileItem [],
+  personnelInfo: string [],
+   codeFileList: string [],
+   pdfFileList :string[]
 
   actions : {
     setEntranceCode: (newState : string) => void;
@@ -28,28 +22,37 @@ interface useEditorRoomInfoStoreType {
     setLanguage:(newState : string) => void;
     setRoomName:(newState : string) => void;
     setCurrentPersonnel:(newState : number) => void;
-    setPersonnelInfo: (name : string ,img : string) => void;
-    resetPersonnelInfo:() =>void;
+    setMaxPersonnel:(newState : number) => void;
+    setPersonnelInfo: (newState : string[]) => void;
+    // resetPersonnelInfo:() =>void;
+    setCodeFileList:(newState :string[])=> void;
+    setPdfFileList:(newState :string[])=>void
     setMode:(newState : Mode)=> void;
+    setTemplate:(newState : number) => void;
 
   }
 }
 
 
  const useEditorRoomInfoStore = create< useEditorRoomInfoStoreType>((set) => ({
-  entranceCode:"1a2s3d",
+  entranceCode:"",
   host:"",
   language:"",
   roomName:"RoomName",
   maxPersonnel:6,
-  currentPersonnel:0,
+  currentPersonnel:1,
   personnelInfo:[],
+  pdfFileList:[],
   mode:"blank",
-  codeFileList : [{
-    fileName : "example1.js"
-  }],
-
+  template:1,
+  codeFileList : ["example1.py"],
   actions : { 
+
+
+
+    setTemplate: (newState) => {
+      set(() => ({   template: newState }));
+    },
     setEntranceCode: (newState) => {
       set(() => ({ entranceCode : newState }));
     },
@@ -65,23 +68,30 @@ interface useEditorRoomInfoStoreType {
     setCurrentPersonnel : (newState) => {
       set(() => ({  currentPersonnel : newState }));
     },
-    setPersonnelInfo : (name, img) =>{
-      set((prevState) => ({ personnelInfo : [
-        ...prevState.personnelInfo,
-        {name: name , img:img}
-      ]
-     }));
+
+    setMaxPersonnel : (newState) => {
+      set(() => ({  maxPersonnel: newState }));
     },
+    setPersonnelInfo : (newState) =>{
+      set(() => ({   personnelInfo : newState }));
+    },
+
+
     setMode: (newState) => {
       set(() => ({  mode : newState }));
     },
 
-    resetPersonnelInfo : () =>{
-      set((prevState) => ({
-        ...prevState,
-        personnelInfo: [] // personnelInfo를 빈 배열로 초기화
-      }));
+
+ 
+    setCodeFileList : (newState) =>{
+      set(() => ({   codeFileList : newState }));
     },
+ 
+
+    setPdfFileList:(newState)=>{
+      set(() => ({  pdfFileList : newState }));
+    },
+
  
   },
 }));
@@ -97,8 +107,7 @@ export const useMaxPersonnelState= () =>useEditorRoomInfoStore ((state) => state
 export const usePersonnelInfoState= () =>useEditorRoomInfoStore ((state) => state.personnelInfo)
 export const useModeState= () =>useEditorRoomInfoStore ((state) => state.mode)
 export const useCodeFileListState= () =>useEditorRoomInfoStore ((state) => state.codeFileList)
-
-
+export const useTemplateState= () =>useEditorRoomInfoStore ((state) => state.template)
 
 
 

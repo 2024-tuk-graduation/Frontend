@@ -9,6 +9,7 @@ type SelectButtonProps = {
 };
 const SelectButton = ({ img, title }: SelectButtonProps) => {
   const { setModalOpen } = useModalActions();
+
   const navigate = useNavigate();
 
   const handleOpen = () => {

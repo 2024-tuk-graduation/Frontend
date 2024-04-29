@@ -1,22 +1,30 @@
-import { useCodeFileListState, useModeState } from "@/store/editorRoomInfoStore";
+import { useCodeFileListState, useModeState, useTemplateState } from "@/store/editorRoomInfoStore";
 import React, { ReactNode } from "react";
 import CodeEditor from "./Code/CodeEditor";
 import CodeFileItem from "./Code/CodeFileItem";
+import template1 from "@/assets/images/template/template1.png";
+import template2 from "@/assets/images/template/template2.png";
+import template3 from "@/assets/images/template/template3.png";
+import template4 from "@/assets/images/template/template4.png";
 import template5 from "@/assets/images/template/template5.png";
+import template6 from "@/assets/images/template/template6.png";
 
 const ModeEditor = () => {
+  const templateCount = useTemplateState();
   const mode = useModeState();
   const codeFileList = useCodeFileListState();
+  const templates = [template1, template2, template3, template4, template5, template6]; // 예시 이미지 경로 배열
+
   return (
     <div className="mode-editor-container">
       {mode === "blank" ? (
         <div className="blank-container">
-          <img src={template5} alt="빈화면" />
+          <img src={templates[templateCount - 1]} alt="빈화면" />
         </div>
       ) : mode === "code" ? (
         <div>
           {codeFileList.map((i) => (
-            <CodeFileItem key={i.fileName} fileName={i.fileName} />
+            <CodeFileItem key={i} fileName={i} />
           ))}
           <CodeEditor />{" "}
         </div>

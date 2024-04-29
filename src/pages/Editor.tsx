@@ -1,7 +1,6 @@
 import React from "react";
 import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
-import codeIcon from "@/assets/images/code2.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
 import { useEditorMenuActions } from "@/store/editorMenuStore";
@@ -14,10 +13,48 @@ import WhiteBoard from "@/components/Editor/WhiteBoard";
 import { Navbar, QandA } from "@/components";
 import SearchSection from "@/components/Editor/SearchSection";
 import { useHeightState } from "@/store/editorSection";
+import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
+import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
+import { useQuery } from "@tanstack/react-query";
 
 const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
   const height = useHeightState();
+  const entranceCode = useEntranceCodeState();
+  const {
+    setPersonnelInfo,
+    setCurrentPersonnel,
+    setPdfFileList,
+    setCodeFileList,
+    setHost,
+    setMaxPersonnel,
+    setRoomName,
+    setTemplate,
+  } = useEditorRoomInfoActions();
+
+  const { isLoading, data, isError } = useQuery({
+    queryKey: ["roomInfo"],
+    queryFn: () => editorRoomInfoApi(entranceCode),
+  });
+
+  if (data) {
+    const newData = data.data.data;
+
+    setHost(newData.hostNickname);
+    setMaxPersonnel(newData.personnelCount);
+    setCurrentPersonnel(newData.participantNicknames.length);
+    setRoomName(newData.roomName);
+    setTemplate(newData.template);
+    setPersonnelInfo(newData.participantNicknames);
+
+    if (newData.pdfUrls) {
+      setPdfFileList(newData.pdfUrls);
+    }
+    if (newData.codeUrls) {
+      setCodeFileList(newData.codeUrls);
+    }
+  }
+
   return (
     <WebSocketConnnect>
       <div className="container editor">
@@ -52,22 +89,6 @@ const Editor = () => {
               <Personnel />
             </div>
           </div>
-
-          {/* <div className="editor-detail-container">
-            <div className="edit-area">
-              <Compile />
-              <EditorRoundButton handleClick={setCompileMenu} img={codeIcon} title={"code"} />
-              <EditorRoundButton handleClick={() => setPersonMenu("chat")} img={chatIcon} title={"chat"} />
-              <EditorRoundButton
-                handleClick={() => setPersonMenu("personnel")}
-                img={personnelIcon}
-                title={"personnel"}
-              />{" "}
-              <CodeEditor />
-            </div>
-            <Chat />
-            <Personnel />
-          </div> */}
         </div>
       </div>
     </WebSocketConnnect>
