@@ -32,10 +32,8 @@ const Login: React.FC = () => {
       await axios.post(
         serverURL,
         {
-          username: "1",
-          password: "1",
-          // username: username,
-          // password: password,
+          username: username,
+          password: password,
         },
         { withCredentials: true }
       );
