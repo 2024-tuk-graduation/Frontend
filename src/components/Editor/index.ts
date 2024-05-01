@@ -6,7 +6,7 @@ import Personnel from "./Personnel/Personnel";
 import EditorRoundButton from "./EditorRoundButton";
 import Memo from "./Memo";
 import Menubar from "./PersonMenubar";
-import Palette from "./Palette";
+import Palette from "./Palatte/Palette";
 import TitleBar from "./TitleBar";
 import  CodeFileItem from "./Code/CodeFileItem"
 import DefaultMenubar from"./DefaultMenubar"

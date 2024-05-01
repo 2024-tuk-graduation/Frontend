@@ -7,8 +7,11 @@
   border-radius: 2rem;
   display: flex;
   padding: 0.5rem;
-
+  &.template-selected {
+    border: 2px solid lighten($navy, 30%);
+  }
   img {
+    border-radius: 50%;
     width: 2rem;
     height: 2rem;
   }
