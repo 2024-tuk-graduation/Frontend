@@ -7,8 +7,11 @@ const SignUp: React.FC = () => {
   const [nickname, setNickname] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [file, setFile] = useState<File>(); // 파일 상태 변경
+  const [file, setFile] = useState<File | null>(null); // 파일 상태 변경
+  const [showDefaultProfile, setShowDefaultProfile] = useState<boolean>(false); // 기본 프로필 보여주는 상태
+  const [inputKey, setInputKey] = useState(Date.now());
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 변경
+
 
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/signup`;
 
@@ -16,7 +19,19 @@ const SignUp: React.FC = () => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
       setFile(selectedFile); // 파일 상태 업데이트
+      setShowDefaultProfile(false); // 기본 프로필 보여주는 상태 업데이트
+      console.log("file", file);
+      console.log("handleProfileImageChange 함수 실행");
     }
+  };
+
+  const handleDefaultProfile = () => {
+    setFile(null); // 파일 상태 업데이트
+    // setFile(null)이 잘 작동 되는지 확인
+    // console.log("file", file);
+    setInputKey(Date.now());
+    console.log("handleDefaultProfile 함수 실행");
+    setShowDefaultProfile(true); // 기본 프로필 상태 업데이트
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,13 +69,6 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    // 이미지 파일이 선택되었는지 확인
-    // TODO : 이미지 파일이 선택되지 않았을 때의 처리 추가 ( default 이미지로 보내주기 )
-    if (!file) {
-      setErrorMessage("파일이 선택되지 않았습니다.");
-      return;
-    }
-
     /*
      *   post 요청
      */
@@ -76,7 +84,13 @@ const SignUp: React.FC = () => {
       const formData = new FormData();
 
       // 이미지 파일 추가
-      formData.append("part", file, file.name);
+      if (file) {
+        formData.append("part", file, file.name);
+        console.log("파일 전송");
+      } else {
+        console.log("기본 프로필 이미지 전송");
+        console.log("file", file);
+      }
 
       // 회원가입 요청에 필요한 JSON 데이터 추가
       const jsonStr = JSON.stringify(UserObject);
@@ -93,7 +107,7 @@ const SignUp: React.FC = () => {
       console.log("회원가입 성공:", response);
       alert("회원가입 성공");
       // 회원가입 성공 후 작업
-      window.location.href = "/login";
+      // window.location.href = "/login";
     } catch (error) {
       console.error("회원가입 실패:", error);
       // 회원가입 실패 시 오류 처리
@@ -111,14 +125,27 @@ const SignUp: React.FC = () => {
             <p className="signup-text">Sign Up</p>
           </div>
           <div className="profile-container">
-            <img src={file ? URL.createObjectURL(file) : defaultProfile} alt="Profile" className="profile-image" />
-
+            <img
+              src={showDefaultProfile ? defaultProfile : file ? URL.createObjectURL(file) : defaultProfile}
+              alt="Profile"
+              className="profile-image"
+            />
             <div className="profile-button">
-              <button className="default-button">기본 프로필 선택</button>
+              <button className="default-button" type="button" onClick={handleDefaultProfile}>
+                기본 프로필 선택
+              </button>
               <label htmlFor="file">
                 <div className="upload-button">프로필 등록하기</div>
               </label>
-              <input type="file" name="file" id="file" accept="image/*" onChange={handleProfileImageChange}></input>
+              {/* <input type="file" name="file" id="file" accept="image/*" onChange={handleProfileImageChange}></input> */}
+              <input
+                type="file"
+                name="file"
+                id="file"
+                accept="image/*"
+                key={inputKey}
+                onChange={handleProfileImageChange}
+              ></input>
             </div>
           </div>
           <input
