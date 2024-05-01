@@ -32,8 +32,10 @@ const Login: React.FC = () => {
       await axios.post(
         serverURL,
         {
-          username: username,
-          password: password,
+          username: "1",
+          password: "1",
+          // username: username,
+          // password: password,
         },
         { withCredentials: true }
       );
@@ -57,13 +59,11 @@ const Login: React.FC = () => {
   return (
     <div className="bg-container">
       <div className="container">
-
         {/* 로고 및 이미지 */}
         <div className="login-container">
           <div className="logo-container">
             <img src={bg} alt="sign_bg" />
           </div>
-
         </div>
 
         {/* 로그인 Form */}

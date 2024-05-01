@@ -53,6 +53,7 @@ const Editor = () => {
     if (newData.codeUrls) {
       setCodeFileList(newData.codeUrls);
     }
+    console.log(newData);
   }
 
   return (

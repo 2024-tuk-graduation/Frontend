@@ -66,12 +66,17 @@ const SignUp: React.FC = () => {
      */
     try {
       // 회원가입 요청 시에 JSON으로 전송할 객체 생성
-      const UserObject = {
-        nickname: nickname,
-        username: username,
-        password: password,
-      };
+      // const UserObject = {
+      //   nickname: nickname,
+      //   username: username,
+      //   password: password,
+      // };
 
+      const UserObject = {
+        nickname: "1",
+        username: "1",
+        password: "1",
+      };
       // FormData 객체 생성
       const formData = new FormData();
 
