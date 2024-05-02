@@ -1,7 +1,47 @@
 .record-container {
-  width: 6rem;
+  width: 12rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-around;
   border-right: solid 0.5px $gray;
+}
+.recording-img {
+  animation: blink 1s linear infinite;
+  width: 2rem;
+}
+.recording-time {
+  font-size: 1.4rem;
+}
+
+.notRecord-container {
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
+  img {
+    width: 2.3rem;
+  }
+  p {
+    font-size: 2rem;
+  }
+}
+
+.record-stop-img-container {
+  width: 2.6rem;
+
+  cursor: pointer;
+
+  img {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
