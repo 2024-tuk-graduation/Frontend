@@ -1,10 +1,60 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import recordImg from "@/assets/images/record.svg";
+
 const Record = () => {
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorderRef = useRef(null);
+
+  // 녹화된 미디어 데이터를 임시 저장 . 녹화가 종료되면 이 배열의 데이터를 사용하여 비디오 파일을 생성
+  let data: BlobPart[] = [];
+  const startRecording = async () => {
+    const videoStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const combinedStream = new MediaStream([...videoStream.getTracks(), ...audioStream.getTracks()]);
+    // 스트림 트랙에 onended 이벤트 핸들러 추가
+
+    combinedStream.getTracks().forEach((track) => {
+      track.onended = () => {
+        stopRecording(); // 스트림 종료 감지 시 녹화 중지 처리
+      };
+    });
+
+    const recorder = new MediaRecorder(combinedStream);
+
+    recorder.ondataavailable = (e) => data.push(e.data);
+    recorder.onstop = () => {
+      const completeBlob = new Blob(data, { type: "video/webm" });
+      const videoURL = URL.createObjectURL(completeBlob);
+
+      const a = document.createElement("a");
+      a.href = videoURL;
+      a.download = "recorded-video.webm";
+      a.click();
+
+      data = [];
+    };
+
+    recorder.start();
+    mediaRecorderRef.current = recorder;
+    setIsRecording(true);
+  };
+  const stopRecording = () => {
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      setIsRecording(false);
+    }
+  };
+
   return (
-    <div className="record-container">
-      <img src={recordImg} alt="녹화하기" />
-    </div>
+    <>
+      <div className="record-container" onClick={startRecording}>
+        <img className={isRecording ? "blinking" : ""} src={recordImg} alt="녹화하기" />
+      </div>
+      <div onClick={stopRecording} style={{ cursor: "pointer" }}>
+        {" "}
+        멈추기
+      </div>
+    </>
   );
 };
 
