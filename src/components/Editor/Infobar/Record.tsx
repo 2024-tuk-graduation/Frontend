@@ -10,39 +10,41 @@ const Record = () => {
   // 녹화된 미디어 데이터를 임시 저장 . 녹화가 종료되면 이 배열의 데이터를 사용하여 비디오 파일을 생성
   let data: BlobPart[] = [];
   const startRecording = async () => {
-    const videoStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
-    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const combinedStream = new MediaStream([...videoStream.getTracks(), ...audioStream.getTracks()]);
-    // 스트림 트랙에 onended 이벤트 핸들러 추가
+    if (!isRecording) {
+      const videoStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const combinedStream = new MediaStream([...videoStream.getTracks(), ...audioStream.getTracks()]);
+      // 스트림 트랙에 onended 이벤트 핸들러 추가
 
-    combinedStream.getTracks().forEach((track) => {
-      track.onended = () => {
-        stopRecording(); // 스트림 종료 감지 시 녹화 중지 처리
+      combinedStream.getTracks().forEach((track) => {
+        track.onended = () => {
+          stopRecording(); // 스트림 종료 감지 시 녹화 중지 처리
+        };
+      });
+
+      const recorder = new MediaRecorder(combinedStream);
+
+      recorder.ondataavailable = (e) => data.push(e.data);
+      recorder.onstop = () => {
+        const completeBlob = new Blob(data, { type: "video/webm" });
+        const videoURL = URL.createObjectURL(completeBlob);
+
+        const a = document.createElement("a");
+        a.href = videoURL;
+        a.download = "recorded-video.webm";
+        a.click();
+
+        data = [];
       };
-    });
 
-    const recorder = new MediaRecorder(combinedStream);
+      recorder.start();
+      mediaRecorderRef.current = recorder;
+      setIsRecording(true);
 
-    recorder.ondataavailable = (e) => data.push(e.data);
-    recorder.onstop = () => {
-      const completeBlob = new Blob(data, { type: "video/webm" });
-      const videoURL = URL.createObjectURL(completeBlob);
-
-      const a = document.createElement("a");
-      a.href = videoURL;
-      a.download = "recorded-video.webm";
-      a.click();
-
-      data = [];
-    };
-
-    recorder.start();
-    mediaRecorderRef.current = recorder;
-    setIsRecording(true);
-
-    timeIntervalRef.current = setInterval(() => {
-      setTime((prev) => prev + 1);
-    }, 1000); // 매초마다 타이머 업데이트
+      timeIntervalRef.current = setInterval(() => {
+        setTime((prev) => prev + 1);
+      }, 1000); // 매초마다 타이머 업데이트
+    }
   };
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
@@ -60,8 +62,8 @@ const Record = () => {
   };
 
   return (
-    <div className="record-container" onClick={startRecording}>
-      <div className={isRecording ? "" : "notRecord-container"}>
+    <div className="record-container">
+      <div className={isRecording ? "" : "notRecord-container"} onClick={startRecording}>
         <img className={isRecording ? "recording-img" : ""} src={recordImg} alt="녹화하기" />
         <p className={isRecording ? "recording-time" : ""}>{isRecording ? `${formatTime(time)}` : "rec"}</p>
       </div>
