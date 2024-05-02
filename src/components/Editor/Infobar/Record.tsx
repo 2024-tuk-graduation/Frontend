@@ -4,6 +4,8 @@ import recordImg from "@/assets/images/record.svg";
 const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
+  const [time, setTime] = useState(0);
+  const timeIntervalRef = useRef(null);
 
   // 녹화된 미디어 데이터를 임시 저장 . 녹화가 종료되면 이 배열의 데이터를 사용하여 비디오 파일을 생성
   let data: BlobPart[] = [];
@@ -37,12 +39,24 @@ const Record = () => {
     recorder.start();
     mediaRecorderRef.current = recorder;
     setIsRecording(true);
+
+    timeIntervalRef.current = setInterval(() => {
+      setTime((prev) => prev + 1);
+    }, 1000); // 매초마다 타이머 업데이트
   };
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
+      clearInterval(timeIntervalRef.current);
+      setTime(0);
     }
+  };
+
+  const formatTime = (seconds) => {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${min}:${sec < 10 ? "0" + sec : sec}`;
   };
 
   return (
@@ -54,6 +68,7 @@ const Record = () => {
         {" "}
         멈추기
       </div>
+      {isRecording && <p>Recording Time: {formatTime(time)}</p>}
     </>
   );
 };
