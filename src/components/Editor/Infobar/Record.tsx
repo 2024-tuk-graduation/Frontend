@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import recordImg from "@/assets/images/record.svg";
-
+import recordStopImg from "@/assets/images/recordStop.svg";
 const Record = () => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorderRef = useRef(null);
@@ -60,16 +60,17 @@ const Record = () => {
   };
 
   return (
-    <>
-      <div className="record-container" onClick={startRecording}>
-        <img className={isRecording ? "blinking" : ""} src={recordImg} alt="녹화하기" />
+    <div className="record-container" onClick={startRecording}>
+      <div className={isRecording ? "" : "notRecord-container"}>
+        <img className={isRecording ? "recording-img" : ""} src={recordImg} alt="녹화하기" />
+        <p className={isRecording ? "recording-time" : ""}>{isRecording ? `${formatTime(time)}` : "rec"}</p>
       </div>
-      <div onClick={stopRecording} style={{ cursor: "pointer" }}>
-        {" "}
-        멈추기
-      </div>
-      {isRecording && <p>Recording Time: {formatTime(time)}</p>}
-    </>
+      {isRecording && (
+        <div className="record-stop-img-container" onClick={stopRecording} style={{ cursor: "pointer" }}>
+          <img src={recordStopImg} alt="녹화종료" />
+        </div>
+      )}
+    </div>
   );
 };
 
