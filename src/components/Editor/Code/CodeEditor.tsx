@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
-import { useHostState } from "@/store/editorRoomInfoStore";
+import { useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
 import { WebSocketContext } from "@/context/WebSocketConnect";
 import { toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
+
 const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
   const host = useHostState();
+  const selectedLanguage = useLanguageState();
   const [edit, setEdit] = useState(true); // 이 상태에 따라 에디터가 읽기 전용인지 결정
   const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
 
@@ -66,7 +68,8 @@ const CodeEditor = () => {
         theme="theme"
         height="50rem"
         width="100%"
-        language="python"
+        // language="python"
+        language={selectedLanguage}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
         defaultValue="#코드를 입력해주세용용용용"

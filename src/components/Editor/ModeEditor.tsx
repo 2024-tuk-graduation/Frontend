@@ -17,9 +17,9 @@ const ModeEditor = () => {
         </div>
       ) : mode === "code" ? (
         <div>
-          {codeFileList.map((i) => (
+          {/* {codeFileList.map((i) => (
             <CodeFileItem key={i} fileName={i} />
-          ))}
+          ))} */}
           <CodeEditor />{" "}
         </div>
       ) : (
