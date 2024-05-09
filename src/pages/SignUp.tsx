@@ -12,7 +12,6 @@ const SignUp: React.FC = () => {
   const [inputKey, setInputKey] = useState(Date.now());
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지 상태 변경
 
-
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/member/signup`;
 
   const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +106,7 @@ const SignUp: React.FC = () => {
       console.log("회원가입 성공:", response);
       alert("회원가입 성공");
       // 회원가입 성공 후 작업
-      // window.location.href = "/login";
+      window.location.href = "/login";
     } catch (error) {
       console.error("회원가입 실패:", error);
       // 회원가입 실패 시 오류 처리

@@ -5,7 +5,6 @@ import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
 import { useEditorMenuActions } from "@/store/editorMenuStore";
 import Chat from "@/components/Editor/Chat/Chat";
-import Personnel from "@/components/Editor/Personnel/Personnel";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
@@ -30,6 +29,7 @@ const Editor = () => {
     setMaxPersonnel,
     setRoomName,
     setTemplate,
+    setRoomId,
   } = useEditorRoomInfoActions();
 
   const { isLoading, data, isError } = useQuery({
@@ -46,7 +46,7 @@ const Editor = () => {
     setRoomName(newData.roomName);
     setTemplate(newData.template);
     setPersonnelInfo(newData.participantNicknames);
-
+    setRoomId(newData.roomId);
     if (newData.pdfUrls) {
       setPdfFileList(newData.pdfUrls);
     }
@@ -87,7 +87,6 @@ const Editor = () => {
             </div>
             <div>
               <Chat />
-              <Personnel />
             </div>
           </div>
         </div>
