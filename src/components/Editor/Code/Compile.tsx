@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 import { DefaultMenubar } from "..";
 import { useLanguageState } from "@/store/editorRoomInfoStore";
-import { useCodeState } from "@/store/compile";
+import { useCodeState, useCompileActions, useInputState } from "@/store/compile";
 
 const Compile: React.FC = () => {
   const [compileResult, setCompileResult] = useState(""); // 컴파일 결과를 저장할 상태
-
+  const input = useInputState();
   const language = useLanguageState();
   const code = useCodeState();
+  const { setInput } = useCompileActions();
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/codes`;
 
   const compileLanguage: { [key: string]: string } = {
-    python: "python3",
-    javascript: "nodejs",
+    py: "python3",
+    js: "nodejs",
     c: "c",
   };
 
@@ -23,13 +24,11 @@ const Compile: React.FC = () => {
       language: compileLanguage[language],
       version: "latest",
       code: code,
-      input: null,
+      input: input === "" ? null : input,
     };
 
-    console.log(CompileData, "들어갈 데이터");
     try {
       const response = await axios.post(serverURL, CompileData);
-      console.log("컴파일 성공", response.data);
       setCompileResult(response.data.data.output);
     } catch (error) {
       console.error("컴파일 실패", error);
@@ -41,8 +40,15 @@ const Compile: React.FC = () => {
       {" "}
       <DefaultMenubar title="컴파일" />
       <div>
-        {/* <p>현재 언어 : {selectedLanguage}</p> */}
+        <p>현재 언어 : {language}</p>
+        <input
+          onChange={(e) => setInput(e.target.value)}
+          value={input}
+          style={{ width: "10rem", height: "5rem", backgroundColor: "#fad3fadd" }}
+          type="text"
+        />
         <pre className="compile-result">{compileResult}</pre>
+
         <button className="compile-button" onClick={handleCompile}>
           RUN CODE
         </button>

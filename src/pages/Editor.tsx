@@ -48,6 +48,7 @@ const Editor = () => {
     setTemplate(newData.template);
     setPersonnelInfo(newData.participantNicknames);
     setLanguage(newData.language);
+
     if (newData.pdfUrls) {
       setPdfFileList(newData.pdfUrls);
     }

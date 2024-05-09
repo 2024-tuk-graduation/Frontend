@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Mode } from "@/types/Mode";
+import { Mode} from "@/types/Mode";
 
 interface useEditorRoomInfoStoreType {
   entranceCode: string;
@@ -33,7 +33,7 @@ interface useEditorRoomInfoStoreType {
 const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
   entranceCode: "",
   host: "",
-  language: "python",
+  language: "py",
   roomName: "RoomName",
   maxPersonnel: 6,
   currentPersonnel: 1,
