@@ -29,7 +29,7 @@ const Login: React.FC = () => {
     }
 
     try {
-      await axios.post(
+      const response = await axios.post(
         serverURL,
         {
           username: username,
@@ -37,10 +37,12 @@ const Login: React.FC = () => {
         },
         { withCredentials: true }
       );
-
+      const UserName = response.data.data.nickname;
+      console.log(response);
       alert("로그인 성공");
       window.location.href = "/selectRoom";
-      setCookie("rememberId", String(username), { path: "/" });
+
+      setCookie("rememberId", String(UserName), { path: "/" });
     } catch (error) {
       console.error("로그인 실패!!:", error);
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
