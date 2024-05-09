@@ -1,9 +1,8 @@
 import { create } from "zustand";
-import { Mode } from "@/types/Mode";
-
-
+import { Mode} from "@/types/Mode";
 
 interface useEditorRoomInfoStoreType {
+
   entranceCode:string,
   host:string,
   language:string,
@@ -32,16 +31,14 @@ interface useEditorRoomInfoStoreType {
     setRoomId:(newState:number)=>void;
     setTemplate:(newState : number) => void;
   
-
   }
 }
-
 
  const useEditorRoomInfoStore = create< useEditorRoomInfoStoreType>((set) => ({
   entranceCode:"",
   host:"",
   roomId:0,
-  language:"",
+  language: "py",
   roomName:"RoomName",
   maxPersonnel:6,
   currentPersonnel:1,
@@ -50,55 +47,56 @@ interface useEditorRoomInfoStoreType {
   mode:"blank",
   template:1,
   codeFileList : ["example1.py"],
+  
+   
+   
   actions : { 
-
     setTemplate: (newState) => {
-      set(() => ({   template: newState }));
+      set(() => ({ template: newState }));
     },
     setEntranceCode: (newState) => {
-      set(() => ({ entranceCode : newState }));
+      set(() => ({ entranceCode: newState }));
     },
     setHost: (newState) => {
-      set(() => ({  host : newState }));
+      set(() => ({ host: newState }));
     },
     setLanguage: (newState) => {
-      set(() => ({  language : newState }));
+      set(() => ({ language: newState }));
     },
     setRoomName: (newState) => {
-      set(() => ({  roomName : newState }));
+      set(() => ({ roomName: newState }));
     },
-    setCurrentPersonnel : (newState) => {
-      set(() => ({  currentPersonnel : newState }));
-    },
-
-    setMaxPersonnel : (newState) => {
-      set(() => ({  maxPersonnel: newState }));
-    },
-    setPersonnelInfo : (newState) =>{
-      set(() => ({   personnelInfo : newState }));
+    setCurrentPersonnel: (newState) => {
+      set(() => ({ currentPersonnel: newState }));
     },
 
+    setMaxPersonnel: (newState) => {
+      set(() => ({ maxPersonnel: newState }));
+    },
+    setPersonnelInfo: (newState) => {
+      set(() => ({ personnelInfo: newState }));
+    },
 
     setMode: (newState) => {
-      set(() => ({  mode : newState }));
+      set(() => ({ mode: newState }));
     },
 
-
- 
-    setCodeFileList : (newState) =>{
-      set(() => ({   codeFileList : newState }));
+    setCodeFileList: (newState) => {
+      set(() => ({ codeFileList: newState }));
     },
- 
-
-    setPdfFileList:(newState)=>{
-      set(() => ({  pdfFileList : newState }));
-    },
-    setRoomId : (newState) =>{
+      
+     setRoomId : (newState) =>{
       set(() => ({  roomId : newState }));
     }
- 
+
+    setPdfFileList: (newState) => {
+      set(() => ({ pdfFileList: newState }));
+    },
   },
 }));
+
+
+ 
 
 
  
@@ -116,3 +114,4 @@ export const useRoomId =()=>useEditorRoomInfoStore ((state)=>state.roomId)
 
 
 export const  useEditorRoomInfoActions = () => useEditorRoomInfoStore ((state) => state.actions)
+

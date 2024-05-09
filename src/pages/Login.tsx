@@ -40,8 +40,9 @@ const Login: React.FC = () => {
       const UserName = response.data.data.nickname;
       console.log(response);
       alert("로그인 성공");
-      window.location.href = "/selectRoom";
+      const UserName = response.data.data.nickname;
 
+      window.location.href = "/selectRoom";
       setCookie("rememberId", String(UserName), { path: "/" });
     } catch (error) {
       console.error("로그인 실패!!:", error);

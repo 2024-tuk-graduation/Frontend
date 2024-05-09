@@ -1,88 +1,81 @@
 import { create } from "zustand";
 
-
-
-
-
 interface Code {
   language: string;
   urls: File[];
 }
 
-
-interface  roomDataType {
+interface roomDataType {
   personnelCount: number;
   roomName: string;
   template: number;
-  pdfUrls :File[];
+  pdfUrls: File[];
   codeUrls: Code;
 }
 
 interface createRoomStoreType {
-  roomData: roomDataType,
-  actions : {
+  roomData: roomDataType;
+  actions: {
     increasePersonnal: () => void;
     decreasePersonnal: () => void;
     setCreateRoomName: (newName: string) => void;
     setBlankTemplate: (template: number) => void;
     setCodeLanguage: (newLanguage: string) => void;
     addPdfFiles: (newFiles: File) => void;
-    removePdfFile: (fileToRemove:File) => void;
+    removePdfFile: (fileToRemove: File) => void;
     addCodeFiles: (newFiles: File) => void;
     removeCodeFile: (fileToRemove: File) => void;
-    resetCodeFile:()=>void;
-  }
+    resetCodeFile: () => void;
+  };
 }
 
-
- const useCreateRoomStore = create<createRoomStoreType >((set) => ({
+const useCreateRoomStore = create<createRoomStoreType>((set) => ({
   roomData: {
-    personnelCount:1, 
-    roomName:"",
+    personnelCount: 1,
+    roomName: "",
     template: 1,
-    pdfUrls : [],
+    pdfUrls: [],
     codeUrls: {
-      language : "py",
-      urls : [],
-    }
+      language: "py",
+      urls: [],
+    },
   },
 
-  actions : { 
+  actions: {
     increasePersonnal: () => {
-      set((prev) => ({  roomData :{...prev.roomData , personnelCount : prev.roomData.personnelCount+1}} ));
+      set((prev) => ({ roomData: { ...prev.roomData, personnelCount: prev.roomData.personnelCount + 1 } }));
     },
     decreasePersonnal: () => {
-      set((prev) => ({  roomData :{...prev.roomData , personnelCount : prev.roomData.personnelCount-1}} ));
+      set((prev) => ({ roomData: { ...prev.roomData, personnelCount: prev.roomData.personnelCount - 1 } }));
     },
 
     setCreateRoomName: (newName: string) => {
       set((prev) => ({ roomData: { ...prev.roomData, roomName: newName } }));
     },
-    
+
     setBlankTemplate: (template: number) => {
-      set((prev) => ({ roomData: { ...prev.roomData, template :template} }));
+      set((prev) => ({ roomData: { ...prev.roomData, template: template } }));
     },
     setCodeLanguage: (newLanguage: string) => {
       set((state) => ({
-        roomData: { ...state.roomData, codeUrls: { ...state.roomData.codeUrls, language :newLanguage } },
+        roomData: { ...state.roomData, codeUrls: { ...state.roomData.codeUrls, language: newLanguage } },
       }));
     },
 
-    addPdfFiles: (newFiles:File) => {
+    addPdfFiles: (newFiles: File) => {
       set((state) => ({
         roomData: {
           ...state.roomData,
-          pdfUrls: [... state.roomData.pdfUrls, newFiles] 
-          },
-        }
-      ));
+          pdfUrls: [...state.roomData.pdfUrls, newFiles],
+        },
+      }));
     },
 
-    removePdfFile: (fileToRemove:File) => {
+    removePdfFile: (fileToRemove: File) => {
       set((state) => ({
         roomData: {
           ...state.roomData,
-          pdfUrls: state.roomData.pdfUrls?.filter(file => file !== fileToRemove) 
+          pdfUrls: state.roomData.pdfUrls?.filter((file) => file !== fileToRemove),
         },
       }));
     },
@@ -93,42 +86,39 @@ interface createRoomStoreType {
           ...state.roomData,
           codeUrls: {
             ...state.roomData.codeUrls,
-            urls: [... state.roomData.codeUrls.urls, newFiles] 
+            urls: [...state.roomData.codeUrls.urls, newFiles],
           },
         },
       }));
     },
 
-    removeCodeFile: (fileToRemove:File) => {
+    removeCodeFile: (fileToRemove: File) => {
       set((state) => ({
         roomData: {
           ...state.roomData,
           codeUrls: {
             ...state.roomData.codeUrls,
-            urls: state.roomData.codeUrls.urls?.filter(file => file !== fileToRemove) 
+            urls: state.roomData.codeUrls.urls?.filter((file) => file !== fileToRemove),
           },
         },
       }));
     },
 
-    resetCodeFile : () =>{
+    resetCodeFile: () => {
       set((state) => ({
         roomData: {
           ...state.roomData,
           codeUrls: {
             ...state.roomData.codeUrls,
-            urls: [] 
+            urls: [],
           },
         },
       }));
-    }
-    
+    },
   },
 }));
 
-
-export const useCreateRoomDataState= () => useCreateRoomStore ((state) => state.roomData)
-
+export const useCreateRoomDataState = () => useCreateRoomStore((state) => state.roomData);
 
 // 🎉  모든 action을 위한 하나의 selector
-export const  useCreateRoomDataActions = () => useCreateRoomStore ((state) => state.actions)
+export const useCreateRoomDataActions = () => useCreateRoomStore((state) => state.actions);

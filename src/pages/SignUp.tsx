@@ -47,30 +47,28 @@ const SignUp: React.FC = () => {
       return;
     }
 
-    // 닉네임 유효성 검사
-    const nicknameRegex = /^[a-zA-Z가-힣0-9]{2,8}$/;
-    if (!nicknameRegex.test(nickname)) {
-      setErrorMessage("닉네임은 영문, 한글, 숫자로 구성된 2~8글자여야 합니다.");
-      return;
-    }
+    // // 닉네임 유효성 검사
+    // const nicknameRegex = /^[a-zA-Z가-힣0-9]{2,8}$/;
+    // if (!nicknameRegex.test(nickname)) {
+    //   setErrorMessage("닉네임은 영문, 한글, 숫자로 구성된 2~8글자여야 합니다.");
+    //   return;
+    // }
 
-    // 아이디 유효성 검사
-    const usernameRegex = /^[a-zA-Z0-9]{4,12}$/;
-    if (!usernameRegex.test(username)) {
-      setErrorMessage("아이디는 영문 대/소문자, 숫자로 구성된 4~12글자여야 합니다.");
-      return;
-    }
+    // // 아이디 유효성 검사
+    // const usernameRegex = /^[a-zA-Z0-9]{4,12}$/;
+    // if (!usernameRegex.test(username)) {
+    //   setErrorMessage("아이디는 영문 대/소문자, 숫자로 구성된 4~12글자여야 합니다.");
+    //   return;
+    // }
 
-    // 비밀번호 유효성 검사
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
-    if (!passwordRegex.test(password)) {
-      setErrorMessage("비밀번호는 영문 대/소문자, 숫자, 특수문자(@$!%*?&)로 구성된 8~16글자여야 합니다.");
-      return;
-    }
+    // // 비밀번호 유효성 검사
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+    // if (!passwordRegex.test(password)) {
+    //   setErrorMessage("비밀번호는 영문 대/소문자, 숫자, 특수문자(@$!%*?&)로 구성된 8~16글자여야 합니다.");
+    //   return;
+    // }
 
-    /*
-     *   post 요청
-     */
+    // post 요청
     try {
       // 회원가입 요청 시에 JSON으로 전송할 객체 생성
       const UserObject = {

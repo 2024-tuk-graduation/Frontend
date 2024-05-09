@@ -28,6 +28,7 @@ const Editor = () => {
     setHost,
     setMaxPersonnel,
     setRoomName,
+    setLanguage,
     setTemplate,
     setRoomId,
   } = useEditorRoomInfoActions();
@@ -46,7 +47,9 @@ const Editor = () => {
     setRoomName(newData.roomName);
     setTemplate(newData.template);
     setPersonnelInfo(newData.participantNicknames);
-    setRoomId(newData.roomId);
+
+    setLanguage(newData.language);
+            setRoomId(newData.roomId);
     if (newData.pdfUrls) {
       setPdfFileList(newData.pdfUrls);
     }
