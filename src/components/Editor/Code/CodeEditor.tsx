@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { useLocation } from "react-router-dom";
 import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
+import { useCompileActions } from "@/store/compile";
 
 const CodeEditor = () => {
   const monaco = useMonaco();
@@ -16,11 +17,13 @@ const CodeEditor = () => {
   const [edit, setEdit] = useState(true); // 이 상태에 따라 에디터가 읽기 전용인지 결정
   const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
 
+  const { setCode } = useCompileActions();
   const handleEditorChange = (value, event) => {
     if (host === String(cookies.rememberId)) {
       stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
       console.log("코드 전송");
     }
+    setCode(value);
   };
 
   const handleEditorDidMount = (editor, monaco) => {
@@ -68,7 +71,6 @@ const CodeEditor = () => {
         theme="theme"
         height="50rem"
         width="100%"
-        // language="python"
         language={selectedLanguage}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}

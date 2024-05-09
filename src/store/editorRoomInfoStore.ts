@@ -33,7 +33,7 @@ interface useEditorRoomInfoStoreType {
 const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
   entranceCode: "",
   host: "",
-  language: "",
+  language: "python",
   roomName: "RoomName",
   maxPersonnel: 6,
   currentPersonnel: 1,
