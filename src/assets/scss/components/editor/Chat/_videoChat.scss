@@ -1,0 +1,11 @@
+.video-container {
+  height: 100%;
+  width: $menu;
+
+  video {
+    width: $menu;
+    background-color: black;
+    height: 20rem;
+    object-fit: cover;
+  }
+}

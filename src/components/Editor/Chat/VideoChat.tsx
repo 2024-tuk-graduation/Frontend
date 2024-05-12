@@ -1,14 +1,23 @@
 import { WebSocketContext } from "@/context/WebSocketConnect";
-import { useEditorRoomInfoActions, useHostState, useRoomId } from "@/store/editorRoomInfoStore";
-import React, { useEffect, useRef, useContext } from "react";
+import {
+  useCurrentPersonnelState,
+  useEditorRoomInfoActions,
+  useHostState,
+  useMaxPersonnelState,
+  useRoomId,
+} from "@/store/editorRoomInfoStore";
+import React, { useEffect, useRef, useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 
-const Chat = () => {
+const VideoChat = () => {
   const host = useHostState();
   const [cookies] = useCookies(["rememberId"]);
   const roomId = useRoomId();
-
-  // 자신의 비디오
+  const [cameraOff, setCameraOff] = useState(false);
+  const [mute, setMute] = useState(false);
+  const curentPersonnel = useCurrentPersonnelState();
+  const maxPersonnel = useMaxPersonnelState();
+  // 자신의 비디오 // HTMLVideoElement
   const myVideoRef = useRef<HTMLVideoElement>(null);
   // 다른사람의 비디오
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -17,6 +26,7 @@ const Chat = () => {
 
   const { setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
 
+  const streamRef = useRef<MediaStream>();
   // peerConnection
   const peerRef = useRef<RTCPeerConnection>();
 
@@ -46,17 +56,13 @@ const Chat = () => {
         audio: true,
       });
 
+      streamRef.current = stream;
       if (myVideoRef.current) {
         myVideoRef.current.srcObject = stream;
       }
 
       // 스트림을 peerConnection에 등록
-      stream.getTracks().forEach((track) => {
-        if (!peerRef.current) {
-          return;
-        }
-        peerRef.current.addTrack(track, stream);
-      });
+      stream.getTracks().forEach((track) => peerRef.current?.addTrack(track, stream));
 
       // 상대방으로부터 전송된 미디어 트랙을 수신
       peerRef.current.ontrack = (e) => {
@@ -66,6 +72,24 @@ const Chat = () => {
       };
     } catch (e) {
       console.error(e);
+    }
+  };
+
+  // 상태 변경 함수
+  const camClickHandler = () => {
+    // 자신의 스트림의 첫 번째 비디오 트랙을 가져옴
+    const videoTrack = streamRef.current?.getVideoTracks()[0];
+    if (videoTrack) {
+      videoTrack.enabled = !videoTrack.enabled; // 트랙의 활성화 상태를 반전시킴
+      setCameraOff(!videoTrack.enabled); // 카메라 상태를 저장하기 위한 상태 업데이트
+    }
+  };
+
+  const muteClickHandler = () => {
+    const audioTrack = streamRef.current?.getAudioTracks()[0];
+    if (audioTrack) {
+      audioTrack.enabled = !audioTrack.enabled;
+      setMute(!videoTrack.enabled);
     }
   };
 
@@ -221,29 +245,31 @@ const Chat = () => {
   }, [stompClient.connected]);
 
   return (
-    <div className="chat-container ">
-      <video
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-        }}
-        ref={myVideoRef}
-        autoPlay
-      />
-      <video
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-        }}
-        ref={remoteVideoRef}
-        autoPlay
-      />
+    <div className="video-container">
+      <div>
+        <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
+      </div>
+      <div>
+        <div>
+          <div>닉네임</div>
+          <div>
+            <div>
+              <img src={왕관} alt="왕관" />
+            </div>
+            <button onClick={camClickHandler}>
+              <img></img>
+            </button>
+            <button onClick={muteClickHandler}>
+              {" "}
+              <img></img>
+            </button>
+          </div>
+        </div>
+        <video ref={myVideoRef} autoPlay />
+      </div>
+      <video ref={remoteVideoRef} autoPlay />
     </div>
   );
 };
 
-export default Chat;
+export default VideoChat;
