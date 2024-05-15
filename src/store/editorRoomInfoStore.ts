@@ -81,8 +81,10 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
       set(() => ({ codeFileList: newState }));
     },
 
+
     setRoomId: (newState) => {
       set(() => ({ roomId: newState }));
+
     },
 
     setPdfFileList: (newState) => {

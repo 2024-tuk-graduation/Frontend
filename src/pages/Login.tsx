@@ -38,9 +38,8 @@ const Login: React.FC = () => {
         { withCredentials: true }
       );
       const UserName = response.data.data.nickname;
-      console.log(response);
+
       alert("로그인 성공");
-      // const UserName = response.data.data.nickname;
 
       window.location.href = "/selectRoom";
       setCookie("rememberId", String(UserName), { path: "/" });

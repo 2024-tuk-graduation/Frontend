@@ -4,7 +4,7 @@ import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
 import { useEditorMenuActions } from "@/store/editorMenuStore";
-import Chat from "@/components/Editor/Chat/Chat";
+import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
@@ -49,7 +49,7 @@ const Editor = () => {
     setPersonnelInfo(newData.participantNicknames);
 
     setLanguage(newData.language);
-            setRoomId(newData.roomId);
+    setRoomId(newData.roomId);
     if (newData.pdfUrls) {
       setPdfFileList(newData.pdfUrls);
     }
