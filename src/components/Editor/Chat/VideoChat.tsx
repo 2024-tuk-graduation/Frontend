@@ -7,19 +7,23 @@ import {
   usePersonnelInfoState,
   useRoomId,
 } from "@/store/editorRoomInfoStore";
-import React, { useEffect, useRef, useContext, useState } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { useCookies } from "react-cookie";
+
+import VideoCam from "./VideoCam";
 
 const VideoChat = () => {
   const host = useHostState();
+
   const [cookies] = useCookies(["rememberId"]);
+
   const roomId = useRoomId();
-  const [cameraOff, setCameraOff] = useState(false);
-  const [mute, setMute] = useState(false);
+
   const curentPersonnel = useCurrentPersonnelState();
   const maxPersonnel = useMaxPersonnelState();
 
   const participants = usePersonnelInfoState().filter((i) => i !== host);
+  const remotePerson = usePersonnelInfoState().filter((i) => i !== String(cookies.rememberId));
 
   // 자신의 비디오 // HTMLVideoElement
   const myVideoRef = useRef<HTMLVideoElement>(null);
@@ -77,40 +81,6 @@ const VideoChat = () => {
     } catch (e) {
       console.error(e);
     }
-  };
-
-  // 상태 변경 함수
-  const camClickHandler = () => {
-    // 자신의 스트림의 첫 번째 비디오 트랙을 가져옴
-    const videoTrack = streamRef.current?.getVideoTracks()[0];
-    if (videoTrack) {
-      videoTrack.enabled = !videoTrack.enabled; // 트랙의 활성화 상태를 반전시킴
-      setCameraOff(!videoTrack.enabled); // 카메라 상태를 저장하기 위한 상태 업데이트
-    }
-
-    stompClient.send(
-      `/pub/media/status/${roomId}/${String(cookies.rememberId)}`,
-      JSON.stringify({
-        cam: cameraOff,
-        voice: mute,
-      })
-    );
-  };
-
-  const muteClickHandler = () => {
-    const audioTrack = streamRef.current?.getAudioTracks()[0];
-    if (audioTrack) {
-      audioTrack.enabled = !audioTrack.enabled;
-      setMute(!audioTrack.enabled);
-    }
-
-    stompClient.send(
-      `/pub/media/status/${roomId}/${String(cookies.rememberId)}`,
-      JSON.stringify({
-        cam: cameraOff,
-        voice: mute,
-      })
-    );
   };
 
   //A->B offer 생성
@@ -266,50 +236,28 @@ const VideoChat = () => {
   }, [stompClient.connected]);
 
   useEffect(() => {
-    if (host === String(cookies.rememberId)) {
-      stompClient.subscribe(
-        `/sub/media/status/${roomId}/${participants[0]}`,
-        (res) => {
-          const data = JSON.parse(res.body);
-          console.log("Receivedmediaaaa", data);
-        },
-        (error) => {
-          console.error("Subscription error:", error);
-        }
-      );
-    }
+    const MediaStatusUrl = host === String(cookies.rememberId) ? participants[0] : host;
 
-    if (host !== String(cookies.rememberId)) {
-      stompClient.subscribe(
-        `/sub/media/status/${roomId}/${host}`,
-        (res) => {
-          const data = JSON.parse(res.body);
-          console.log("Receivedmediaaaa", data);
-        },
-        (error) => {
-          console.error("Subscription error:", error);
-        }
-      );
-    }
+    stompClient.subscribe(
+      `/sub/media/status/${roomId}/${MediaStatusUrl}`,
+      (res) => {
+        const data = JSON.parse(res.body);
+
+        console.log(data.cam, data.voice);
+      },
+      (error) => {
+        console.error("Subscription error:", error);
+      }
+    );
   }, [stompClient.connected, participants]);
 
   return (
     <div className="video-container">
-      <div>
+      <div className="personnel-container">
         <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
       </div>
-      <div>
-        <div>
-          <div>닉네임</div>
-          <div>
-            <div>{/* <img src={왕관} alt="왕관" /> */}</div>
-            <button onClick={camClickHandler}>캠{/* <img></img> */}</button>
-            <button onClick={muteClickHandler}>음성 {/* <img></img> */}</button>
-          </div>
-        </div>
-        <video ref={myVideoRef} autoPlay />
-      </div>
-      <video ref={remoteVideoRef} autoPlay />
+      <VideoCam nickname={String(cookies.rememberId)} streamRef={streamRef} videoRef={myVideoRef} remote={false} />
+      <VideoCam nickname={remotePerson[0]} streamRef={streamRef} videoRef={remoteVideoRef} remote={true} />
     </div>
   );
 };

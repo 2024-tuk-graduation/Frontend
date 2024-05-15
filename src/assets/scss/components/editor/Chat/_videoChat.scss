@@ -1,14 +1,19 @@
 .video-container {
   height: 100%;
   width: $menu;
-
-  video {
-    width: $menu;
-    background-color: black;
-    height: 20rem;
-    object-fit: cover;
-  }
+  display: flex;
+  flex-direction: column;
 }
 
-.control-video-container {
+.personnel-container {
+  background-color: $pink;
+  height: 4rem;
+  position: relative;
+  p {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    font-size: 1.6rem;
+    color: $darkpink;
+  }
 }
