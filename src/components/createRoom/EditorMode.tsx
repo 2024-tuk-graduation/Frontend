@@ -19,13 +19,15 @@ const EditorMode = ({ img, title, mode }: EditorModeButtonPropsType) => {
         </div>
       </div>
 
-      {mode === "blank" ? (
-        <BlankScreenModeCreate />
-      ) : mode === "code" ? (
-        <CodeModeCreate />
-      ) : mode === "pdf" ? (
-        <PdfModeCreate />
-      ) : null}
+      <div className="editor-mode-content">
+        {mode === "blank" ? (
+          <BlankScreenModeCreate />
+        ) : mode === "code" ? (
+          <CodeModeCreate />
+        ) : mode === "pdf" ? (
+          <PdfModeCreate />
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@
   border-radius: 3rem;
   flex-direction: column;
   display: flex;
-  overflow: scroll;
+  overflow: hidden;
 }
 .editor-mode-navbar {
   width: 100%;
@@ -42,4 +42,9 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.editor-mode-content {
+  overflow: scroll;
+  height: 100%;
 }
