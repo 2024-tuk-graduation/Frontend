@@ -3,13 +3,15 @@
   width: 100%;
 
   p {
-    margin-bottom: 1rem;
+    margin-left: 1rem;
+    text-align: center;
   }
 }
 
 .code-mode-language-choose {
   width: 100%;
   padding: 0.3rem;
+  margin-top: 1rem;
   display: flex;
   overflow-x: scroll;
 }

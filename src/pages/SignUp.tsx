@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import bg from "../assets/images/bg.png";
 import defaultProfile from "../assets/images/default_profile.svg";
 import axios from "axios";
+import ex9 from "../assets/images/logo/ex9.jpeg";
 
 const SignUp: React.FC = () => {
   const [nickname, setNickname] = useState("");
@@ -114,10 +114,14 @@ const SignUp: React.FC = () => {
   return (
     <div className="bg-container">
       <div className="container">
+        {/* 로고 및 이미지 */}
+
         <div className="logo-container">
-          <img src={bg} alt="bg" />
+          <img className="img" src={ex9} alt="bg" />
+          <p className="logo">puzzlearn</p>
         </div>
-        <form className="signup-form" onSubmit={handleSubmit}>
+
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="signup-text-container">
             <p className="signup-text">Sign Up</p>
           </div>

@@ -2,8 +2,9 @@
 .login-form {
   background-color: $lightgray;
   border-radius: 4rem;
-  width: 60rem;
-  height: 100%;
+  width: 63rem;
+  height: 90%;
+  margin-top: 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,6 +29,8 @@
   border-radius: 1.4rem;
   font-size: 2rem;
   background-color: white;
+  text-indent: 1rem;
+  outline: none;
 }
 
 .login-error-message {
@@ -46,7 +49,7 @@
   box-shadow: 0rem 0.3rem 0.4rem 0rem #939393;
   font-size: 2.5rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  // transition: background-color 0.3s;
   text-align: center;
 }
 
