@@ -1,0 +1,25 @@
+.video-control-btn {
+  width: 3rem;
+  z-index: 99;
+  height: 3rem;
+  border-radius: 50%;
+  margin-left: 0.8rem;
+  background-color: #fb2626;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten(#fb2626, 10%);
+  }
+  img {
+    width: 1.4rem;
+    height: 1.5rem;
+  }
+  &.on {
+    background-color: #0b40ff;
+    &:hover {
+      background-color: lighten(#0b40ff, 10%);
+    }
+  }
+}

@@ -1,14 +1,31 @@
 import { WebSocketContext } from "@/context/WebSocketConnect";
-import { useEditorRoomInfoActions, useHostState, useRoomId } from "@/store/editorRoomInfoStore";
+import {
+  useCurrentPersonnelState,
+  useEditorRoomInfoActions,
+  useHostState,
+  useMaxPersonnelState,
+  usePersonnelInfoState,
+  useRoomId,
+} from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext } from "react";
 import { useCookies } from "react-cookie";
 
-const Chat = () => {
+import VideoCam from "./VideoCam";
+
+const VideoChat = () => {
   const host = useHostState();
+
   const [cookies] = useCookies(["rememberId"]);
+
   const roomId = useRoomId();
 
-  // 자신의 비디오
+  const curentPersonnel = useCurrentPersonnelState();
+  const maxPersonnel = useMaxPersonnelState();
+
+  const participants = usePersonnelInfoState().filter((i) => i !== host);
+  const remotePerson = usePersonnelInfoState().filter((i) => i !== String(cookies.rememberId));
+
+  // 자신의 비디오 // HTMLVideoElement
   const myVideoRef = useRef<HTMLVideoElement>(null);
   // 다른사람의 비디오
   const remoteVideoRef = useRef<HTMLVideoElement>(null);
@@ -17,6 +34,7 @@ const Chat = () => {
 
   const { setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
 
+  const streamRef = useRef<MediaStream>();
   // peerConnection
   const peerRef = useRef<RTCPeerConnection>();
 
@@ -46,17 +64,13 @@ const Chat = () => {
         audio: true,
       });
 
+      streamRef.current = stream;
       if (myVideoRef.current) {
         myVideoRef.current.srcObject = stream;
       }
 
       // 스트림을 peerConnection에 등록
-      stream.getTracks().forEach((track) => {
-        if (!peerRef.current) {
-          return;
-        }
-        peerRef.current.addTrack(track, stream);
-      });
+      stream.getTracks().forEach((track) => peerRef.current?.addTrack(track, stream));
 
       // 상대방으로부터 전송된 미디어 트랙을 수신
       peerRef.current.ontrack = (e) => {
@@ -205,13 +219,14 @@ const Chat = () => {
       `/sub/peer/iceCandidate/${roomId}`,
       (res) => {
         const data = JSON.parse(res.body);
-        console.log("Received ICE candidate:", data);
+        // console.log("Received ICE candidate:", data);
         const candidate = new RTCIceCandidate({
           candidate: data.content,
           sdpMid: data.sdpMid,
           sdpMLineIndex: data.sdpMLineIndex,
         });
-        peerRef.current.addIceCandidate(candidate);
+        console.log("Received ICE candidate:", candidate);
+        peerRef.current?.addIceCandidate(candidate);
       },
       (error) => {
         console.error("Subscription error:", error);
@@ -220,30 +235,31 @@ const Chat = () => {
     getMedia();
   }, [stompClient.connected]);
 
+  useEffect(() => {
+    const MediaStatusUrl = host === String(cookies.rememberId) ? participants[0] : host;
+
+    stompClient.subscribe(
+      `/sub/media/status/${roomId}/${MediaStatusUrl}`,
+      (res) => {
+        const data = JSON.parse(res.body);
+
+        console.log(data.cam, data.voice);
+      },
+      (error) => {
+        console.error("Subscription error:", error);
+      }
+    );
+  }, [stompClient.connected, participants]);
+
   return (
-    <div className="chat-container ">
-      <video
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-        }}
-        ref={myVideoRef}
-        autoPlay
-      />
-      <video
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          backgroundColor: "black",
-        }}
-        ref={remoteVideoRef}
-        autoPlay
-      />
+    <div className="video-container">
+      <div className="personnel-container">
+        <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
+      </div>
+      <VideoCam nickname={String(cookies.rememberId)} streamRef={streamRef} videoRef={myVideoRef} remote={false} />
+      <VideoCam nickname={remotePerson[0]} streamRef={streamRef} videoRef={remoteVideoRef} remote={true} />
     </div>
   );
 };
 
-export default Chat;
+export default VideoChat;

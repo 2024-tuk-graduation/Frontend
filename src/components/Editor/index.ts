@@ -1,4 +1,4 @@
-import Chat from "./Chat/Chat";
+import Chat from "./Chat/VideoChat";
 import CodeEditor  from "./Code/CodeEditor";
 import Compile from "./Code/Compile";
 import EditorInfobar from "./Infobar/EditorInfobar"

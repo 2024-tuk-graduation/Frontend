@@ -87,7 +87,7 @@ interface useEditorRoomInfoStoreType {
       
      setRoomId : (newState) =>{
       set(() => ({  roomId : newState }));
-    }
+    },
 
     setPdfFileList: (newState) => {
       set(() => ({ pdfFileList: newState }));
