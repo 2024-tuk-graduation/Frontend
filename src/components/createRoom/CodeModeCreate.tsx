@@ -18,7 +18,7 @@ const CodeModeCreate = () => {
     <div>
       <SelectUpload mode={"code"} select={selectedCodeOption} setSelect={setSelectedCodeOption} />
       <div className="code-mode-language-area">
-        <p>언어를 선택해주세요</p>
+        <p className="code-mode-language">언어를 선택해주세요</p>
         <div className="code-mode-language-choose">
           {language.map((i) => (
             <CodeLanguage key={i} language={i} />

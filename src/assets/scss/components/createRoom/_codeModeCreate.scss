@@ -1,17 +1,15 @@
 .code-mode-language-area {
   margin: 3rem 0;
   width: 100%;
-
-  p {
-    margin-left: 1rem;
-    text-align: center;
-  }
+}
+.code-mode-language {
+  margin: 3rem 0 0 4rem;
 }
 
 .code-mode-language-choose {
-  width: 100%;
   padding: 0.3rem;
   margin-top: 1rem;
+  margin-left: 3rem;
   display: flex;
   overflow-x: scroll;
 }
