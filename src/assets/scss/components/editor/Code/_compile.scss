@@ -19,10 +19,16 @@
   }
 }
 
+.now-language {
+  font-size: 1.5rem;
+  margin: 1rem;
+}
+
 .compile-result {
   color: black;
   font-size: 1.4rem;
   padding: 1rem;
+  background-color: #ffe4ea;
 }
 
 .compile-button {

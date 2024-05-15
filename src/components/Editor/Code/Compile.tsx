@@ -40,11 +40,20 @@ const Compile: React.FC = () => {
       {" "}
       <DefaultMenubar title="컴파일" />
       <div>
-        <p>현재 언어 : {language}</p>
+        <div className="now-language">
+          <p>현재 언어 : {language}</p>
+        </div>
         <input
           onChange={(e) => setInput(e.target.value)}
           value={input}
-          style={{ width: "10rem", height: "5rem", backgroundColor: "#fad3fadd" }}
+          style={{
+            width: "100%",
+            height: "3rem",
+            backgroundColor: "#fad3fadd",
+            outline: "none",
+            textIndent: "1rem",
+            fontSize: "1.6rem",
+          }}
           type="text"
         />
         <pre className="compile-result">{compileResult}</pre>

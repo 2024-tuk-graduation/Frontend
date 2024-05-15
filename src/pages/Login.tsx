@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import bg from "../assets/images/bg.png";
 import { useCookies } from "react-cookie";
 // import { useLoginFormStore } from "@/store/loginFormState";
 import axios from "axios";
+import ex9 from "../assets/images/logo/ex9.jpeg";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -40,7 +40,7 @@ const Login: React.FC = () => {
       const UserName = response.data.data.nickname;
       console.log(response);
       alert("로그인 성공");
-      const UserName = response.data.data.nickname;
+      // const UserName = response.data.data.nickname;
 
       window.location.href = "/selectRoom";
       setCookie("rememberId", String(UserName), { path: "/" });
@@ -61,10 +61,10 @@ const Login: React.FC = () => {
     <div className="bg-container">
       <div className="container">
         {/* 로고 및 이미지 */}
-        <div className="login-container">
-          <div className="logo-container">
-            <img src={bg} alt="sign_bg" />
-          </div>
+
+        <div className="logo-container">
+          <img className="img" src={ex9} alt="bg" />
+          <p className="logo">puzzlearn</p>
         </div>
 
         {/* 로그인 Form */}

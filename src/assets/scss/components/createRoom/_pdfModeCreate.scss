@@ -34,6 +34,8 @@
 .pdf-mode-create-upload-container {
   display: flex;
   margin-top: 1rem;
+  background-color: $lightgray;
+  overflow-x: scroll;
 }
 
 .pdf-mode-upload-area-container {
@@ -41,11 +43,13 @@
   display: flex;
   border-radius: 6px;
   margin-top: 2rem;
+  margin-left: 4rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 11rem;
   height: 11rem;
+  background-color: white;
 
   input {
     display: none;
