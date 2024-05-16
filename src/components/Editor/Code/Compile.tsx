@@ -39,23 +39,12 @@ const Compile: React.FC = () => {
     <div>
       {" "}
       <DefaultMenubar title="컴파일" />
-      <div>
-        <div className="now-language">
-          <p>현재 언어 : {language}</p>
+      <div className="compile-container">
+        <div className="input-container">
+          <div className="input-hint">&gt;&gt;&gt;</div>
+          <textarea className="input-area" onChange={(e) => setInput(e.target.value)} value={input} />
         </div>
-        <input
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-          style={{
-            width: "100%",
-            height: "3rem",
-            backgroundColor: "#fad3fadd",
-            outline: "none",
-            textIndent: "1rem",
-            fontSize: "1.6rem",
-          }}
-          type="text"
-        />
+
         <pre className="compile-result">{compileResult}</pre>
 
         <button className="compile-button" onClick={handleCompile}>
