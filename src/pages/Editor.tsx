@@ -20,8 +20,8 @@ const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
   const height = useHeightState();
   const entranceCode = useEntranceCodeState();
-  const codeFileList = useCodeFileListState();
-  const [fileContents, setFileContents] = useState<(string | void)[]>([]);
+  // const codeFileList = useCodeFileListState();
+  // const [fileContents, setFileContents] = useState<(string | void)[]>([]);
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
@@ -61,40 +61,40 @@ const Editor = () => {
     console.log(newData);
   }
 
-  const codeClick = () => {
-    Promise.all(
-      codeFileList.map((url: string) =>
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .catch((e) => {
-            console.error("Failed to fetch file: ", e);
-          })
-      )
-    )
-      .then((contents) => {
-        setFileContents(contents);
-      })
-      .catch((e) => {
-        console.error("Error processing files: ", e);
-      });
+  // const codeClick = () => {
+  //   Promise.all(
+  //     codeFileList.map((url: string) =>
+  //       fetch(url)
+  //         .then((response) => {
+  //           if (!response.ok) {
+  //             throw new Error(`HTTP error! status: ${response.status}`);
+  //           }
+  //           return response.text();
+  //         })
+  //         .catch((e) => {
+  //           console.error("Failed to fetch file: ", e);
+  //         })
+  //     )
+  //   )
+  //     .then((contents) => {
+  //       setFileContents(contents);
+  //     })
+  //     .catch((e) => {
+  //       console.error("Error processing files: ", e);
+  //     });
 
-    console.log(fileContents);
-  };
-  useEffect(() => {
-    setTimeout(codeClick, 60000);
-  }, [codeFileList]);
+  //   console.log(fileContents);
+  // };
+  // useEffect(() => {
+  //   setTimeout(codeClick, 60000);
+  // }, [codeFileList]);
   return (
     <WebSocketConnnect>
       <div className="container editor">
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
-          <div onClick={codeClick}>코드</div>
+          {/* <div onClick={codeClick}>코드</div> */}
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
@@ -110,8 +110,8 @@ const Editor = () => {
                   img={personnelIcon}
                   title={"personnel"}
                 />
-                {/* <ModeEditor /> */}
-                <ModeEditor code={fileContents} />
+                <ModeEditor />
+                {/* <ModeEditor code={fileContents} /> */}
               </div>
               <SearchSection />
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>

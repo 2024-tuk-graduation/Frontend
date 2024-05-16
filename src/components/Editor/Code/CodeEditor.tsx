@@ -8,7 +8,7 @@ import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 
-const CodeEditor = ({ code }: { code: (string | void)[] }) => {
+const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
@@ -74,7 +74,7 @@ const CodeEditor = ({ code }: { code: (string | void)[] }) => {
         language={selectedLanguage}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        defaultValue={code[0] ? code[0] : undefined}
+        defaultValue="#코드를 입력해주세용용용용"
         options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
       />
     </div>
