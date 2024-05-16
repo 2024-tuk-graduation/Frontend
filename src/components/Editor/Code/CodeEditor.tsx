@@ -8,7 +8,7 @@ import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 
-const CodeEditor = () => {
+const CodeEditor = ({ code }: { code: any }) => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
@@ -41,7 +41,7 @@ const CodeEditor = () => {
       setEdit(false);
     }
     if (monaco) {
-      import("monaco-themes/themes/Tomorrow.json")
+      import("monaco-themes/themes/Clouds.json")
         // import("monaco-themes/themes/Amy.json")
         .then((data) => {
           monaco.editor.defineTheme("theme", data);
@@ -74,8 +74,8 @@ const CodeEditor = () => {
         language={selectedLanguage}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        defaultValue="#코드를 입력해주세용용용용"
-        options={{ border: "#000", fontSize: 10, lineHeight: 20, readOnly: edit }}
+        defaultValue={code[0]}
+        options={{ border: "#000", fontSize: 17, lineHeight: 20, readOnly: edit }}
       />
     </div>
     // <ToastContainer />
