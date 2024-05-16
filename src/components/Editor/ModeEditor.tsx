@@ -5,9 +5,11 @@ import CodeFileItem from "./Code/CodeFileItem";
 
 import BlankCanvas from "./Blank/ BlankCanvas";
 
-const ModeEditor = () => {
+const ModeEditor = ({ code }: { code: (string | void)[] }) => {
   const mode = useModeState();
   const codeFileList = useCodeFileListState();
+  const codeFileTitleList = codeFileList.map((i) => i.split("_")[1]);
+  console.log(codeFileTitleList);
 
   return (
     <div className="mode-editor-container">
@@ -17,10 +19,12 @@ const ModeEditor = () => {
         </div>
       ) : mode === "code" ? (
         <div>
-          {/* {codeFileList.map((i) => (
-            <CodeFileItem key={i} fileName={i} />
-          ))} */}
-          <CodeEditor />{" "}
+          <div className="codeFile-title-list-container">
+            {codeFileTitleList.map((i) => (
+              <CodeFileItem key={i} fileName={i} />
+            ))}
+          </div>
+          <CodeEditor code={code} />
         </div>
       ) : (
         <div className="pdf-container">

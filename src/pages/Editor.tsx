@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
@@ -12,7 +12,7 @@ import WhiteBoard from "@/components/Editor/WhiteBoard";
 import { Navbar, QandA } from "@/components";
 import SearchSection from "@/components/Editor/SearchSection";
 import { useHeightState } from "@/store/editorSection";
-import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
+import { useCodeFileListState, useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,6 +20,8 @@ const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
   const height = useHeightState();
   const entranceCode = useEntranceCodeState();
+  const codeFileList = useCodeFileListState();
+  const [fileContents, setFileContents] = useState<(string | void)[]>([]);
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
@@ -53,18 +55,46 @@ const Editor = () => {
     if (newData.pdfUrls) {
       setPdfFileList(newData.pdfUrls);
     }
-    if (newData.codeUrls) {
-      setCodeFileList(newData.codeUrls);
+    if (newData.codeUrls.urls) {
+      setCodeFileList(newData.codeUrls.urls);
     }
     console.log(newData);
   }
 
+  const codeClick = () => {
+    Promise.all(
+      codeFileList.map((url: string) =>
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+          })
+          .catch((e) => {
+            console.error("Failed to fetch file: ", e);
+          })
+      )
+    )
+      .then((contents) => {
+        setFileContents(contents);
+      })
+      .catch((e) => {
+        console.error("Error processing files: ", e);
+      });
+
+    console.log(fileContents);
+  };
+  useEffect(() => {
+    setTimeout(codeClick, 60000);
+  }, [codeFileList]);
   return (
     <WebSocketConnnect>
       <div className="container editor">
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
+          <div onClick={codeClick}>코드</div>
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
@@ -80,7 +110,8 @@ const Editor = () => {
                   img={personnelIcon}
                   title={"personnel"}
                 />
-                <ModeEditor />
+                {/* <ModeEditor /> */}
+                <ModeEditor code={fileContents} />
               </div>
               <SearchSection />
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
