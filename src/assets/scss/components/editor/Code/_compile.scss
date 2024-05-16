@@ -52,8 +52,8 @@
 
   .compile-result {
     min-height: 5rem;
-    height: auto;
     width: 100%;
+    height: auto;
     resize: none;
     border: none;
     outline: none;
@@ -62,7 +62,7 @@
     padding-top: 1.6rem;
     padding-left: 1rem;
     background-color: #ffe4ea;
-    overflow: auto;
+    overflow-y: auto;
     word-wrap: break-word;
   }
 
