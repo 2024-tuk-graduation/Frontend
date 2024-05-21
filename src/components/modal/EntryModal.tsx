@@ -27,7 +27,8 @@ const EntryModal = () => {
     onErrorCb: onEntryError,
   });
 
-  const [codeInput, setCodeInput] = useState({
+  // 인덱스 시그니처를 사용하여 TypeScript에게 객체를 인덱스로 사용할 수 있음을 알립니다.
+  const [codeInput, setCodeInput] = useState<{ [key: string]: string }>({
     input1: "",
     input2: "",
     input3: "",
@@ -41,6 +42,24 @@ const EntryModal = () => {
       ...codeInput,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // 붙여넣기 이벤트 처리 함수
+  const onPasteHandler = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const clipboardData = e.clipboardData || (window as any).clipboardData;
+    if (!clipboardData) return;
+
+    const pastedText = clipboardData.getData("text");
+    const pastedCharacters = pastedText.split("");
+    const newCodeInput = { ...codeInput };
+
+    Object.keys(newCodeInput).forEach((key, index) => {
+      if (index < pastedCharacters.length) {
+        newCodeInput[key] = pastedCharacters[index];
+      }
+    });
+
+    setCodeInput(newCodeInput);
   };
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,6 +83,7 @@ const EntryModal = () => {
               key={index}
               name={`input${index + 1}`}
               onChange={onCodehandler}
+              onPaste={onPasteHandler} // 붙여넣기 이벤트 핸들러
               value={value}
               required
               maxLength={1}
