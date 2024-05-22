@@ -17,6 +17,7 @@ interface useEditorRoomInfoStoreType {
   personnelInfo: string[];
   codeFileList: codeFileItem[];
   pdfFileList: string[];
+ 
 
   actions: {
     setEntranceCode: (newState: string) => void;
@@ -28,6 +29,7 @@ interface useEditorRoomInfoStoreType {
     setPersonnelInfo: (newState: string[]) => void;
     addCodeFile: (title: string, content: string) => void;
     setPdfFileList: (newState: string[]) => void;
+
     setMode: (newState: Mode) => void;
     setRoomId: (newState: number) => void;
     setTemplate: (newState: number) => void;
@@ -106,5 +108,5 @@ export const useModeState = () => useEditorRoomInfoStore((state) => state.mode);
 export const useCodeFileListState = () => useEditorRoomInfoStore((state) => state.codeFileList);
 export const useTemplateState = () => useEditorRoomInfoStore((state) => state.template);
 export const useRoomId = () => useEditorRoomInfoStore((state) => state.roomId);
-
+export const usePdfFileListState = () =>useEditorRoomInfoStore((state) => state.pdfFileList);
 export const useEditorRoomInfoActions = () => useEditorRoomInfoStore((state) => state.actions);

@@ -30,10 +30,11 @@ const EntranceCode = () => {
     navigator.clipboard
       .writeText(entranceCode)
       .then(() => {
-        console.log("Entrance code copied:", entranceCode);
+        alert("입장코드가 복사되었습니다.");
+        console.log("입장코드 복사:", entranceCode);
       })
       .catch((err) => {
-        console.error("Failed to copy entrance code:", err);
+        console.error("입장코드 복사 실패:", err);
       });
   };
 

@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
 
-const CodeEditor = () => {
+const CodeEditor = ({ code }: { code: any }) => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
@@ -39,7 +39,7 @@ const CodeEditor = () => {
       setEdit(false);
     }
     if (monaco) {
-      import("monaco-themes/themes/Tomorrow.json")
+      import("monaco-themes/themes/Clouds.json")
         // import("monaco-themes/themes/Amy.json")
         .then((data) => {
           monaco.editor.defineTheme("theme", data);
@@ -71,8 +71,10 @@ const CodeEditor = () => {
         width="100%"
         language={selectedLanguage}
         onChange={handleEditorChange}
+
         defaultValue={getEditCodeFile(editCodeTitle, codeFileList)}
         options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
+
       />
     </div>
   );
