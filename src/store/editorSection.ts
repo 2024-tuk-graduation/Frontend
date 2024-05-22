@@ -3,7 +3,6 @@ import { create } from "zustand";
 
 interface editorSectionStoreType {
   height : number;
-
   actions : {
     setHeight:(newState:number)  => void;
   }
@@ -12,7 +11,6 @@ interface editorSectionStoreType {
 
  const useEditorSectionStore= create<editorSectionStoreType>((set) => ({
   height : 1000,
- 
   actions : { 
     setHeight: (newState:number)  => {  set(() => ({ height : newState }));}
    

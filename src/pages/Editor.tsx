@@ -3,7 +3,6 @@ import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
-import { useEditorMenuActions } from "@/store/editorMenuStore";
 import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
@@ -12,21 +11,22 @@ import WhiteBoard from "@/components/Editor/WhiteBoard";
 import { Navbar, QandA } from "@/components";
 import SearchSection from "@/components/Editor/SearchSection";
 import { useHeightState } from "@/store/editorSection";
-import { useCodeFileListState, useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
+import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
+import useFiles from "@/hooks/useFiles";
+import { useEditorMenuActions } from "@/store/EditorMenuStore";
 
 const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
   const height = useHeightState();
   const entranceCode = useEntranceCodeState();
-  const codeFileList = useCodeFileListState();
-  const [fileContents, setFileContents] = useState<(string | void)[]>([]);
+  const { handleCodeFiles } = useFiles();
+  const [code, setCode] = useState<string[] | null>(null);
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
     setPdfFileList,
-    setCodeFileList,
     setHost,
     setMaxPersonnel,
     setRoomName,
@@ -40,61 +40,34 @@ const Editor = () => {
     queryFn: () => editorRoomInfoApi(entranceCode),
   });
 
-  if (data) {
-    const newData = data.data.data;
-
-    setHost(newData.hostNickname);
-    setMaxPersonnel(newData.personnelCount);
-    setCurrentPersonnel(newData.participantNicknames.length);
-    setRoomName(newData.roomName);
-    setTemplate(newData.template);
-    setPersonnelInfo(newData.participantNicknames);
-
-    setLanguage(newData.language);
-    setRoomId(newData.roomId);
-    if (newData.pdfUrls) {
-      setPdfFileList(newData.pdfUrls);
-    }
-    if (newData.codeUrls.urls) {
-      setCodeFileList(newData.codeUrls.urls);
-    }
-    console.log(newData);
-  }
-
-  const codeClick = () => {
-    Promise.all(
-      codeFileList.map((url: string) =>
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .catch((e) => {
-            console.error("Failed to fetch file: ", e);
-          })
-      )
-    )
-      .then((contents) => {
-        setFileContents(contents);
-      })
-      .catch((e) => {
-        console.error("Error processing files: ", e);
-      });
-
-    console.log(fileContents);
-  };
   useEffect(() => {
-    setTimeout(codeClick, 60000);
-  }, [codeFileList]);
+    const updateRoomInfo = async () => {
+      if (data) {
+        const newData = data.data.data;
+        setHost(newData.hostNickname);
+        setMaxPersonnel(newData.personnelCount);
+        setCurrentPersonnel(newData.participantNicknames.length);
+        setRoomName(newData.roomName);
+        setTemplate(newData.template);
+        setPersonnelInfo(newData.participantNicknames);
+        setLanguage(newData.language);
+        setRoomId(newData.roomId);
+        if (newData.pdfUrls) {
+          setPdfFileList(newData.pdfUrls);
+        }
+        await handleCodeFiles(newData.codeUrls.urls);
+      }
+    };
+
+    updateRoomInfo();
+  }, [data]);
+
   return (
     <WebSocketConnnect>
       <div className="container editor">
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
-          <div onClick={codeClick}>코드</div>
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
@@ -110,8 +83,7 @@ const Editor = () => {
                   img={personnelIcon}
                   title={"personnel"}
                 />
-                {/* <ModeEditor /> */}
-                <ModeEditor code={fileContents} />
+                <ModeEditor />
               </div>
               <SearchSection />
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>

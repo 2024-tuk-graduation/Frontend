@@ -1,8 +1,10 @@
 import React from "react";
 import PythonLogo from "@/assets/images/python.svg";
+import { useSelectFileActions } from "@/store/selectFile";
 const CodeFileItem = ({ fileName }: { fileName: string }) => {
+  const { setEditCodeFile } = useSelectFileActions();
   return (
-    <div className="code-file-item-container">
+    <div onClick={() => setEditCodeFile(fileName)} className="code-file-item-container">
       <div>
         {" "}
         <img src={PythonLogo} />{" "}
