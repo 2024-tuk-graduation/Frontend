@@ -4,7 +4,12 @@ import { useSelectFileActions } from "@/store/selectFile";
 const CodeFileItem = ({ fileName }: { fileName: string }) => {
   const { setEditCodeFile } = useSelectFileActions();
   return (
-    <div onClick={() => setEditCodeFile(fileName)} className="code-file-item-container">
+    <div
+      onClick={() => {
+        setEditCodeFile(fileName), console.log(fileName);
+      }}
+      className="code-file-item-container"
+    >
       <div>
         {" "}
         <img src={PythonLogo} />{" "}

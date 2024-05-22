@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
 
-const CodeEditor = ({ code }: { code: any }) => {
+const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
@@ -63,6 +63,10 @@ const CodeEditor = ({ code }: { code: any }) => {
     }
   }, [stompClient.connected]);
 
+  const handleEditorDidMount = (editor, monaco) => {
+    // 에디터 객체에 접근
+    editorRef.current = editor;
+  };
   return (
     <div style={{ border: "solid 1px #ececec", width: "100%" }}>
       <Editor
@@ -71,10 +75,9 @@ const CodeEditor = ({ code }: { code: any }) => {
         width="100%"
         language={selectedLanguage}
         onChange={handleEditorChange}
-
+        onMount={handleEditorDidMount}
         defaultValue={getEditCodeFile(editCodeTitle, codeFileList)}
         options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
-
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
@@ -11,12 +11,7 @@ import WhiteBoard from "@/components/Editor/WhiteBoard";
 import { Navbar, QandA } from "@/components";
 import SearchSection from "@/components/Editor/SearchSection";
 import { useHeightState } from "@/store/editorSection";
-import {
-  useCodeFileListState,
-  useEditorRoomInfoActions,
-  useEntranceCodeState,
-  usePdfFileListState,
-} from "@/store/editorRoomInfoStore";
+import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
@@ -44,7 +39,6 @@ const Editor = () => {
     queryFn: () => editorRoomInfoApi(entranceCode),
   });
 
- 
   useEffect(() => {
     const updateRoomInfo = async () => {
       if (data) {
@@ -67,8 +61,6 @@ const Editor = () => {
     updateRoomInfo();
   }, [data]);
 
- 
-
   return (
     <WebSocketConnnect>
       <div className="container editor">
@@ -90,7 +82,7 @@ const Editor = () => {
                   img={personnelIcon}
                   title={"personnel"}
                 />
-                <ModeEditor code={fileContents} />
+                <ModeEditor />
               </div>
               <SearchSection />
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
