@@ -76,7 +76,9 @@ const CodeEditor = () => {
         language={selectedLanguage}
         onChange={handleEditorChange}
         onMount={handleEditorDidMount}
-        defaultValue={getEditCodeFile(editCodeTitle, codeFileList)}
+        defaultValue={
+          getEditCodeFile(editCodeTitle, codeFileList) ? getEditCodeFile(editCodeTitle, codeFileList) : undefined
+        }
         options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
       />
     </div>

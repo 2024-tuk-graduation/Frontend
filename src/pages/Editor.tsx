@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
@@ -22,6 +22,8 @@ const Editor = () => {
   const height = useHeightState();
   const entranceCode = useEntranceCodeState();
   const { handleCodeFiles } = useFiles();
+  const [modeEditor, setModeEditor] = useState(false);
+
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
@@ -55,6 +57,7 @@ const Editor = () => {
           setPdfFileList(newData.pdfUrls);
         }
         await handleCodeFiles(newData.codeUrls.urls);
+        setModeEditor(true);
       }
     };
 
@@ -82,7 +85,7 @@ const Editor = () => {
                   img={personnelIcon}
                   title={"personnel"}
                 />
-                <ModeEditor />
+                {modeEditor && <ModeEditor />}
               </div>
               <SearchSection />
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
