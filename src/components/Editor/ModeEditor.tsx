@@ -20,11 +20,13 @@ const ModeEditor = ({ code }: { code: any }) => {
       ) : mode === "code" ? (
         <div>
           <div className="codeFile-title-list-container">
-            {codeFileTitleList.map((i) => (
-              <CodeFileItem key={i} fileName={i} />
+
+            {codeFileList.map((i, index) => (
+              <CodeFileItem key={index} fileName={i.title} />
             ))}
           </div>
-          <CodeEditor code={code} />{" "}
+          <CodeEditor />
+
         </div>
       ) : (
         <div className="pdf-container">

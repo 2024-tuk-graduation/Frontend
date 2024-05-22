@@ -3,7 +3,6 @@ import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
-import { useEditorMenuActions } from "@/store/editorMenuStore";
 import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
@@ -20,18 +19,18 @@ import {
 } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
+import useFiles from "@/hooks/useFiles";
+import { useEditorMenuActions } from "@/store/EditorMenuStore";
 
 const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
   const height = useHeightState();
   const entranceCode = useEntranceCodeState();
-  const codeFileList = useCodeFileListState();
-  const [fileContents, setFileContents] = useState([]);
+  const { handleCodeFiles } = useFiles();
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
     setPdfFileList,
-    setCodeFileList,
     setHost,
     setMaxPersonnel,
     setRoomName,
@@ -45,49 +44,30 @@ const Editor = () => {
     queryFn: () => editorRoomInfoApi(entranceCode),
   });
 
-  if (data) {
-    const newData = data.data.data;
-
-    setHost(newData.hostNickname);
-    setMaxPersonnel(newData.personnelCount);
-    setCurrentPersonnel(newData.participantNicknames.length);
-    setRoomName(newData.roomName);
-    setTemplate(newData.template);
-    setPersonnelInfo(newData.participantNicknames);
-    setLanguage(newData.language);
-    setRoomId(newData.roomId);
-    if (newData.pdfUrls) {
-      setPdfFileList(newData.pdfUrls);
-    }
-    if (newData.codeUrls.urls) {
-      setCodeFileList(newData.codeUrls.urls);
-    }
-  }
-
+ 
   useEffect(() => {
-    Promise.all(
-      codeFileList.map((url: string) =>
-        fetch(url)
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .catch((e) => {
-            console.error("Failed to fetch file: ", e);
-          })
-      )
-    )
-      .then((contents) => {
-        setFileContents(contents);
-      })
-      .catch((e) => {
-        console.error("Error processing files: ", e);
-      });
+    const updateRoomInfo = async () => {
+      if (data) {
+        const newData = data.data.data;
+        setHost(newData.hostNickname);
+        setMaxPersonnel(newData.personnelCount);
+        setCurrentPersonnel(newData.participantNicknames.length);
+        setRoomName(newData.roomName);
+        setTemplate(newData.template);
+        setPersonnelInfo(newData.participantNicknames);
+        setLanguage(newData.language);
+        setRoomId(newData.roomId);
+        if (newData.pdfUrls) {
+          setPdfFileList(newData.pdfUrls);
+        }
+        await handleCodeFiles(newData.codeUrls.urls);
+      }
+    };
 
-    console.log(fileContents);
-  }, [codeFileList]);
+    updateRoomInfo();
+  }, [data]);
+
+ 
 
   return (
     <WebSocketConnnect>

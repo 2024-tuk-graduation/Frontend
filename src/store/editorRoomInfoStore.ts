@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { Mode } from "@/types/Mode";
-
+export interface codeFileItem {
+  title: string;
+  content: string;
+}
 interface useEditorRoomInfoStoreType {
   entranceCode: string;
   host: string;
@@ -12,7 +15,7 @@ interface useEditorRoomInfoStoreType {
   currentPersonnel: number;
   roomId: number;
   personnelInfo: string[];
-  codeFileList: string[];
+  codeFileList: codeFileItem[];
   pdfFileList: string[];
  
 
@@ -24,8 +27,7 @@ interface useEditorRoomInfoStoreType {
     setCurrentPersonnel: (newState: number) => void;
     setMaxPersonnel: (newState: number) => void;
     setPersonnelInfo: (newState: string[]) => void;
-    // resetPersonnelInfo:() =>void;
-    setCodeFileList: (newState: string[]) => void;
+    addCodeFile: (title: string, content: string) => void;
     setPdfFileList: (newState: string[]) => void;
 
     setMode: (newState: Mode) => void;
@@ -46,7 +48,7 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
   pdfFileList: [],
   mode: "blank",
   template: 1,
-  codeFileList: ["example1.py"],
+  codeFileList: [],
 
   actions: {
     setTemplate: (newState) => {
@@ -79,11 +81,11 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
       set(() => ({ mode: newState }));
     },
 
-    setCodeFileList: (newState) => {
-      set(() => ({ codeFileList: newState }));
-    },
-
-
+    addCodeFile: (title, content) =>
+      set((state) => ({
+        codeFileList: [...state.codeFileList, { title, content }],
+      })),
+      
     setRoomId: (newState) => {
       set(() => ({ roomId: newState }));
 

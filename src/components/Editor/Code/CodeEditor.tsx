@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
-import { useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
+import { useCodeFileListState, useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
 import { WebSocketContext } from "@/context/WebSocketConnect";
-import { toast, ToastContainer } from "react-toastify";
-import { useLocation } from "react-router-dom";
 import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
+import { useCodeState, useSelectFileActions } from "@/store/selectFile";
 
 const CodeEditor = ({ code }: { code: any }) => {
   const monaco = useMonaco();
@@ -15,9 +14,11 @@ const CodeEditor = ({ code }: { code: any }) => {
   const host = useHostState();
   const selectedLanguage = useLanguageState();
   const [edit, setEdit] = useState(true); // 이 상태에 따라 에디터가 읽기 전용인지 결정
-  const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
-
+  const [cookies] = useCookies(["rememberId"]);
+  const codeFileList = useCodeFileListState();
   const { setCode } = useCompileActions();
+  const editCodeTitle = useCodeState();
+  const { getEditCodeFile } = useSelectFileActions();
   const handleEditorChange = (value, event) => {
     if (host === String(cookies.rememberId)) {
       stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
@@ -26,15 +27,12 @@ const CodeEditor = ({ code }: { code: any }) => {
     setCode(value);
   };
 
-  const handleEditorDidMount = (editor, monaco) => {
-    // 에디터 객체에 접근
-    editorRef.current = editor;
-    editor.onMouseDown(() => {
-      if (host !== String(cookies.rememberId)) {
-        toast.error("호스트만 입력할 수 있습니다!");
-      }
-    });
-  };
+  useEffect(() => {
+    if (editorRef.current) {
+      const codeContent = getEditCodeFile(editCodeTitle, codeFileList);
+      editorRef.current.setValue(codeContent);
+    }
+  }, [editCodeTitle, codeFileList]);
 
   useEffect(() => {
     if (host === String(cookies.rememberId)) {
@@ -73,12 +71,12 @@ const CodeEditor = ({ code }: { code: any }) => {
         width="100%"
         language={selectedLanguage}
         onChange={handleEditorChange}
-        onMount={handleEditorDidMount}
-        defaultValue={code[0]}
-        options={{ border: "#000", fontSize: 17, lineHeight: 20, readOnly: edit }}
+
+        defaultValue={getEditCodeFile(editCodeTitle, codeFileList)}
+        options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
+
       />
     </div>
-    // <ToastContainer />
   );
 };
 
