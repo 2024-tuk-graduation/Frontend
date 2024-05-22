@@ -7,9 +7,7 @@ import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
-import WhiteBoard from "@/components/Editor/WhiteBoard";
 import { Navbar, QandA } from "@/components";
-import SearchSection from "@/components/Editor/SearchSection";
 import { useHeightState } from "@/store/editorSection";
 import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
@@ -87,9 +85,8 @@ const Editor = () => {
                 />
                 {modeEditor && <ModeEditor />}
               </div>
-              <SearchSection />
+
               <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
-                <WhiteBoard />
                 <QandA />
               </div>
             </div>
