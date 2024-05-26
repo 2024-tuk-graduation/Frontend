@@ -53,8 +53,10 @@ const Editor = () => {
         setRoomId(newData.roomId);
         if (newData.pdfUrls) {
           setPdfFileList(newData.pdfUrls);
+          console.log(newData.pdfUrls);
         }
         await handleCodeFiles(newData.codeUrls.urls);
+
         setModeEditor(true);
       }
     };
@@ -76,19 +78,20 @@ const Editor = () => {
             </div>
 
             <div className="main-edit-area">
-              <div className="button-editor-container">
-                <EditorRoundButton handleClick={() => setPersonMenu("chat")} img={chatIcon} title={"chat"} />
+              {modeEditor && <ModeEditor />}
+              {/* <div className="button-editor-container"> */}
+              {/* <EditorRoundButton handleClick={() => setPersonMenu("chat")} img={chatIcon} title={"chat"} />
                 <EditorRoundButton
                   handleClick={() => setPersonMenu("personnel")}
                   img={personnelIcon}
                   title={"personnel"}
-                />
-                {modeEditor && <ModeEditor />}
-              </div>
+                /> */}
 
-              <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
+              {/* </div> */}
+
+              {/* <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
                 <QandA />
-              </div>
+              </div> */}
             </div>
             <div>
               <Chat />

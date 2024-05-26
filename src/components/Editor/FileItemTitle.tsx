@@ -1,12 +1,18 @@
 import React from "react";
 import PythonLogo from "@/assets/images/python.svg";
 import { useSelectFileActions } from "@/store/selectFile";
-const CodeFileItem = ({ fileName }: { fileName: string }) => {
+import { Mode } from "@/types";
+
+interface FileItemTitlePropsType {
+  fileName: string;
+  fileType: Mode;
+}
+const FileItemTitle = ({ fileName, fileType }: FileItemTitlePropsType) => {
   const { setEditCodeFile } = useSelectFileActions();
   return (
     <div
       onClick={() => {
-        setEditCodeFile(fileName), console.log(fileName);
+        fileType === "code" ? setEditCodeFile(fileName) : "";
       }}
       className="code-file-item-container"
     >
@@ -19,4 +25,4 @@ const CodeFileItem = ({ fileName }: { fileName: string }) => {
   );
 };
 
-export default CodeFileItem;
+export default FileItemTitle;

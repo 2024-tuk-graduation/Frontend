@@ -18,6 +18,21 @@
   }
 }
 
+@mixin fileTitle($color) {
+  background-color: $color;
+  cursor: pointer;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+  display: flex;
+  width: 12rem;
+  height: 3rem;
+  padding: 1rem;
+  align-items: center;
+  &:hover {
+    background-color: lighten($color, 15%);
+  }
+}
+
 // @mixin font-face($name, $path, $weight: null, $style: null, $exts: otf ttf) {
 //   $src: null;
 //   $formats: (
