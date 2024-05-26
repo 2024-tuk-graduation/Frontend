@@ -6,6 +6,7 @@ import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
+import FileItemTitle from "../FileItemTitle";
 
 const CodeEditor = () => {
   const monaco = useMonaco();
@@ -16,6 +17,7 @@ const CodeEditor = () => {
   const [edit, setEdit] = useState(true); // 이 상태에 따라 에디터가 읽기 전용인지 결정
   const [cookies] = useCookies(["rememberId"]);
   const codeFileList = useCodeFileListState();
+
   const { setCode } = useCompileActions();
   const editCodeTitle = useCodeState();
   const { getEditCodeFile } = useSelectFileActions();
@@ -68,19 +70,27 @@ const CodeEditor = () => {
     editorRef.current = editor;
   };
   return (
-    <div style={{ border: "solid 1px #ececec", width: "100%" }}>
-      <Editor
-        theme="theme"
-        height="50rem"
-        width="100%"
-        language={selectedLanguage}
-        onChange={handleEditorChange}
-        onMount={handleEditorDidMount}
-        defaultValue={
-          getEditCodeFile(editCodeTitle, codeFileList) ? getEditCodeFile(editCodeTitle, codeFileList) : undefined
-        }
-        options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
-      />
+    <div>
+      <div className="file-title-list-container">
+        {codeFileList.map((i, index) => (
+          <FileItemTitle key={index} fileName={i.title} fileType="code" />
+        ))}
+      </div>
+
+      <div style={{ border: "solid 1px #ececec", width: "100%" }}>
+        <Editor
+          theme="theme"
+          height="66rem"
+          width="100%"
+          language={selectedLanguage}
+          onChange={handleEditorChange}
+          onMount={handleEditorDidMount}
+          defaultValue={
+            getEditCodeFile(editCodeTitle, codeFileList) ? getEditCodeFile(editCodeTitle, codeFileList) : undefined
+          }
+          options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
+        />
+      </div>
     </div>
   );
 };

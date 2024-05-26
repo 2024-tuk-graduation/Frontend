@@ -34,6 +34,9 @@ const useFiles = () => {
 
   useEffect(()=>{
     setEditCodeFile(codeFileList[0]?.title);
+
+    console.log(codeFileList)
+
   },[codeFileList[0]])
 
 

@@ -1,23 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
-import chatIcon from "@/assets/images/chat.svg";
-import personnelIcon from "@/assets/images/personnel.svg";
+import { EditorInfobar, Palette } from "@/components/Editor";
 import Compile from "@/components/Editor/Code/Compile";
 import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
-import { Navbar, QandA } from "@/components";
-import { useHeightState } from "@/store/editorSection";
+import { Navbar } from "@/components";
 import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
-import { useEditorMenuActions } from "@/store/EditorMenuStore";
 
 const Editor = () => {
-  const { setPersonMenu } = useEditorMenuActions();
-  const height = useHeightState();
   const entranceCode = useEntranceCodeState();
   const { handleCodeFiles } = useFiles();
   const [modeEditor, setModeEditor] = useState(false);
@@ -53,8 +47,11 @@ const Editor = () => {
         setRoomId(newData.roomId);
         if (newData.pdfUrls) {
           setPdfFileList(newData.pdfUrls);
+          console.log(newData.pdfUrls);
         }
+        console.log(newData.codeUrls);
         await handleCodeFiles(newData.codeUrls.urls);
+
         setModeEditor(true);
       }
     };
@@ -75,21 +72,7 @@ const Editor = () => {
               <Compile />
             </div>
 
-            <div className="main-edit-area">
-              <div className="button-editor-container">
-                <EditorRoundButton handleClick={() => setPersonMenu("chat")} img={chatIcon} title={"chat"} />
-                <EditorRoundButton
-                  handleClick={() => setPersonMenu("personnel")}
-                  img={personnelIcon}
-                  title={"personnel"}
-                />
-                {modeEditor && <ModeEditor />}
-              </div>
-
-              <div className="editor-WhiteBoard-QnA-area" style={{ height }}>
-                <QandA />
-              </div>
-            </div>
+            <div className="main-edit-area">{modeEditor && <ModeEditor />}</div>
             <div>
               <Chat />
             </div>

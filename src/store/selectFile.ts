@@ -1,6 +1,6 @@
 
 import { create } from "zustand";
-import { codeFileItem} from "./editorRoomInfoStore";
+import { codeFileItem, pdfFileItem} from "./editorRoomInfoStore";
 
 
 interface selectFileType {
@@ -9,6 +9,8 @@ interface selectFileType {
   actions : {
     setEditCodeFile:(title :string) => void;
     getEditCodeFile:(title:string , list : codeFileItem[])  => string | undefined;
+    setEditPdfFile:(title :string) => void;
+    getEditPdfFile:(title:string , list : pdfFileItem[])  => string | undefined;
   }
 }
 
@@ -22,6 +24,12 @@ interface selectFileType {
     },
     setEditCodeFile: (title) => {
       set(() => ({code: title}));
+    },
+    getEditPdfFile: (title , list) => {
+      return (list.find((file) => file.fileName === title))?.fileUrl
+    },
+    setEditPdfFile: (title) => {
+      set(() => ({pdf: title}));
     },
    
   },
