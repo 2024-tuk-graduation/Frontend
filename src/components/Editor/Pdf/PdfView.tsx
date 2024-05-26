@@ -1,20 +1,21 @@
 import { usePdfFileListState } from "@/store/editorRoomInfoStore";
-import React, { MutableRefObject, Ref, useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Document, Page } from "react-pdf";
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import FileItemTitle from "../FileItemTitle";
 import doubleArrow from "@/assets/images/doubleArrow.svg";
+import { usePdfState, useSelectFileActions } from "@/store/selectFile";
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
 const PdfView = () => {
   const pdfFileList = usePdfFileListState();
-
-  const pdfRef = useRef<any>();
+  const editPdfTitle = usePdfState();
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
 
+  const { getEditPdfFile } = useSelectFileActions();
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
   };
@@ -48,13 +49,13 @@ const PdfView = () => {
         <div className="yes-pdf">
           <div className="file-title-list-container">
             {pdfFileList.map((i, index) => (
-              <FileItemTitle key={index} fileName={String(index)} fileType="pdf" />
+              <FileItemTitle key={index} fileName={i.fileName} fileType="pdf" />
             ))}
           </div>
 
           <div className="pdf-content-container">
             <Document
-              file={pdfFileList[0]}
+              file={getEditPdfFile(editPdfTitle, pdfFileList) ? getEditPdfFile(editPdfTitle, pdfFileList) : undefined}
               onLoadError={onDocumentError}
               onPassword={onDocumentLocked}
               onLoadSuccess={onDocumentLoadSuccess}

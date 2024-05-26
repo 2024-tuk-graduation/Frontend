@@ -1,5 +1,10 @@
 import { create } from "zustand";
 import { Mode } from "@/types/Mode";
+export interface pdfFileItem {
+  fileUrl : string;
+fileName:string;
+}
+
 export interface codeFileItem {
   title: string;
   content: string;
@@ -16,7 +21,7 @@ interface useEditorRoomInfoStoreType {
   roomId: number;
   personnelInfo: string[];
   codeFileList: codeFileItem[];
-  pdfFileList: string[];
+  pdfFileList:  pdfFileItem [];
  
 
   actions: {
@@ -28,7 +33,7 @@ interface useEditorRoomInfoStoreType {
     setMaxPersonnel: (newState: number) => void;
     setPersonnelInfo: (newState: string[]) => void;
     addCodeFile: (title: string, content: string) => void;
-    setPdfFileList: (newState: string[]) => void;
+    setPdfFileList: (newState: pdfFileItem []) => void;
 
     setMode: (newState: Mode) => void;
     setRoomId: (newState: number) => void;
@@ -91,7 +96,7 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
 
     },
 
-    setPdfFileList: (newState) => {
+    setPdfFileList: (newState :pdfFileItem [] ) => {
       set(() => ({ pdfFileList: newState }));
     },
   },

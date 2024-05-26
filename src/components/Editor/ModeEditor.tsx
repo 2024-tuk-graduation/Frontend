@@ -1,4 +1,4 @@
-import { useCodeFileListState, useModeState } from "@/store/editorRoomInfoStore";
+import { useModeState } from "@/store/editorRoomInfoStore";
 import React from "react";
 import CodeEditor from "./Code/CodeEditor";
 import BlankCanvas from "./Blank/ BlankCanvas";
