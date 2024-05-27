@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import { useCodeFileListState, useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
 import { WebSocketContext } from "@/context/WebSocketConnect";
-import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
 import FileItemTitle from "../FileItemTitle";
+import useCanvas from "@/hooks/useCanvas";
 
 const CodeEditor = () => {
   const monaco = useMonaco();
@@ -21,6 +21,17 @@ const CodeEditor = () => {
   const { setCode } = useCompileActions();
   const editCodeTitle = useCodeState();
   const { getEditCodeFile } = useSelectFileActions();
+
+  const [isDrawingMode, setIsDrawingMode] = useState(false); // 그림 모드 상태
+
+  const { canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode);
+
+  useEffect(() => {
+    if (!isDrawingMode) {
+      resizeCanvas();
+    }
+  }, [resizeCanvas, isDrawingMode]);
+
   const handleEditorChange = (value, event) => {
     if (host === String(cookies.rememberId)) {
       stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
@@ -42,7 +53,6 @@ const CodeEditor = () => {
     }
     if (monaco) {
       import("monaco-themes/themes/Clouds.json")
-        // import("monaco-themes/themes/Amy.json")
         .then((data) => {
           monaco.editor.defineTheme("theme", data);
         })
@@ -52,10 +62,7 @@ const CodeEditor = () => {
 
   useEffect(() => {
     if (stompClient.connected) {
-      //서버로부터 코드 변경 사항을 구독
-
       stompClient.subscribe("/sub/code", (res) => {
-        // 메시지를 받으면, 메시지에 포함된 코드 내용으로 Editor를 업데이트
         const data = JSON.parse(res.body);
         console.log(data);
         if (host !== String(cookies.rememberId)) {
@@ -66,18 +73,25 @@ const CodeEditor = () => {
   }, [stompClient.connected]);
 
   const handleEditorDidMount = (editor, monaco) => {
-    // 에디터 객체에 접근
     editorRef.current = editor;
+    resizeCanvas();
   };
+
+  const toggleDrawingMode = () => {
+    setIsDrawingMode((prevMode) => !prevMode);
+    resizeCanvas(); // Ensure canvas is resized correctly when toggling mode
+  };
+
   return (
     <div>
+      <button onClick={toggleDrawingMode}>{isDrawingMode ? "코드 편집 모드" : "그림 그리기 모드"}</button>
       <div className="file-title-list-container">
         {codeFileList.map((i, index) => (
           <FileItemTitle key={index} fileName={i.title} fileType="code" />
         ))}
       </div>
 
-      <div style={{ border: "solid 1px #ececec", width: "100%" }}>
+      <div ref={containerRef} style={{ border: "solid 1px #ececec", width: "100%", position: "relative" }}>
         <Editor
           theme="theme"
           height="66rem"
@@ -88,7 +102,25 @@ const CodeEditor = () => {
           defaultValue={
             getEditCodeFile(editCodeTitle, codeFileList) ? getEditCodeFile(editCodeTitle, codeFileList) : undefined
           }
-          options={{ border: "#000", fontSize: 15, lineHeight: 20, readOnly: edit }}
+          options={{
+            zIndex: isDrawingMode ? 1 : 9999,
+            border: "#000",
+            fontSize: 15,
+            lineHeight: 20,
+            readOnly: edit,
+          }}
+        />
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: isDrawingMode ? 9999 : 1,
+            pointerEvents: isDrawingMode ? "auto" : "none",
+          }}
         />
       </div>
     </div>
