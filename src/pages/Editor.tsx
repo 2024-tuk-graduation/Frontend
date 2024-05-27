@@ -6,16 +6,18 @@ import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
 import { Navbar } from "@/components";
-import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
+import { useEditorRoomInfoActions, useEntranceCodeState, usePdfFileListState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
+import { useSelectFileActions } from "@/store/selectFile";
 
 const Editor = () => {
   const entranceCode = useEntranceCodeState();
   const { handleCodeFiles } = useFiles();
   const [modeEditor, setModeEditor] = useState(false);
-
+  const pdfFileList = usePdfFileListState();
+  const { setEditPdfFile } = useSelectFileActions();
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
@@ -47,7 +49,6 @@ const Editor = () => {
         setRoomId(newData.roomId);
         if (newData.pdfUrls) {
           setPdfFileList(newData.pdfUrls);
-          console.log(newData.pdfUrls);
         }
         console.log(newData.codeUrls);
         await handleCodeFiles(newData.codeUrls.urls);
@@ -58,6 +59,10 @@ const Editor = () => {
 
     updateRoomInfo();
   }, [data]);
+
+  useEffect(() => {
+    setEditPdfFile(pdfFileList[0]?.fileName);
+  }, [pdfFileList[0]]);
 
   return (
     <WebSocketConnnect>
