@@ -7,7 +7,7 @@ interface EditorRoundButtonPropsType {
 }
 const EditorRoundButton = ({ handleClick, img, title }: EditorRoundButtonPropsType) => {
   return (
-    <button className={`editor-round-button-container ${title}`} onClick={handleClick}>
+    <button className="editor-round-button-container" onClick={handleClick}>
       <div>
         <img src={img} alt={title}></img>
       </div>

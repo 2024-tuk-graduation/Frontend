@@ -1,12 +1,13 @@
 import { usePdfFileListState } from "@/store/editorRoomInfoStore";
-import React, { useState } from "react";
-import { Document, Page } from "react-pdf";
-import { pdfjs } from "react-pdf";
+import React, { useEffect, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import FileItemTitle from "../FileItemTitle";
 import doubleArrow from "@/assets/images/doubleArrow.svg";
 import { usePdfState, useSelectFileActions } from "@/store/selectFile";
+import useCanvas from "@/hooks/useCanvas";
+
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
 const PdfView = () => {
@@ -14,10 +15,12 @@ const PdfView = () => {
   const editPdfTitle = usePdfState();
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
+  const { canvasRef, containerRef, resizeCanvas } = useCanvas(true);
 
   const { getEditPdfFile } = useSelectFileActions();
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
+    resizeCanvas(); // Ensure canvas is resized when document is loaded
   };
 
   const onDocumentError = (error: Error) => {
@@ -36,49 +39,65 @@ const PdfView = () => {
     }
   };
 
+  useEffect(() => {
+    resizeCanvas(); // Ensure canvas is resized initially
+  }, [resizeCanvas]);
+
+  useEffect(() => {
+    resizeCanvas(); // Ensure canvas is resized when page number changes
+  }, [pageNumber, resizeCanvas]);
+
   return (
     <>
       {pdfFileList.length === 0 ? (
         <div className="no-pdf">
-          {" "}
-          <p>아직 업로드된 pdf가 없습니다. </p>
+          <p>아직 업로드된 pdf가 없습니다.</p>
           <br />
-          <p>pdf를 업로드 해주세요 </p>
+          <p>pdf를 업로드 해주세요</p>
         </div>
       ) : (
-        <div className="yes-pdf">
-          <div className="file-title-list-container">
-            {pdfFileList.map((i, index) => (
-              <FileItemTitle key={index} fileName={i.fileName} fileType="pdf" />
-            ))}
-          </div>
+        <div style={{ position: "relative", width: "100%", height: "100%" }}>
+          <div className="yes-pdf">
+            <div className="file-title-list-container">
+              {pdfFileList.map((i, index) => (
+                <FileItemTitle key={index} fileName={i.fileName} fileType="pdf" />
+              ))}
+            </div>
 
-          <div className="pdf-content-container">
-            <Document
-              file={getEditPdfFile(editPdfTitle, pdfFileList) ? getEditPdfFile(editPdfTitle, pdfFileList) : undefined}
-              onLoadError={onDocumentError}
-              onPassword={onDocumentLocked}
-              onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber} height={610} />
-            </Document>
+            <div className="pdf-content-container">
+              <div ref={containerRef} style={{ width: "100%", height: 610, position: "relative" }}>
+                <Document
+                  file={
+                    getEditPdfFile(editPdfTitle, pdfFileList) ? getEditPdfFile(editPdfTitle, pdfFileList) : undefined
+                  }
+                  onLoadError={onDocumentError}
+                  onPassword={onDocumentLocked}
+                  onLoadSuccess={onDocumentLoadSuccess}
+                >
+                  <Page pageNumber={pageNumber} height={610} />
+                </Document>
 
-            <div className="pdf-page-control-container">
-              <div className="pdf-arrows-container">
-                <div className="pdf-arrow-button" onClick={() => onhandlePdfPage("left")}>
-                  <img src={doubleArrow} alt="left" />
-                </div>
-                <div className="pdf-arrow-button right" onClick={() => onhandlePdfPage("right")}>
-                  {" "}
-                  <img src={doubleArrow} alt="right" />
-                </div>
+                <canvas
+                  ref={canvasRef}
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 610, zIndex: 9099 }}
+                />
               </div>
-              <div className="pdf-page-info-container">
-                <h3>page</h3>
-                <div className="pdf-page">
-                  <p>
-                    {pageNumber} / {numPages}
-                  </p>
+              <div className="pdf-page-control-container">
+                <div className="pdf-arrows-container">
+                  <div className="pdf-arrow-button" onClick={() => onhandlePdfPage("left")}>
+                    <img src={doubleArrow} alt="left" />
+                  </div>
+                  <div className="pdf-arrow-button right" onClick={() => onhandlePdfPage("right")}>
+                    <img src={doubleArrow} alt="right" />
+                  </div>
+                </div>
+                <div className="pdf-page-info-container">
+                  <h3>page</h3>
+                  <div className="pdf-page">
+                    <p>
+                      {pageNumber} / {numPages}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
