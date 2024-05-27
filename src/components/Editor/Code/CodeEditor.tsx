@@ -7,7 +7,9 @@ import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
 import FileItemTitle from "../FileItemTitle";
 import useCanvas from "@/hooks/useCanvas";
-
+import EditorRoundButton from "../EditorRoundButton";
+import pencilImg from "@/assets/images/pencil.svg";
+import codeImg from "@/assets/images/code3.svg";
 const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
@@ -84,7 +86,12 @@ const CodeEditor = () => {
 
   return (
     <div>
-      <button onClick={toggleDrawingMode}>{isDrawingMode ? "코드 편집 모드" : "그림 그리기 모드"}</button>
+      <EditorRoundButton
+        handleClick={toggleDrawingMode}
+        img={isDrawingMode ? `${pencilImg} ` : `${codeImg} `}
+        title={isDrawingMode ? "그리기" : "코드입력"}
+      />
+
       <div className="file-title-list-container">
         {codeFileList.map((i, index) => (
           <FileItemTitle key={index} fileName={i.title} fileType="code" />

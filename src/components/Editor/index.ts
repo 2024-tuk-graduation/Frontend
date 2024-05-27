@@ -7,7 +7,6 @@ import Memo from "./Memo";
 import Menubar from "./PersonMenubar";
 import Palette from "./Palatte/Palette";
 import TitleBar from "./TitleBar";
-import  CodeFileItem from "./FileItemTitle"
 import DefaultMenubar from"./DefaultMenubar"
 import PdfView from "./Pdf/PdfView";
-export {PdfView , DefaultMenubar,CodeFileItem,Memo,Menubar,Palette,TitleBar,Chat , CodeEditor,Compile,EditorInfobar ,EditorRoundButton ,}
+export {PdfView , DefaultMenubar,Memo,Menubar,Palette,TitleBar,Chat , CodeEditor,Compile,EditorInfobar ,EditorRoundButton ,}
