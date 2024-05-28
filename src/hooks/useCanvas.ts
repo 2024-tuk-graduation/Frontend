@@ -13,6 +13,7 @@ const useCanvas = (isDrawingMode: boolean) => {
   const lineWidth = useLineWidthState();
   const strokeStyle = useStrokeStyleState();
   const eraser = useEraseState();
+  
 
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -79,6 +80,9 @@ const useCanvas = (isDrawingMode: boolean) => {
     setIsPainting(false);
   }, []);
 
+
+
+
   useEffect(() => {
     const overlayCanvas = canvasRef.current;
     if (overlayCanvas) {
@@ -112,7 +116,17 @@ const useCanvas = (isDrawingMode: boolean) => {
     return () => window.removeEventListener("resize", resizeCanvas);
   }, [resizeCanvas]);
 
-  return { canvasRef, containerRef, resizeCanvas };
+
+  const clearCanvas = useCallback(() => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  }, []);
+  return { canvasRef, containerRef, resizeCanvas ,clearCanvas };
 };
 
 export default useCanvas;

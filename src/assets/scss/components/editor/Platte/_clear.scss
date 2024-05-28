@@ -1,0 +1,12 @@
+.clear-button {
+  position: absolute;
+  right: 17rem;
+  top: -40px;
+  z-index: 90;
+  height: 0.3rem;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  @include editorButton(#e7f4ff, #4f98f1);
+}

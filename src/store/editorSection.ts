@@ -13,7 +13,6 @@ interface editorSectionStoreType {
   height : 1000,
   actions : { 
     setHeight: (newState:number)  => {  set(() => ({ height : newState }));}
-   
   },
 
 }));

@@ -7,6 +7,7 @@ import FileItemTitle from "../FileItemTitle";
 import doubleArrow from "@/assets/images/doubleArrow.svg";
 import { usePdfState, useSelectFileActions } from "@/store/selectFile";
 import useCanvas from "@/hooks/useCanvas";
+import Clear from "../Palatte/Clear";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
 
@@ -15,7 +16,7 @@ const PdfView = () => {
   const editPdfTitle = usePdfState();
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { canvasRef, containerRef, resizeCanvas } = useCanvas(true);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true);
 
   const { getEditPdfFile } = useSelectFileActions();
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -65,6 +66,7 @@ const PdfView = () => {
             </div>
 
             <div className="pdf-content-container">
+              <Clear handleClear={clearCanvas} />
               <div ref={containerRef} style={{ width: "100%", height: 610, position: "relative" }}>
                 <Document
                   file={

@@ -10,6 +10,7 @@ import useCanvas from "@/hooks/useCanvas";
 import EditorRoundButton from "../EditorRoundButton";
 import pencilImg from "@/assets/images/pencil.svg";
 import codeImg from "@/assets/images/code3.svg";
+import Clear from "../Palatte/Clear";
 const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
@@ -26,7 +27,7 @@ const CodeEditor = () => {
 
   const [isDrawingMode, setIsDrawingMode] = useState(false); // 그림 모드 상태
 
-  const { canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode);
 
   useEffect(() => {
     if (!isDrawingMode) {
@@ -93,6 +94,7 @@ const CodeEditor = () => {
       />
 
       <div className="file-title-list-container">
+        <Clear handleClear={clearCanvas} />
         {codeFileList.map((i, index) => (
           <FileItemTitle key={index} fileName={i.title} fileType="code" />
         ))}
