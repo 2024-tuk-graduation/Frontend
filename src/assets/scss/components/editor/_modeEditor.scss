@@ -8,12 +8,9 @@
 .blank-container {
   width: 100%;
   height: 100%;
-  border: solid $gray 1px;
+
   display: none;
-  img {
-    width: 100%;
-    height: 20rem;
-  }
+
   &.select {
     display: block;
   }
