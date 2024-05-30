@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import EditorModal from "@/components/modal/EditorModal";
 import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
@@ -95,6 +96,7 @@ const Editor = () => {
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
+          {/* <EditorModal /> */}
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">

@@ -1,0 +1,29 @@
+.editor-modal-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.editor-modal-title {
+  margin-top: 5rem;
+  font-weight: 100;
+  font-size: 3rem;
+}
+
+.editor-modal-now-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.editor-modal-now-list-button {
+}
+
+.editor-modal-button {
+  @include button(20rem, 2rem, $navy);
+  color: $white;
+  font-weight: normal;
+}

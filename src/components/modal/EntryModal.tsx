@@ -27,7 +27,6 @@ const EntryModal = () => {
     onErrorCb: onEntryError,
   });
 
-  // 인덱스 시그니처를 사용하여 TypeScript에게 객체를 인덱스로 사용할 수 있음을 알립니다.
   const [codeInput, setCodeInput] = useState<{ [key: string]: string }>({
     input1: "",
     input2: "",

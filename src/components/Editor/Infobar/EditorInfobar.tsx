@@ -1,24 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
 import RadioButton from "./RadioButton";
 import EntranceCode from "./EntranceCode";
 import Record from "./Record";
 import AddFile from "./AddFile";
 import Time from "./Time";
 import Save from "./Save";
-import { useEditorRoomInfoActions, useModeState } from "@/store/editorRoomInfoStore";
+import {
+  useEditorRoomInfoActions,
+  useModeState,
+  useHostState,
+  usePersonnelInfoState,
+} from "@/store/editorRoomInfoStore";
+import { useModalActions } from "@/store/modalStore";
+import { useCookies } from "react-cookie";
+import { Editor } from "@monaco-editor/react";
+import EditorModal from "@/components/modal/EditorModal";
 
 const EditorInfobar = () => {
-  // const [checkedValue, setCheckedValue] = useState("blank");
-
   const { setMode } = useEditorRoomInfoActions();
   const mode = useModeState();
+  const { setModalOpen } = useModalActions();
+  const currentHost = useHostState();
+  const currentUser = usePersonnelInfoState();
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setCheckedValue(event.target.value);
     setMode(event.target.value);
   };
 
   const modeContent = ["blank", "pdf", "code"];
+
+  const handleNowEditor = () => {
+    if (currentHost === String(cookies.rememberId)) {
+      setModalOpen("editor");
+      console.log("현재 편집자 : ", currentHost);
+    }
+  };
 
   return (
     <div className="editor-infobar-container">
@@ -29,7 +46,7 @@ const EditorInfobar = () => {
           ))}
           <div className="editor-switch__indicator" />
         </div>
-        <div className="editor-infobar-buttons ">
+        <div className="editor-infobar-buttons">
           <Record />
           <AddFile />
           <EntranceCode />
@@ -37,7 +54,12 @@ const EditorInfobar = () => {
           <Save />
         </div>
       </div>
-      <button className="editor-save-button">편집자 바꾸기</button>
+      {currentHost === String(cookies.rememberId) ? (
+        <button className="editor-save-button" onClick={handleNowEditor}>
+          편집자 바꾸기
+        </button>
+      ) : null}
+      <EditorModal />
     </div>
   );
 };
