@@ -1,11 +1,14 @@
 import { highlighterColorPlatte, penColorPlatte } from "@/data";
 import { useCanvasActions, useLineWidthState, usePenTypeState, useStrokeStyleState } from "@/store/canvas";
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 
 import palette from "@/assets/images/palette.svg";
 import { penType } from "@/data/penType";
 import { PenType } from "@/types";
 import ColorPalette from "./ColorPalette";
+import { useCookies } from "react-cookie";
+import { useHostState } from "@/store/editorRoomInfoStore";
+import { WebSocketContext } from "@/context/WebSocketConnect";
 
 const Palette = () => {
   const lineWidth = useLineWidthState();
@@ -13,6 +16,11 @@ const Palette = () => {
   const strokeStyle = useStrokeStyleState();
   const currentPenType = usePenTypeState();
   const colorInputRef = useRef(null);
+
+  const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
+  const [cookies] = useCookies(["rememberId"]);
+  const host = useHostState();
+  const isHost: boolean = host === String(cookies.rememberId);
 
   const sliderStyle = {
     background: `linear-gradient(to right, ${strokeStyle} ${(lineWidth / 30) * 100}%, #CCCCCC ${(lineWidth / 30) * 100}%)`,
@@ -36,6 +44,9 @@ const Palette = () => {
       ? (setEraser(true), setStrokeStyle("rgba(0,0,0,1)"))
       : (setEraser(false),
         toolName === "highlighter" ? setStrokeStyle(highlighterColorPlatte[0]) : setStrokeStyle(penColorPlatte[0]));
+    // if (isHost) {
+    //   stompClient.send(`/pub/canvasdraw/type`, JSON.stringify({ drawType: toolName }));
+    // }
   };
 
   return (

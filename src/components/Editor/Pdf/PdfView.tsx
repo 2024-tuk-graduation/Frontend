@@ -41,11 +41,7 @@ const PdfView = () => {
   };
 
   useEffect(() => {
-    resizeCanvas(); // Ensure canvas is resized initially
-  }, [resizeCanvas]);
-
-  useEffect(() => {
-    resizeCanvas(); // Ensure canvas is resized when page number changes
+    resizeCanvas();
   }, [pageNumber, resizeCanvas]);
 
   return (

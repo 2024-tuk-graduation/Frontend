@@ -1,12 +1,14 @@
-import { useTemplateState } from "@/store/editorRoomInfoStore";
+import { useHostState, useTemplateState } from "@/store/editorRoomInfoStore";
 import React, { useEffect } from "react";
 import { templates } from "@/data";
 import useCanvas from "@/hooks/useCanvas";
 import FileItemTitle from "../FileItemTitle";
 import Clear from "../Palatte/Clear";
+import { useCookies } from "react-cookie";
 
 const BlankCanvas = () => {
   const templateCount = useTemplateState();
+
   const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true);
 
   useEffect(() => {
