@@ -39,6 +39,8 @@ const EditorModal = () => {
         currentHostNickname: currentHostNickname,
         newHostNickname: selectedHost,
       };
+
+      console.log(hostData);
       changeHostMutation.mutate(hostData);
     }
   };

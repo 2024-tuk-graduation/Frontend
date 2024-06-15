@@ -18,7 +18,7 @@ const VideoChat = () => {
   const [cookies] = useCookies(["rememberId"]);
 
   const roomId = useRoomId();
-
+  const { setHost } = useEditorRoomInfoActions();
   const curentPersonnel = useCurrentPersonnelState();
   const maxPersonnel = useMaxPersonnelState();
 
@@ -47,6 +47,8 @@ const VideoChat = () => {
           setCurrentPersonnel(data.participantNicknames.length);
           setPersonnelInfo(data.participantNicknames);
           setTimeout(createOffer, 1000);
+          setHost(data.hostNickname);
+          console.log("아강", data);
         },
         (error: any) => {
           console.error("구독 오류 발생", error);
