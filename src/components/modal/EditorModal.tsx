@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useEditorModalState, useModalActions } from "@/store/modalStore";
 import { useEditorRoomInfoActions, useEntranceCodeState, useHostState } from "@/store/editorRoomInfoStore";
 import { changeHostApi, changeHostApiPropsType } from "@/hooks/services/mutations/useChangeHost";
 import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 import BaseModal from "./BaseModal";
 import ParticipantsList from "../Editor/ParticipantsList";
+import { WebSocketContext } from "@/context/WebSocketConnect";
 
 const EditorModal = () => {
   const editorModal = useEditorModalState();
-  // const { setModalOpen } = useModalActions();
+  const { setModalOpen } = useModalActions();
   const { setHost } = useEditorRoomInfoActions();
   const entranceCode = useEntranceCodeState();
   const currentHostNickname = useHostState();
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
+  const stompClient = useContext(WebSocketContext);
 
   const onChangeHostSuccess = (data: any) => {
     console.log("호스트 변경 성공");
-    const newData = data.data.data;
-    setHost(newData.hostNickname);
-    // setModalOpen("editor");
+    setModalOpen("editor");
   };
 
   const onChangeHostError = () => {
@@ -45,6 +45,21 @@ const EditorModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (stompClient.connected) {
+      stompClient.subscribe(
+        `/sub/hostChange`,
+        (res) => {
+          const data = JSON.parse(res.body);
+          setHost(data.hostNickname);
+          console.log("아강", data);
+        },
+        (error: any) => {
+          console.error("구독 오류 발생", error);
+        }
+      );
+    }
+  }, [stompClient.connected]);
   return (
     <BaseModal isOpen={editorModal} type={"editor"}>
       <form onSubmit={onSubmitHandler} className="editor-modal-container">

@@ -9,7 +9,6 @@ import {
 } from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext } from "react";
 import { useCookies } from "react-cookie";
-
 import VideoCam from "./VideoCam";
 
 const VideoChat = () => {
@@ -47,8 +46,6 @@ const VideoChat = () => {
           setCurrentPersonnel(data.participantNicknames.length);
           setPersonnelInfo(data.participantNicknames);
           setTimeout(createOffer, 1000);
-          setHost(data.hostNickname);
-          console.log("아강", data);
         },
         (error: any) => {
           console.error("구독 오류 발생", error);

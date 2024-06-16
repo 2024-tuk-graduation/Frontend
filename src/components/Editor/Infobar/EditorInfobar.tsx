@@ -21,7 +21,6 @@ const EditorInfobar = () => {
   const mode = useModeState();
   const { setModalOpen } = useModalActions();
   const currentHost = useHostState();
-  const currentUser = usePersonnelInfoState();
   const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +32,6 @@ const EditorInfobar = () => {
   const handleNowEditor = () => {
     if (currentHost === String(cookies.rememberId)) {
       setModalOpen("editor");
-      console.log("현재 편집자 : ", currentHost);
     }
   };
 

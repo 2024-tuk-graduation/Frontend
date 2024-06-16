@@ -20,7 +20,7 @@ const ParticipantsList = React.memo(({ onSelect }: { onSelect: (participant: str
           .filter((person) => person !== currentHost)
           .map((participant) => (
             <li key={participant}>
-              <button className="editor-modal-now-list-button" onClick={() => handleSelect(participant)}>
+              <button className="editor-modal-now-list-button" type="button" onClick={() => handleSelect(participant)}>
                 {participant}
               </button>
             </li>
