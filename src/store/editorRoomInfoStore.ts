@@ -85,15 +85,13 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
     setMode: (newState) => {
       set(() => ({ mode: newState }));
     },
-
+    
     addCodeFile: (title, content) =>
       set((state) => ({
         codeFileList: [...state.codeFileList, { title, content }],
       })),
-      
     setRoomId: (newState) => {
       set(() => ({ roomId: newState }));
-
     },
 
     setPdfFileList: (newState :pdfFileItem [] ) => {
@@ -113,5 +111,5 @@ export const useModeState = () => useEditorRoomInfoStore((state) => state.mode);
 export const useCodeFileListState = () => useEditorRoomInfoStore((state) => state.codeFileList);
 export const useTemplateState = () => useEditorRoomInfoStore((state) => state.template);
 export const useRoomId = () => useEditorRoomInfoStore((state) => state.roomId);
-export const usePdfFileListState = () =>useEditorRoomInfoStore((state) => state.pdfFileList);
+export const usePdfFileListState = () => useEditorRoomInfoStore((state) => state.pdfFileList);
 export const useEditorRoomInfoActions = () => useEditorRoomInfoStore((state) => state.actions);

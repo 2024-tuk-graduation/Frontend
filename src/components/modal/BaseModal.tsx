@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-modal";
 import closeIcon from "@/assets/images/close.svg";
 import { Type, useModalActions } from "@/store/modalStore";
+
 type BaseModalPropsType = {
   isOpen: boolean;
   children: React.ReactNode;

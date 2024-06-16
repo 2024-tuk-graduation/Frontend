@@ -9,7 +9,6 @@ import {
 } from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext } from "react";
 import { useCookies } from "react-cookie";
-
 import VideoCam from "./VideoCam";
 
 const VideoChat = () => {
@@ -18,7 +17,7 @@ const VideoChat = () => {
   const [cookies] = useCookies(["rememberId"]);
 
   const roomId = useRoomId();
-
+  const { setHost } = useEditorRoomInfoActions();
   const curentPersonnel = useCurrentPersonnelState();
   const maxPersonnel = useMaxPersonnelState();
 

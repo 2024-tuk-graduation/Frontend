@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { EditorInfobar, Palette } from "@/components/Editor";
+import EditorModal from "@/components/modal/EditorModal";
+import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
+import chatIcon from "@/assets/images/chat.svg";
+import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
 import Chat from "@/components/Editor/Chat/VideoChat";
 import { WebSocketConnnect } from "@/context";
@@ -70,6 +73,7 @@ const Editor = () => {
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
+          {/* <EditorModal /> */}
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
