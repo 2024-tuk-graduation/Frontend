@@ -1,19 +1,34 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useEraseState, useLineWidthState, useStrokeStyleState } from "@/store/canvas";
+import { WebSocketContext } from "@/context/WebSocketConnect";
+import { useCookies } from "react-cookie";
+import { useHostState } from "@/store/editorRoomInfoStore";
 
 interface Coordinate {
   x: number;
   y: number;
 }
 
+interface DrawData {
+  lastX: number;
+  lastY: number;
+  offsetX: number;
+  offsetY: number;
+  isDrawing: boolean;
+}
+
 const useCanvas = (isDrawingMode: boolean) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [cookies] = useCookies(["rememberId"]);
+  const host = useHostState();
+  const isHost: boolean = host === String(cookies.rememberId);
 
   const lineWidth = useLineWidthState();
   const strokeStyle = useStrokeStyleState();
   const eraser = useEraseState();
-  
+
+  const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
 
   const [mousePosition, setMousePosition] = useState<Coordinate | undefined>(undefined);
   const [isPainting, setIsPainting] = useState(false);
@@ -30,7 +45,7 @@ const useCanvas = (isDrawingMode: boolean) => {
     };
   };
 
-  const drawLine = (originalMousePosition: Coordinate, newMousePosition: Coordinate) => {
+  const drawLine = (originalMousePosition: Coordinate, newMousePosition: Coordinate, sendToServer: boolean) => {
     if (!canvasRef.current) {
       return;
     }
@@ -48,40 +63,59 @@ const useCanvas = (isDrawingMode: boolean) => {
     context.lineTo(newMousePosition.x, newMousePosition.y);
     context.closePath();
     context.stroke();
+
+    if (sendToServer && isHost) {
+      const drawData: DrawData = {
+        lastX: originalMousePosition.x,
+        lastY: originalMousePosition.y,
+        offsetX: newMousePosition.x,
+        offsetY: newMousePosition.y,
+        isDrawing: true,
+      };
+      stompClient.send(`/pub/canvasdraw`, JSON.stringify(drawData));
+      console.log( drawData)
+    }
   };
 
-  const startPaint = useCallback((event: MouseEvent) => {
-    if (!isDrawingMode) return;
-    const coordinates = getCoordinates(event);
-    if (coordinates) {
-      setIsPainting(true);
-      setMousePosition(coordinates);
-    }
-  }, [isDrawingMode]);
+  const handleDrawData = (data: DrawData) => {
+    const { lastX, lastY, offsetX, offsetY } = data;
+    const originalMousePosition: Coordinate = { x: lastX, y: lastY };
+    const newMousePosition: Coordinate = { x: offsetX, y: offsetY };
+    drawLine(originalMousePosition, newMousePosition, false);
+  };
+
+  const startPaint = useCallback(
+    (event: MouseEvent) => {
+      if (!isDrawingMode || !isHost) return;
+      const coordinates = getCoordinates(event);
+      if (coordinates) {
+        setIsPainting(true);
+        setMousePosition(coordinates);
+      }
+    },
+    [isDrawingMode, isHost]
+  );
 
   const paint = useCallback(
     (event: MouseEvent) => {
-      if (!isDrawingMode) return;
+      if (!isDrawingMode || !isHost) return;
       event.preventDefault();
       event.stopPropagation();
 
       if (isPainting) {
         const newMousePosition = getCoordinates(event);
         if (mousePosition && newMousePosition) {
-          drawLine(mousePosition, newMousePosition);
+          drawLine(mousePosition, newMousePosition, true);
           setMousePosition(newMousePosition);
         }
       }
     },
-    [isPainting, mousePosition, eraser, isDrawingMode]
+    [isPainting, mousePosition, eraser, isDrawingMode, isHost]
   );
 
   const exitPaint = useCallback(() => {
     setIsPainting(false);
   }, []);
-
-
-
 
   useEffect(() => {
     const overlayCanvas = canvasRef.current;
@@ -100,6 +134,20 @@ const useCanvas = (isDrawingMode: boolean) => {
     }
   }, [startPaint, paint, exitPaint]);
 
+  useEffect(() => {
+    if (!isHost) {
+      const subscription = stompClient.subscribe("/sub/canvasdraw", (message: any) => {
+        const drawData: DrawData = JSON.parse(message.body);
+      console.log(drawData);
+        handleDrawData(drawData);
+      });
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [isHost, stompClient]);
+
   const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -116,7 +164,6 @@ const useCanvas = (isDrawingMode: boolean) => {
     return () => window.removeEventListener("resize", resizeCanvas);
   }, [resizeCanvas]);
 
-
   const clearCanvas = useCallback(() => {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
@@ -126,7 +173,8 @@ const useCanvas = (isDrawingMode: boolean) => {
       }
     }
   }, []);
-  return { canvasRef, containerRef, resizeCanvas ,clearCanvas };
+
+  return { canvasRef, containerRef, resizeCanvas, clearCanvas };
 };
 
 export default useCanvas;
