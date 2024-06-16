@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, useCallback } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import { useCodeFileListState, useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
 import { WebSocketContext } from "@/context/WebSocketConnect";
@@ -11,6 +11,7 @@ import EditorRoundButton from "../EditorRoundButton";
 import pencilImg from "@/assets/images/pencil.svg";
 import codeImg from "@/assets/images/code3.svg";
 import Clear from "../Palatte/Clear";
+
 const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
@@ -35,24 +36,29 @@ const CodeEditor = () => {
     }
   }, [resizeCanvas, isDrawingMode]);
 
-  const handleEditorChange = (value, event) => {
-    if (host === String(cookies.rememberId)) {
-      stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
-      console.log("코드 전송");
-    }
-    setCode(value);
-  };
+  const handleEditorChange = useCallback(
+    (value, event) => {
+      if (host === String(cookies.rememberId)) {
+        stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
+        console.log("코드 전송");
+      }
+      setCode(value);
+    },
+    [host, setCode]
+  );
 
   useEffect(() => {
     if (editorRef.current) {
       const codeContent = getEditCodeFile(editCodeTitle, codeFileList);
       editorRef.current.setValue(codeContent);
     }
-  }, [editCodeTitle, codeFileList]);
+  }, [editCodeTitle, codeFileList, getEditCodeFile]);
 
   useEffect(() => {
     if (host === String(cookies.rememberId)) {
       setEdit(false);
+    } else {
+      setEdit(true);
     }
     if (monaco) {
       import("monaco-themes/themes/Clouds.json")
@@ -61,19 +67,24 @@ const CodeEditor = () => {
         })
         .then(() => monaco.editor.setTheme("theme"));
     }
-  }, [monaco]);
+  }, [monaco, host]);
 
   useEffect(() => {
     if (stompClient.connected) {
-      stompClient.subscribe("/sub/code", (res) => {
+      const subscription = stompClient.subscribe("/sub/code", (res) => {
         const data = JSON.parse(res.body);
         console.log(data);
         if (host !== String(cookies.rememberId)) {
           editorRef.current?.setValue(data.codeContent);
         }
       });
+
+      // 이전 구독을 취소하기 위해 클린업 함수 반환
+      return () => {
+        subscription.unsubscribe();
+      };
     }
-  }, [stompClient.connected]);
+  }, [stompClient.connected, host]);
 
   const handleEditorDidMount = (editor, monaco) => {
     editorRef.current = editor;
