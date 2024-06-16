@@ -1,6 +1,14 @@
 import { create } from "zustand";
 import { Mode } from "@/types/Mode";
+export interface pdfFileItem {
+  fileUrl : string;
+fileName:string;
+}
 
+export interface codeFileItem {
+  title: string;
+  content: string;
+}
 interface useEditorRoomInfoStoreType {
   entranceCode: string;
   host: string;
@@ -12,8 +20,9 @@ interface useEditorRoomInfoStoreType {
   currentPersonnel: number;
   roomId: number;
   personnelInfo: string[];
-  codeFileList: string[];
-  pdfFileList: string[];
+  codeFileList: codeFileItem[];
+  pdfFileList:  pdfFileItem [];
+ 
 
   actions: {
     setEntranceCode: (newState: string) => void;
@@ -23,9 +32,8 @@ interface useEditorRoomInfoStoreType {
     setCurrentPersonnel: (newState: number) => void;
     setMaxPersonnel: (newState: number) => void;
     setPersonnelInfo: (newState: string[]) => void;
-    // resetPersonnelInfo:() =>void;
-    setCodeFileList: (newState: string[]) => void;
-    setPdfFileList: (newState: string[]) => void;
+    addCodeFile: (title: string, content: string) => void;
+    setPdfFileList: (newState: pdfFileItem []) => void;
 
     setMode: (newState: Mode) => void;
     setRoomId: (newState: number) => void;
@@ -45,7 +53,7 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
   pdfFileList: [],
   mode: "blank",
   template: 1,
-  codeFileList: ["example1.py"],
+  codeFileList: [],
 
   actions: {
     setTemplate: (newState) => {
@@ -77,16 +85,16 @@ const useEditorRoomInfoStore = create<useEditorRoomInfoStoreType>((set) => ({
     setMode: (newState) => {
       set(() => ({ mode: newState }));
     },
-
-    setCodeFileList: (newState) => {
-      set(() => ({ codeFileList: newState }));
-    },
-
+    
+    addCodeFile: (title, content) =>
+      set((state) => ({
+        codeFileList: [...state.codeFileList, { title, content }],
+      })),
     setRoomId: (newState) => {
       set(() => ({ roomId: newState }));
     },
 
-    setPdfFileList: (newState) => {
+    setPdfFileList: (newState :pdfFileItem [] ) => {
       set(() => ({ pdfFileList: newState }));
     },
   },

@@ -18,21 +18,33 @@
   }
 }
 
-// @mixin font-face($name, $path, $weight: null, $style: null, $exts: otf ttf) {
-//   $src: null;
-//   $formats: (
-//     woff2: "opentype",
-//   );
-//   @each $ext in $exts {
-//     $format: map-get($formats, $ext);
-//     $src: append($src, url(quote($path)) format(quote($format)), comma);
-//   }
-//   @font-face {
-//     font-family: quote($name);
-//     font-style: $style;
-//     font-weight: $weight;
-//     src: $src;
-//   }
-// }
+@mixin fileTitle($color) {
+  background-color: $color;
+  cursor: pointer;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+  display: flex;
+  width: 12rem;
+  height: 3rem;
+  padding: 1rem;
+  align-items: center;
+  &:hover {
+    background-color: lighten($color, 15%);
+  }
+}
 
-// @include font-face("SUITE-woff2", "../../..//font/SUITE-woff2", 400, null, woff2);
+@mixin editorButton($color, $hoverColor) {
+  background-color: $color;
+  color: black;
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  border: 0.1rem solid #b5b5b5;
+  box-shadow: 0.1rem 0.1rem 0.3rem rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    background-color: $hoverColor;
+    color: white;
+  }
+}

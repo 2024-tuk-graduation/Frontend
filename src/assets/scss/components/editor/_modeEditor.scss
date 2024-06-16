@@ -2,29 +2,35 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 53.25rem;
+  position: relative;
+  height: 100%;
 }
 .blank-container {
   width: 100%;
   height: 100%;
-  border: solid $gray 1px;
-  img {
-    width: 100%;
-    height: 100%;
+
+  display: none;
+
+  &.select {
+    display: block;
   }
 }
 
-.codeFile-title-list-container {
+.file-title-list-container {
   display: flex;
 }
+
 .pdf-container {
   width: 100%;
   height: 100%;
-  border: solid $gray 1px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  display: none;
+  &.select {
+    display: block;
+  }
   p {
     font-size: 2rem;
     color: #656565;

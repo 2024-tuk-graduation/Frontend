@@ -45,7 +45,7 @@ const VideoChat = () => {
           const data = JSON.parse(res.body);
           setCurrentPersonnel(data.participantNicknames.length);
           setPersonnelInfo(data.participantNicknames);
-          setTimeout(createOffer, 1000);
+          setTimeout(createOffer, 500);
         },
         (error: any) => {
           console.error("구독 오류 발생", error);
@@ -183,7 +183,7 @@ const VideoChat = () => {
             console.log("Received offer:", data);
             setTimeout(() => {
               createAnswer(new RTCSessionDescription({ type: data.type, sdp: data.content }));
-            }, 5000); //
+            }, 500); //
           },
           (error) => {
             console.error("Subscription error:", error);

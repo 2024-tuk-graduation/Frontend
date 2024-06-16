@@ -1,23 +1,40 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
-import { useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
+import { useCodeFileListState, useHostState, useLanguageState } from "@/store/editorRoomInfoStore";
 import { WebSocketContext } from "@/context/WebSocketConnect";
-import { toast, ToastContainer } from "react-toastify";
-import { useLocation } from "react-router-dom";
-import "react-toastify/ReactToastify.css";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
-
-const CodeEditor = ({ code }: { code: any }) => {
+import { useCodeState, useSelectFileActions } from "@/store/selectFile";
+import FileItemTitle from "../FileItemTitle";
+import useCanvas from "@/hooks/useCanvas";
+import EditorRoundButton from "../EditorRoundButton";
+import pencilImg from "@/assets/images/pencil.svg";
+import codeImg from "@/assets/images/code3.svg";
+import Clear from "../Palatte/Clear";
+const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
   const stompClient = useContext(WebSocketContext); // 웹소켓에 접근
   const host = useHostState();
   const selectedLanguage = useLanguageState();
   const [edit, setEdit] = useState(true); // 이 상태에 따라 에디터가 읽기 전용인지 결정
-  const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
+  const [cookies] = useCookies(["rememberId"]);
+  const codeFileList = useCodeFileListState();
 
   const { setCode } = useCompileActions();
+  const editCodeTitle = useCodeState();
+  const { getEditCodeFile } = useSelectFileActions();
+
+  const [isDrawingMode, setIsDrawingMode] = useState(false); // 그림 모드 상태
+
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode);
+
+  useEffect(() => {
+    if (!isDrawingMode) {
+      resizeCanvas();
+    }
+  }, [resizeCanvas, isDrawingMode]);
+
   const handleEditorChange = (value, event) => {
     if (host === String(cookies.rememberId)) {
       stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
@@ -26,15 +43,12 @@ const CodeEditor = ({ code }: { code: any }) => {
     setCode(value);
   };
 
-  const handleEditorDidMount = (editor, monaco) => {
-    // 에디터 객체에 접근
-    editorRef.current = editor;
-    editor.onMouseDown(() => {
-      if (host !== String(cookies.rememberId)) {
-        toast.error("호스트만 입력할 수 있습니다!");
-      }
-    });
-  };
+  useEffect(() => {
+    if (editorRef.current) {
+      const codeContent = getEditCodeFile(editCodeTitle, codeFileList);
+      editorRef.current.setValue(codeContent);
+    }
+  }, [editCodeTitle, codeFileList]);
 
   useEffect(() => {
     if (host === String(cookies.rememberId)) {
@@ -42,7 +56,6 @@ const CodeEditor = ({ code }: { code: any }) => {
     }
     if (monaco) {
       import("monaco-themes/themes/Clouds.json")
-        // import("monaco-themes/themes/Amy.json")
         .then((data) => {
           monaco.editor.defineTheme("theme", data);
         })
@@ -52,10 +65,7 @@ const CodeEditor = ({ code }: { code: any }) => {
 
   useEffect(() => {
     if (stompClient.connected) {
-      //서버로부터 코드 변경 사항을 구독
-
       stompClient.subscribe("/sub/code", (res) => {
-        // 메시지를 받으면, 메시지에 포함된 코드 내용으로 Editor를 업데이트
         const data = JSON.parse(res.body);
         console.log(data);
         if (host !== String(cookies.rememberId)) {
@@ -65,20 +75,64 @@ const CodeEditor = ({ code }: { code: any }) => {
     }
   }, [stompClient.connected]);
 
+  const handleEditorDidMount = (editor, monaco) => {
+    editorRef.current = editor;
+    resizeCanvas();
+  };
+
+  const toggleDrawingMode = () => {
+    setIsDrawingMode((prevMode) => !prevMode);
+    resizeCanvas(); // Ensure canvas is resized correctly when toggling mode
+  };
+
   return (
-    <div style={{ border: "solid 1px #ececec", width: "100%" }}>
-      <Editor
-        theme="theme"
-        height="50rem"
-        width="100%"
-        language={selectedLanguage}
-        onChange={handleEditorChange}
-        onMount={handleEditorDidMount}
-        defaultValue={code[0]}
-        options={{ border: "#000", fontSize: 17, lineHeight: 20, readOnly: edit }}
+    <div>
+      <EditorRoundButton
+        handleClick={toggleDrawingMode}
+        img={isDrawingMode ? `${pencilImg} ` : `${codeImg} `}
+        title={isDrawingMode ? "그리기" : "코드입력"}
       />
+
+      <div className="file-title-list-container">
+        <Clear handleClear={clearCanvas} />
+        {codeFileList.map((i, index) => (
+          <FileItemTitle key={index} fileName={i.title} fileType="code" />
+        ))}
+      </div>
+
+      <div ref={containerRef} style={{ border: "solid 1px #ececec", width: "100%", position: "relative" }}>
+        <Editor
+          theme="theme"
+          height="66rem"
+          width="100%"
+          language={selectedLanguage}
+          onChange={handleEditorChange}
+          onMount={handleEditorDidMount}
+          defaultValue={
+            getEditCodeFile(editCodeTitle, codeFileList) ? getEditCodeFile(editCodeTitle, codeFileList) : undefined
+          }
+          options={{
+            zIndex: isDrawingMode ? 1 : 9999,
+            border: "#000",
+            fontSize: 15,
+            lineHeight: 20,
+            readOnly: edit,
+          }}
+        />
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: isDrawingMode ? 9999 : 1,
+            pointerEvents: isDrawingMode ? "auto" : "none",
+          }}
+        />
+      </div>
     </div>
-    // <ToastContainer />
   );
 };
 
