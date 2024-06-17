@@ -8,8 +8,7 @@ import { useCookies } from "react-cookie";
 
 const BlankCanvas = () => {
   const templateCount = useTemplateState();
-
-  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true, "blank");
 
   useEffect(() => {
     resizeCanvas();

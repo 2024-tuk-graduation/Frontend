@@ -3,6 +3,7 @@ import { useEraseState, useLineWidthState, useStrokeStyleState } from "@/store/c
 import { WebSocketContext } from "@/context/WebSocketConnect";
 import { useCookies } from "react-cookie";
 import { useHostState } from "@/store/editorRoomInfoStore";
+import { Mode } from "@/types";
 
 interface Coordinate {
   x: number;
@@ -15,9 +16,10 @@ interface DrawData {
   offsetX: number;
   offsetY: number;
   isDrawing: boolean;
+  mode: Mode; 
 }
 
-const useCanvas = (isDrawingMode: boolean) => {
+const useCanvas = (isDrawingMode: boolean , mode : Mode) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [cookies] = useCookies(["rememberId"]);
@@ -71,13 +73,15 @@ const useCanvas = (isDrawingMode: boolean) => {
         offsetX: newMousePosition.x,
         offsetY: newMousePosition.y,
         isDrawing: true,
+        mode : mode
       };
       stompClient.send(`/pub/canvasdraw`, JSON.stringify(drawData));
-      console.log( drawData)
+
     }
   };
 
   const handleDrawData = (data: DrawData) => {
+    // if (data.mode !== mode) return; // 현재 모드와 다르면 무시
     const { lastX, lastY, offsetX, offsetY } = data;
     const originalMousePosition: Coordinate = { x: lastX, y: lastY };
     const newMousePosition: Coordinate = { x: offsetX, y: offsetY };
@@ -138,10 +142,9 @@ const useCanvas = (isDrawingMode: boolean) => {
     if (!isHost) {
       const subscription = stompClient.subscribe("/sub/canvasdraw", (message: any) => {
         const drawData: DrawData = JSON.parse(message.body);
+        if(drawData.mode == mode) { handleDrawData(drawData)}
       console.log(drawData);
-        handleDrawData(drawData);
       });
-
       return () => {
         subscription.unsubscribe();
       };
