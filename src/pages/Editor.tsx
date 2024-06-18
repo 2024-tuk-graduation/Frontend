@@ -32,10 +32,13 @@ const Editor = () => {
     setTemplate,
     setRoomId,
   } = useEditorRoomInfoActions();
-
   const { isLoading, data, isError } = useQuery({
-    queryKey: ["roomInfo"],
-    queryFn: () => editorRoomInfoApi(entranceCode),
+    queryKey: ["roomInfo", entranceCode],
+    queryFn: () => {
+      console.log("Fetching room info...");
+      return editorRoomInfoApi(entranceCode);
+    },
+    staleTime: 5 * 60 * 10000, // 5 minutes
   });
 
   useEffect(() => {
@@ -64,8 +67,10 @@ const Editor = () => {
   }, [data]);
 
   useEffect(() => {
-    setEditPdfFile(pdfFileList[0]?.fileName);
-  }, [pdfFileList[0]]);
+    if (pdfFileList.length > 0) {
+      setEditPdfFile(pdfFileList[0]?.fileName);
+    }
+  }, [pdfFileList]);
 
   return (
     <WebSocketConnnect>

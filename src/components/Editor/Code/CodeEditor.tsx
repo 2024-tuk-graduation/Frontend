@@ -31,9 +31,7 @@ const CodeEditor = () => {
   const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode, "code");
 
   useEffect(() => {
-    if (!isDrawingMode) {
-      resizeCanvas();
-    }
+    resizeCanvas();
   }, [resizeCanvas, isDrawingMode]);
 
   useEffect(() => {
@@ -44,7 +42,7 @@ const CodeEditor = () => {
         setIsDrawingMode(data.codeMode);
       });
     }
-  }, [isDrawingMode]);
+  }, [isDrawingMode, host]);
 
   const handleEditorChange = useCallback(
     (value, event) => {
@@ -103,6 +101,7 @@ const CodeEditor = () => {
 
   const toggleDrawingMode = () => {
     if (host == String(cookies.rememberId)) {
+      console.log("여기는??");
       setIsDrawingMode((prevMode) => !prevMode);
       resizeCanvas();
       stompClient.send("/pub/canvasdraw/codeMode", JSON.stringify({ codeMode: !isDrawingMode }));
