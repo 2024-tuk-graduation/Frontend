@@ -16,7 +16,7 @@ const PdfView = () => {
   const editPdfTitle = usePdfState();
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true, "pdf");
 
   const { getEditPdfFile } = useSelectFileActions();
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -62,7 +62,7 @@ const PdfView = () => {
             </div>
 
             <div className="pdf-content-container">
-              <Clear handleClear={clearCanvas} />
+              <Clear handleClear={clearCanvas} mode="pdf" />
               <div ref={containerRef} style={{ width: "100%", height: 610, position: "relative" }}>
                 <Document
                   file={

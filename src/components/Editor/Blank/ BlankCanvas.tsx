@@ -8,8 +8,7 @@ import { useCookies } from "react-cookie";
 
 const BlankCanvas = () => {
   const templateCount = useTemplateState();
-
-  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(true, "blank");
 
   useEffect(() => {
     resizeCanvas();
@@ -17,7 +16,7 @@ const BlankCanvas = () => {
 
   return (
     <div className="blank-img-container" ref={containerRef}>
-      <Clear handleClear={clearCanvas} />
+      <Clear handleClear={clearCanvas} mode="blank" />
       <img
         className="blank-img"
         src={templates[templateCount - 1]}

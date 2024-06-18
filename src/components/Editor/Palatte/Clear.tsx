@@ -2,11 +2,12 @@ import { Mode } from "@/types";
 import React from "react";
 
 interface clearPropsType {
-  handleClear: () => void;
+  handleClear: (mode: Mode) => void;
+  mode: Mode;
 }
-const Clear = ({ handleClear }: clearPropsType) => {
+const Clear = ({ handleClear, mode }: clearPropsType) => {
   return (
-    <button className="clear-button" onClick={handleClear}>
+    <button className="clear-button" onClick={() => handleClear(mode)}>
       Clear
     </button>
   );

@@ -1,8 +1,10 @@
+import useCanvasDetail from "@/hooks/useCanvasDetail";
 import { useCanvasActions } from "@/store/canvas";
 import React from "react";
 
 const ColorPalette = ({ palette }: { palette: string[] }) => {
-  const { setStrokeStyle } = useCanvasActions();
+  const { onHandleStrokeStyle } = useCanvasDetail();
+
   return (
     <>
       {palette.map((i) => (
@@ -11,7 +13,7 @@ const ColorPalette = ({ palette }: { palette: string[] }) => {
           key={i}
           style={{ backgroundColor: `${i}` }}
           data-color={i}
-          onClick={(e) => setStrokeStyle(e.target.dataset.color)}
+          onClick={(e) => onHandleStrokeStyle(e.target.dataset.color)}
         ></div>
       ))}
     </>
