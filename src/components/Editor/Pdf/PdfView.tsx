@@ -62,7 +62,7 @@ const PdfView = () => {
             </div>
 
             <div className="pdf-content-container">
-              <Clear handleClear={clearCanvas} />
+              <Clear handleClear={clearCanvas} mode="pdf" />
               <div ref={containerRef} style={{ width: "100%", height: 610, position: "relative" }}>
                 <Document
                   file={

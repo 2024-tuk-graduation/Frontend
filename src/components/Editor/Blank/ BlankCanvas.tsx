@@ -16,7 +16,7 @@ const BlankCanvas = () => {
 
   return (
     <div className="blank-img-container" ref={containerRef}>
-      <Clear handleClear={clearCanvas} />
+      <Clear handleClear={clearCanvas} mode="blank" />
       <img
         className="blank-img"
         src={templates[templateCount - 1]}

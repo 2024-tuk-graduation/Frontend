@@ -28,13 +28,23 @@ const CodeEditor = () => {
 
   const [isDrawingMode, setIsDrawingMode] = useState(false); // 그림 모드 상태
 
-  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode);
+  const { clearCanvas, canvasRef, containerRef, resizeCanvas } = useCanvas(isDrawingMode, "code");
 
   useEffect(() => {
     if (!isDrawingMode) {
       resizeCanvas();
     }
   }, [resizeCanvas, isDrawingMode]);
+
+  useEffect(() => {
+    if (host !== String(cookies.rememberId)) {
+      stompClient.subscribe("/sub/canvasdraw/codeMode", (res) => {
+        const data = JSON.parse(res.body);
+        console.log(data);
+        setIsDrawingMode(data.codeMode);
+      });
+    }
+  }, [isDrawingMode]);
 
   const handleEditorChange = useCallback(
     (value, event) => {
@@ -92,8 +102,11 @@ const CodeEditor = () => {
   };
 
   const toggleDrawingMode = () => {
-    setIsDrawingMode((prevMode) => !prevMode);
-    resizeCanvas(); // Ensure canvas is resized correctly when toggling mode
+    if (host == String(cookies.rememberId)) {
+      setIsDrawingMode((prevMode) => !prevMode);
+      resizeCanvas();
+      stompClient.send("/pub/canvasdraw/codeMode", JSON.stringify({ codeMode: !isDrawingMode }));
+    }
   };
 
   return (
@@ -105,7 +118,7 @@ const CodeEditor = () => {
       />
 
       <div className="file-title-list-container">
-        <Clear handleClear={clearCanvas} />
+        <Clear handleClear={clearCanvas} mode="code" />
         {codeFileList.map((i, index) => (
           <FileItemTitle key={index} fileName={i.title} fileType="code" />
         ))}
