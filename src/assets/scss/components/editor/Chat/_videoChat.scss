@@ -11,9 +11,20 @@
   position: relative;
   p {
     position: absolute;
-    bottom: 0.5rem;
+    bottom: 0.8rem;
     left: 0.5rem;
     font-size: 1.6rem;
     color: $darkpink;
+  }
+  button {
+    padding: 0.5rem;
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.7rem;
+    background-color: $pink;
+    font-size: 1.6rem;
+    border-radius: 12%;
+    box-shadow: 0.2rem 0.2rem 0.2rem 0.1rem #888888;
+    cursor: pointer;
   }
 }

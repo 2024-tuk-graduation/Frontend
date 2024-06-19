@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { EditorInfobar, Palette } from "@/components/Editor";
 import Compile from "@/components/Editor/Code/Compile";
 import Chat from "@/components/Editor/Chat/VideoChat";
+import QandA from "@/components/Editor/QandA";
 import { WebSocketConnnect } from "@/context";
 import { Memo } from "@/components/Editor";
 import ModeEditor from "@/components/Editor/ModeEditor";
@@ -11,13 +12,18 @@ import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
 import { useSelectFileActions } from "@/store/selectFile";
+import { useEditorMenuActions, usePersonMenuState } from "@/store/EditorMenuStore";
+import chatIcon from "@/assets/images/chat.svg";
+import qna1 from "@/assets/images/qna1.svg";
 
 const Editor = () => {
+  const { setPersonMenu } = useEditorMenuActions();
   const entranceCode = useEntranceCodeState();
   const { handleCodeFiles } = useFiles();
   const [modeEditor, setModeEditor] = useState(false);
   const pdfFileList = usePdfFileListState();
   const { setEditPdfFile } = useSelectFileActions();
+  const personMenu = usePersonMenuState();
   const {
     setPersonnelInfo,
     setCurrentPersonnel,
@@ -62,7 +68,7 @@ const Editor = () => {
 
   useEffect(() => {
     setEditPdfFile(pdfFileList[0]?.fileName);
-  }, [pdfFileList[0]]);
+  }, [pdfFileList]);
 
   return (
     <WebSocketConnnect>
@@ -77,9 +83,12 @@ const Editor = () => {
               <Compile />
             </div>
 
-            <div className="main-edit-area">{modeEditor && <ModeEditor />}</div>
+            <div className="main-edit-area">
+              <ModeEditor />
+            </div>
             <div>
-              <Chat />
+              {personMenu.chat && <Chat />}
+              {personMenu.qna && <QandA />}
             </div>
           </div>
         </div>

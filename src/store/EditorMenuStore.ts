@@ -1,43 +1,34 @@
 import { create } from "zustand";
 
-
-interface personMenuType {
+interface PersonMenuType {
   chat: boolean;
-  personnel: boolean;
+  qna: boolean;
 }
 
-interface  useEditorMenuStoreType {
-  personMenu: personMenuType;
-  actions : {
-    setPersonMenu: (menu: keyof personMenuType) => void;
-  }
+interface UseEditorMenuStoreType {
+  personMenu: PersonMenuType;
+  actions: {
+    setPersonMenu: (menu: keyof PersonMenuType) => void;
+  };
 }
 
-
-
- const useEditorMenuStore = create<useEditorMenuStoreType>((set) => ({
-
+const useEditorMenuStore = create<UseEditorMenuStoreType>((set) => ({
   personMenu: {
-    chat: false,
-    personnel: false,
+    chat: true,
+    qna: false,
   },
 
-  actions : { 
- 
+  actions: {
     setPersonMenu: (menu) =>
-    set((state) => ({
-      personMenu: {
-        chat: false,
-          personnel: false,
-        [menu]: !state.personMenu[menu],
-      },
-    })),
+      set((state) => ({
+        personMenu: {
+          chat: menu === "chat",
+          qna: menu === "qna",
+        },
+      })),
   },
-
 }));
 
-export const usePersonMenuState= () => useEditorMenuStore((state) => state.personMenu)
+export const usePersonMenuState = () => useEditorMenuStore((state) => state.personMenu);
 
-
-
-export const  useEditorMenuActions = () =>  useEditorMenuStore((state) => state.actions)
+export const useEditorMenuActions = () => useEditorMenuStore((state) => state.actions);

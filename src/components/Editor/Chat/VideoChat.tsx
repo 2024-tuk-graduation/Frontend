@@ -9,6 +9,7 @@ import {
 } from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext } from "react";
 import { useCookies } from "react-cookie";
+import { usePersonMenuState, useEditorMenuActions } from "@/store/EditorMenuStore";
 
 import VideoCam from "./VideoCam";
 
@@ -251,10 +252,19 @@ const VideoChat = () => {
     );
   }, [stompClient.connected, participants]);
 
+  const { setPersonMenu } = useEditorMenuActions();
+
+  const openQnA = () => {
+    setPersonMenu("qna");
+  };
+
   return (
     <div className="video-container">
       <div className="personnel-container">
-        <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
+        <div>
+          <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
+          <button onClick={openQnA}>Q&A</button>
+        </div>
       </div>
       <VideoCam nickname={String(cookies.rememberId)} streamRef={streamRef} videoRef={myVideoRef} remote={false} />
       <VideoCam nickname={remotePerson[0]} streamRef={streamRef} videoRef={remoteVideoRef} remote={true} />

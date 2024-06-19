@@ -42,7 +42,12 @@ const Compile: React.FC = () => {
       <div className="compile-container">
         <div className="input-container">
           <div className="input-hint">&gt;&gt;&gt;</div>
-          <textarea className="input-area" onChange={(e) => setInput(e.target.value)} value={input} />
+          <textarea
+            id="compile-input"
+            className="input-area"
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+          />
         </div>
 
         <pre className="compile-result">{compileResult}</pre>
