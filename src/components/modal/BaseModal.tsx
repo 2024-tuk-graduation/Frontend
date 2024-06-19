@@ -21,6 +21,7 @@ const BaseModal = ({ isOpen, children, type }: BaseModalPropsType) => {
       isOpen={isOpen}
       style={{
         overlay: {
+          zIndex: 999999,
           backgroundColor: "rgba(0, 0, 0, 0.3)",
           width: "100%",
           boxSizing: "border-box",

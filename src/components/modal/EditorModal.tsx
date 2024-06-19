@@ -52,7 +52,6 @@ const EditorModal = () => {
         (res) => {
           const data = JSON.parse(res.body);
           setHost(data.hostNickname);
-          console.log("아강", data);
         },
         (error: any) => {
           console.error("구독 오류 발생", error);
