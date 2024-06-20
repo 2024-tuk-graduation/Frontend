@@ -1,3 +1,68 @@
-.QandA-container {
-  width: 25%;
+.chat-container {
+  height: 85%;
+  width: $menu;
+  display: flex;
+  flex-direction: column;
+}
+
+.qna-question-box {
+  border-radius: 4px;
+  width: 80%;
+  background-color: #eeeeee; // 기본 배경색
+  margin: 1rem;
+  transition: background-color 0.3s; // 애니메이션을 추가하여 부드럽게 전환
+
+  &.clicked {
+    background-color: #e19bac; // 클릭되었을 때의 색상
+  }
+
+  &:hover {
+    background-color: #e19bac; // 마우스를 올렸을 때의 색상
+  }
+}
+
+.qna-question-msg {
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.qna-answer-box {
+  border-radius: 4px;
+  background-color: #db778f;
+  margin: 1rem;
+  color: white;
+  width: 80%;
+  align-self: flex-end;
+}
+
+.qna-answer-msg {
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.qna-input-container {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  width: $menu;
+  padding: 1em;
+
+  button {
+    text-align: center;
+    width: 4rem;
+    background-color: $pink;
+    font-size: 1.5rem;
+    border-radius: 12%;
+    box-shadow: 0.1rem 0.1rem 0.1rem 0.1rem #888888;
+    cursor: pointer;
+  }
+}
+
+.qna-input-field {
+  width: 82%;
+  padding: 0.5em;
+  margin-right: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
 }
