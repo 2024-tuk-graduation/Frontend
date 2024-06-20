@@ -22,13 +22,15 @@
   flex-direction: column;
   height: 100%;
   margin-right: 1rem;
+  // width: 200px;
   width: 28rem;
 }
 
 .main-edit-area {
-  width: calc(100% - 28rem);
+  width: 105rem;
   height: 100%;
   display: flex;
+  background-color: aqua;
   flex-direction: column;
 }
 
