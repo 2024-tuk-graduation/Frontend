@@ -5,50 +5,39 @@
   flex-direction: column;
 }
 
-.chat-box {
-  padding: 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0; /* 마우스 호버 시 배경색 변경 */
-  }
-
-  &.question {
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-  }
-
-  &.answer {
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    color: #666;
-  }
-
-  &.selected {
-    font-weight: bold; /* 선택된 질문일 경우 글자 굵게 표시 */
-    border-color: #007bff; /* 선택된 질문일 경우 테두리 색상 변경 */
-  }
-
-  span {
-    display: block;
-    font-size: 14px;
-    line-height: 1.4;
-  }
-}
-
 .qna-question-box {
   border-radius: 4px;
+  width: 80%;
+  background-color: #eeeeee; // 기본 배경색
+  margin: 1rem;
+  transition: background-color 0.3s; // 애니메이션을 추가하여 부드럽게 전환
+
+  &.clicked {
+    background-color: #e19bac; // 클릭되었을 때의 색상
+  }
+
+  &:hover {
+    background-color: #e19bac; // 마우스를 올렸을 때의 색상
+  }
 }
 
 .qna-question-msg {
+  padding: 1rem;
+  font-size: 1.5rem;
 }
 
 .qna-answer-box {
+  border-radius: 4px;
+  background-color: #db778f;
+  margin: 1rem;
+  color: white;
+  width: 80%;
+  align-self: flex-end;
 }
 
 .qna-answer-msg {
+  padding: 1rem;
+  font-size: 1.5rem;
 }
 
 .qna-input-container {
@@ -57,6 +46,7 @@
   bottom: 0;
   width: $menu;
   padding: 1em;
+
   button {
     text-align: center;
     width: 4rem;
