@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import SelectButton from "./selectRoom/SelectButton";
 import BaseModal from "./modal/BaseModal";
 import EntryModal from "./modal/EntryModal";
+import EditorModal from "./modal/EditorModal";
 import BlankScreenModeCreate from "./createRoom/BlankScreenModeCreate";
 import CodeModeCreate from "./createRoom/CodeModeCreate";
 import EditorMode from "./createRoom/EditorMode";
@@ -15,6 +16,7 @@ export {
   SelectButton,
   BaseModal,
   EntryModal,
+  EditorModal,
   BlankScreenModeCreate,
   CodeModeCreate,
   EditorMode,

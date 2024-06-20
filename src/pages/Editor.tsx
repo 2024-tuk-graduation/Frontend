@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { EditorInfobar, Palette } from "@/components/Editor";
+import EditorModal from "@/components/modal/EditorModal";
+import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
+import chatIcon from "@/assets/images/chat.svg";
+import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
 import Chat from "@/components/Editor/Chat/VideoChat";
 import QandA from "@/components/Editor/QandA";
@@ -35,10 +38,13 @@ const Editor = () => {
     setTemplate,
     setRoomId,
   } = useEditorRoomInfoActions();
-
   const { isLoading, data, isError } = useQuery({
-    queryKey: ["roomInfo"],
-    queryFn: () => editorRoomInfoApi(entranceCode),
+    queryKey: ["roomInfo", entranceCode],
+    queryFn: () => {
+      console.log("Fetching room info...");
+      return editorRoomInfoApi(entranceCode);
+    },
+    staleTime: 5 * 60 * 10000, // 5 minutes
   });
 
   useEffect(() => {
@@ -67,7 +73,10 @@ const Editor = () => {
   }, [data]);
 
   useEffect(() => {
-    setEditPdfFile(pdfFileList[0]?.fileName);
+    if (pdfFileList.length > 0) {
+      setEditPdfFile(pdfFileList[0]?.fileName);
+    }
+
   }, [pdfFileList]);
 
   return (
@@ -76,6 +85,7 @@ const Editor = () => {
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
+          {/* <EditorModal /> */}
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
