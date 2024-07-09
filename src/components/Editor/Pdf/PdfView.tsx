@@ -10,7 +10,6 @@ import useCanvas from "@/hooks/useCanvas";
 import Clear from "../Palatte/Clear";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
-
 const PdfView = () => {
   const pdfFileList = usePdfFileListState();
   const editPdfTitle = usePdfState();

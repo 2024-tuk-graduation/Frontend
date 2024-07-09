@@ -40,7 +40,7 @@ const QandA: React.FC = () => {
             console.log("Received message:", newMessage);
 
             // 질문이 추가되었음을 알림
-            if (newMessage.type === "question") alert(`새로운 질문 : ${newMessage.content}`);
+            // if (newMessage.type === "question") alert(`새로운 질문 : ${newMessage.content}`);
 
             // 이미 존재하는 메시지인지 체크 후 추가
             const messageExists = chatList.some(
@@ -84,9 +84,11 @@ const QandA: React.FC = () => {
       type: "question",
       content: questionContent,
     };
+    console.log(questionMessage);
 
     try {
       const response = await axios.post(serverURL, questionMessage);
+
       console.log("질문 전송 성공 : ", response.data);
       setNewQuestionContent(""); // 새로운 질문 전송 후 입력 필드 초기화
     } catch (error) {

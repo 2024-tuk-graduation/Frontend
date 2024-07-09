@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EditorModal from "@/components/modal/EditorModal";
-import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
+import { EditorInfobar, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
@@ -16,7 +16,6 @@ import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
 import { useSelectFileActions } from "@/store/selectFile";
 import { useEditorMenuActions, usePersonMenuState } from "@/store/EditorMenuStore";
-import chatIcon from "@/assets/images/chat.svg";
 import qna1 from "@/assets/images/qna1.svg";
 
 const Editor = () => {
@@ -44,7 +43,7 @@ const Editor = () => {
       console.log("Fetching room info...");
       return editorRoomInfoApi(entranceCode);
     },
-    staleTime: 5 * 60 * 10000, // 5 minutes
+    staleTime: 5 * 60 * 10000,
   });
 
   useEffect(() => {
@@ -76,7 +75,6 @@ const Editor = () => {
     if (pdfFileList.length > 0) {
       setEditPdfFile(pdfFileList[0]?.fileName);
     }
-
   }, [pdfFileList]);
 
   return (
@@ -92,10 +90,7 @@ const Editor = () => {
               <Memo />
               <Compile />
             </div>
-
-            <div className="main-edit-area">
-              <ModeEditor />
-            </div>
+            <div className="main-edit-area">{modeEditor && <ModeEditor />}</div>
             <div>
               {personMenu.chat && <Chat />}
               {personMenu.qna && <QandA />}
