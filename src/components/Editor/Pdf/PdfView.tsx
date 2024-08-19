@@ -9,7 +9,7 @@ import { usePdfState, useSelectFileActions } from "@/store/selectFile";
 import useCanvas from "@/hooks/useCanvas";
 import Clear from "../Palatte/Clear";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
 const PdfView = () => {
   const pdfFileList = usePdfFileListState();

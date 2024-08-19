@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import EditorModal from "@/components/modal/EditorModal";
-import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
+import { EditorInfobar, Palette } from "@/components/Editor";
 import chatIcon from "@/assets/images/chat.svg";
 import personnelIcon from "@/assets/images/personnel.svg";
 import Compile from "@/components/Editor/Code/Compile";
@@ -16,8 +16,6 @@ import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
 import { useSelectFileActions } from "@/store/selectFile";
 import { useEditorMenuActions, usePersonMenuState } from "@/store/EditorMenuStore";
-import chatIcon from "@/assets/images/chat.svg";
-import qna1 from "@/assets/images/qna1.svg";
 
 const Editor = () => {
   const { setPersonMenu } = useEditorMenuActions();
@@ -62,7 +60,6 @@ const Editor = () => {
         if (newData.pdfUrls) {
           setPdfFileList(newData.pdfUrls);
         }
-        console.log(newData.codeUrls);
         await handleCodeFiles(newData.codeUrls.urls);
 
         setModeEditor(true);
@@ -76,7 +73,6 @@ const Editor = () => {
     if (pdfFileList.length > 0) {
       setEditPdfFile(pdfFileList[0]?.fileName);
     }
-
   }, [pdfFileList]);
 
   return (

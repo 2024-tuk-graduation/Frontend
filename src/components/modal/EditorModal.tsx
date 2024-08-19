@@ -16,13 +16,12 @@ const EditorModal = () => {
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
   const stompClient = useContext(WebSocketContext);
 
-  const onChangeHostSuccess = (data: any) => {
-    console.log("호스트 변경 성공");
+  const onChangeHostSuccess = () => {
     setModalOpen("editor");
   };
 
   const onChangeHostError = () => {
-    console.log("호스트 변경 실패");
+    console.error("호스트 변경 실패");
   };
 
   const { mutation: changeHostMutation } = useGenericMutation({
@@ -40,7 +39,6 @@ const EditorModal = () => {
         newHostNickname: selectedHost,
       };
 
-      console.log(hostData);
       changeHostMutation.mutate(hostData);
     }
   };

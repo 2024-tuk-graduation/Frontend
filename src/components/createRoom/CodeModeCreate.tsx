@@ -11,9 +11,6 @@ const CodeModeCreate = () => {
   const roomData = useCreateRoomDataState();
   const { onCodeFileUpload, onCodeFileDelete } = useCreateFileUpload();
 
-  useEffect(() => {
-    console.log(roomData);
-  }, [roomData]);
   return (
     <div>
       <SelectUpload mode={"code"} select={selectedCodeOption} setSelect={setSelectedCodeOption} />
