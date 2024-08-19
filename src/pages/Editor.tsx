@@ -81,7 +81,7 @@ const Editor = () => {
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
-          {/* <EditorModal /> */}
+
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">

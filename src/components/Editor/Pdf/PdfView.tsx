@@ -63,7 +63,7 @@ const PdfView = () => {
 
             <div className="pdf-content-container">
               <Clear handleClear={clearCanvas} mode="pdf" />
-              <div ref={containerRef} style={{ width: "100%", height: 610, position: "relative" }}>
+              <div ref={containerRef} style={{ width: "100%", height: 750, position: "relative" }}>
                 <Document
                   file={
                     getEditPdfFile(editPdfTitle, pdfFileList) ? getEditPdfFile(editPdfTitle, pdfFileList) : undefined
@@ -77,7 +77,7 @@ const PdfView = () => {
 
                 <canvas
                   ref={canvasRef}
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: 610, zIndex: 9099 }}
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", zIndex: 9099 }}
                 />
               </div>
               <div className="pdf-page-control-container">
