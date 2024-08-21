@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { DefaultMenubar } from "..";
+import { DefaultMenubar } from "@/components/Editor";
 import { useLanguageState } from "@/store/editorRoomInfoStore";
 import { useCodeState, useCompileActions, useInputState } from "@/store/compile";
 

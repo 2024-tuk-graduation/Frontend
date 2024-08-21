@@ -5,15 +5,9 @@ import Record from "./Record";
 import AddFile from "./AddFile";
 import Time from "./Time";
 import Save from "./Save";
-import {
-  useEditorRoomInfoActions,
-  useModeState,
-  useHostState,
-  usePersonnelInfoState,
-} from "@/store/editorRoomInfoStore";
+import { useEditorRoomInfoActions, useModeState, useHostState } from "@/store/editorRoomInfoStore";
 import { useModalActions } from "@/store/modalStore";
 import { useCookies } from "react-cookie";
-import { Editor } from "@monaco-editor/react";
 import EditorModal from "@/components/modal/EditorModal";
 
 const EditorInfobar = () => {
@@ -21,7 +15,7 @@ const EditorInfobar = () => {
   const mode = useModeState();
   const { setModalOpen } = useModalActions();
   const currentHost = useHostState();
-  const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
+  const [cookies] = useCookies(["rememberId"]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMode(event.target.value);

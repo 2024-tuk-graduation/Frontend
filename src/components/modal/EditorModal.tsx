@@ -4,7 +4,7 @@ import { useEditorRoomInfoActions, useEntranceCodeState, useHostState } from "@/
 import { changeHostApi, changeHostApiPropsType } from "@/hooks/services/mutations/useChangeHost";
 import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 import BaseModal from "./BaseModal";
-import ParticipantsList from "../Editor/ParticipantsList";
+import ParticipantsList from "./ParticipantsList";
 import { WebSocketContext } from "@/context/WebSocketConnect";
 
 const EditorModal = () => {

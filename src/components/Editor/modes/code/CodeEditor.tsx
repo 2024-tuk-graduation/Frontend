@@ -5,12 +5,12 @@ import { WebSocketContext } from "@/context/WebSocketConnect";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
-import FileItemTitle from "../FileItemTitle";
+import { FileItemTitle } from "@/components/Editor";
 import useCanvas from "@/hooks/useCanvas";
-import EditorRoundButton from "../EditorRoundButton";
+import { EditorRoundButton } from "@/components/Editor";
 import pencilImg from "@/assets/images/pencil.svg";
 import codeImg from "@/assets/images/code3.svg";
-import Clear from "../Palatte/Clear";
+import { Clear } from "@/components/Editor";
 
 const CodeEditor = () => {
   const monaco = useMonaco();

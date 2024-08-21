@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
-import FileItemTitle from "../FileItemTitle";
+import FileItemTitle from "../../FileItemTitle";
 import doubleArrow from "@/assets/images/doubleArrow.svg";
 import { usePdfState, useSelectFileActions } from "@/store/selectFile";
 import useCanvas from "@/hooks/useCanvas";
-import Clear from "../Palatte/Clear";
+import Clear from "../../palatte/Clear";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL("pdfjs-dist/build/pdf.worker.min.mjs", import.meta.url).toString();
 
