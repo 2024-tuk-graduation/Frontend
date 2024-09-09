@@ -9,6 +9,7 @@ import { useEditorRoomInfoActions, useModeState, useHostState } from "@/store/ed
 import { useModalActions } from "@/store/modalStore";
 import { useCookies } from "react-cookie";
 import EditorModal from "@/components/modal/EditorModal";
+import { modes } from "@/data/modes";
 
 const EditorInfobar = () => {
   const { setMode } = useEditorRoomInfoActions();
@@ -21,8 +22,6 @@ const EditorInfobar = () => {
     setMode(event.target.value);
   };
 
-  const modeContent = ["blank", "pdf", "code"];
-
   const handleNowEditor = () => {
     if (currentHost === String(cookies.rememberId)) {
       setModalOpen("editor");
@@ -33,7 +32,7 @@ const EditorInfobar = () => {
     <div className="editor-infobar-container">
       <div>
         <div className="editor-switch">
-          {modeContent.map((i) => (
+          {modes.map((i) => (
             <RadioButton key={i} checkedValue={mode} onChange={handleChange} mode={i} />
           ))}
           <div className="editor-switch__indicator" />

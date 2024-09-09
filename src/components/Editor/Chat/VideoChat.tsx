@@ -9,14 +9,14 @@ import {
 } from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { useCookies } from "react-cookie";
-import { usePersonMenuState, useEditorMenuActions } from "@/store/EditorMenuStore";
+import { useEditorMenuActions } from "@/store/EditorMenuStore";
 import VideoCam from "./VideoCam";
 
 const VideoChat = () => {
   const host = useHostState();
   const [cookies] = useCookies(["rememberId"]);
   const roomId = useRoomId();
-  const { setHost, setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
+  const { setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
   const curentPersonnel = useCurrentPersonnelState();
   const maxPersonnel = useMaxPersonnelState();
   const participants = usePersonnelInfoState().filter((i) => i !== host);
@@ -39,6 +39,7 @@ const VideoChat = () => {
       peerRef.current.close();
     }
     // peerConnection 생성
+
     // iceServers는 stun sever설정이며 google의 public stun server를 사용하였습니다.
     peerRef.current = new RTCPeerConnection({ iceServers: [{ urls: "stun:stun.l.google.com:19302" }] });
 
