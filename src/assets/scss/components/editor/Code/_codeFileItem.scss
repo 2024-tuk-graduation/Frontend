@@ -1,3 +1,22 @@
 .code-file-item-container {
   @include fileTitle(#8bcbe6);
+
+  div {
+    border-radius: 50%;
+    background-color: $white;
+    position: relative;
+  }
+  img {
+    width: 1.7rem;
+    height: 1.7rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  p {
+    margin-left: 1rem;
+    font-size: 1rem;
+    color: $white;
+  }
 }

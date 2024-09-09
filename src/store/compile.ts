@@ -1,3 +1,4 @@
+
 import { create } from "zustand";
 
 interface compileStoreType {
@@ -15,6 +16,7 @@ interface compileStoreType {
   code:"",
   input: "",
   actions : { 
+
     setCode: (newState) => {
       set(() => ({  code : newState }));
     },

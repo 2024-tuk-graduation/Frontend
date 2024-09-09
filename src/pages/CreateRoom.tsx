@@ -55,10 +55,12 @@ const CreateRoom = () => {
     };
 
     const formData = useFileUpload({
+      // files: roomData.pdfUrls,
       files: [...roomData.codeUrls.urls, ...roomData.pdfUrls],
       fileTitle: "uploadFiles",
       data: UserObject,
     });
+    console.log(formData);
     createRoomMutation.mutate(formData);
   };
 

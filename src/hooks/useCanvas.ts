@@ -192,7 +192,7 @@ const useCanvas = (isDrawingMode: boolean, mode: Mode) => {
           if (drawData.mode === mode) {
             handleDrawData(drawData);
           }
-      
+          console.log(drawData);
         }),
         stompClient.subscribe("/sub/canvasdraw/clearall", (message: any) => {
           const clearData = JSON.parse(message.body);

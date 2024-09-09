@@ -1,6 +1,8 @@
 import { Mode } from "@/store/selectModeStore";
 import React from "react";
 import { BlankScreenModeCreate, CodeModeCreate, PdfModeCreate } from "..";
+import { useCookies } from "react-cookie";
+import { useHostState } from "@/store/editorRoomInfoStore";
 
 interface EditorModeButtonPropsType {
   img: string;

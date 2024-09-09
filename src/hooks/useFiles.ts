@@ -6,11 +6,12 @@ const useFiles = () => {
   const codeFileList = useCodeFileListState();
   const { addCodeFile } = useEditorRoomInfoActions();
   const { setEditCodeFile } = useSelectFileActions();
-  
   const handleCodeFiles = async ( files  : string[] ) => {
+
     if (files.length===0) {
-      addCodeFile('example', "");
+      addCodeFile('example1', "");
     } else {
+
       const fetchPromises = files.map((url: string) =>
         fetch(url)
           .then((response) => {
@@ -27,6 +28,7 @@ const useFiles = () => {
           })
       );
       await Promise.all(fetchPromises);
+
     }
   };
 
@@ -36,7 +38,12 @@ const useFiles = () => {
 
   useEffect(()=>{
     setEditCodeFile(codeFileList[0]?.title);
+
+    console.log(codeFileList,"dlrjwls")
+
   },[codeFileList[0]])
+
+
 
 
 

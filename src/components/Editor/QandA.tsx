@@ -37,6 +37,7 @@ const QandA: React.FC = () => {
         (res: { body: string }) => {
           try {
             const newMessage: ChatMessage = JSON.parse(res.body);
+            console.log("Received message:", newMessage);
 
             // 질문이 추가되었음을 알림
             if (newMessage.type === "question") alert(`새로운 질문 : ${newMessage.content}`);

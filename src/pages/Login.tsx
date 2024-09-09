@@ -47,6 +47,9 @@ const Login: React.FC = () => {
       console.error("로그인 실패!!:", error);
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
+
+    console.log("Username:", username);
+    console.log("Password:", password);
   };
 
   const handleSignupClick = () => {
@@ -59,7 +62,7 @@ const Login: React.FC = () => {
         {/* 로고 및 이미지 */}
 
         <div className="logo-container">
-          {/* <img className="img" src={ex9} alt="bg" /> */}
+          <img className="img" src={ex9} alt="bg" />
           <p className="logo">puzzlearn</p>
         </div>
 
