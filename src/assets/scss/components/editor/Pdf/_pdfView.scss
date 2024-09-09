@@ -25,11 +25,12 @@
 }
 
 .pdf-page-control-container {
+  border: solid $lightgray 1px;
   background-color: $lightgray;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: calc(100% - 750px);
+  height: 5rem;
 }
 .pdf-arrows-container {
   display: flex;

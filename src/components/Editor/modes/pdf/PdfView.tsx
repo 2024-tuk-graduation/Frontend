@@ -63,7 +63,7 @@ const PdfView = () => {
 
             <div className="pdf-content-container">
               <Clear handleClear={clearCanvas} mode="pdf" />
-              <div ref={containerRef} style={{ width: "100%", height: 750, position: "relative" }}>}>
+              <div ref={containerRef} style={{ width: "100%", height: 600, position: "relative" }}>
                 <Document
                   file={
                     getEditPdfFile(editPdfTitle, pdfFileList) ? getEditPdfFile(editPdfTitle, pdfFileList) : undefined
@@ -72,7 +72,7 @@ const PdfView = () => {
                   onPassword={onDocumentLocked}
                   onLoadSuccess={onDocumentLoadSuccess}
                 >
-                  <Page pageNumber={pageNumber} height={610} />
+                  <Page pageNumber={pageNumber} height={600} />
                 </Document>
 
                 <canvas
