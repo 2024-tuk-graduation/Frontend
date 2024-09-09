@@ -24,12 +24,42 @@
   border-top-right-radius: 1.5rem;
   border-top-left-radius: 1.5rem;
   display: flex;
-  width: 12rem;
-  height: 3rem;
+  width: 16rem;
+  height: 4rem;
   padding: 1rem;
   align-items: center;
   &:hover {
     background-color: lighten($color, 15%);
+  }
+
+  div:nth-child(1) {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: $white;
+    position: relative;
+  }
+
+  div:nth-child(2) {
+    width: 11.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    overflow: hidden;
+  }
+  img {
+    width: 1.4rem;
+    height: 1.4rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  p {
+    overflow: hidden;
+    margin-left: 1rem;
+    font-size: 1.2rem;
+    color: $white;
   }
 }
 

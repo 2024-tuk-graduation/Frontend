@@ -26,12 +26,16 @@ const Record = () => {
 
       recorder.ondataavailable = (e) => data.push(e.data);
       recorder.onstop = () => {
+        //비디오 파일 생성
         const completeBlob = new Blob(data, { type: "video/webm" });
+        // 생성된 블랍을 참조하는 URL을 만든다
         const videoURL = URL.createObjectURL(completeBlob);
 
         const a = document.createElement("a");
         a.href = videoURL;
         a.download = "recorded-video.webm";
+
+        // 자동으로 클릭되게 -> 자동 다운
         a.click();
 
         data = [];
@@ -48,15 +52,15 @@ const Record = () => {
   };
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stop(); //   recorder.onstop 이벤트 발생
       setIsRecording(false);
-      clearInterval(timeIntervalRef.current);
+      clearInterval(timeIntervalRef.current); // 타이머중지
       setTime(0);
     }
   };
 
   const formatTime = (seconds) => {
-    const min = Math.floor(seconds / 60);
+    const min = Math.floor(seconds / 60); // 소수값 버림
     const sec = seconds % 60;
     return `${min}:${sec < 10 ? "0" + sec : sec}`;
   };

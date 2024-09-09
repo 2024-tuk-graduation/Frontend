@@ -3,7 +3,7 @@ import axios from "axios";
 import { useLanguageState } from "@/store/editorRoomInfoStore";
 import { useCodeState, useCompileActions, useInputState } from "@/store/compile";
 import { useEditorMenuActions } from "@/store/EditorMenuStore";
-
+import { DefaultMenubar } from "@/components/Editor";
 const Compile: React.FC = () => {
   const [compileResult, setCompileResult] = useState(""); // 컴파일 결과를 저장할 상태
   const input = useInputState();
@@ -43,7 +43,7 @@ const Compile: React.FC = () => {
   return (
     <div>
       {" "}
-      {/* <DefaultMenubar title="컴파일" /> */}
+      <DefaultMenubar title="컴파일" />
       <div className="personnel-container">
         <div>
           <p>Compile</p>

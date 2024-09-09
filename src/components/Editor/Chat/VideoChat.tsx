@@ -9,14 +9,14 @@ import {
 } from "@/store/editorRoomInfoStore";
 import React, { useEffect, useRef, useContext, useCallback } from "react";
 import { useCookies } from "react-cookie";
-import { usePersonMenuState, useEditorMenuActions } from "@/store/EditorMenuStore";
+import { useEditorMenuActions } from "@/store/EditorMenuStore";
 import VideoCam from "./VideoCam";
 
 const VideoChat = () => {
   const host = useHostState();
   const [cookies] = useCookies(["rememberId"]);
   const roomId = useRoomId();
-  const { setHost, setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
+  const { setCurrentPersonnel, setPersonnelInfo } = useEditorRoomInfoActions();
   const curentPersonnel = useCurrentPersonnelState();
   const maxPersonnel = useMaxPersonnelState();
   const participants = usePersonnelInfoState().filter((i) => i !== host);

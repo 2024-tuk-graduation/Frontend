@@ -8,7 +8,6 @@ const useFileUpload = ({files , fileTitle, data}  :useFileUploadType) => {
   if (files) {
     for (let i = 0; i < files.length; i++) {
       formData.append(fileTitle, files[i]);
-      // console.log(formData);
     }
   }
   const jsonStr = JSON.stringify(data);

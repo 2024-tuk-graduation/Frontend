@@ -4,7 +4,7 @@ import { useEditorRoomInfoActions, useEntranceCodeState, useHostState } from "@/
 import { changeHostApi, changeHostApiPropsType } from "@/hooks/services/mutations/useChangeHost";
 import { useGenericMutation } from "@/hooks/services/mutations/customMutation";
 import BaseModal from "./BaseModal";
-import ParticipantsList from "../Editor/ParticipantsList";
+import ParticipantsList from "./ParticipantsList";
 import { WebSocketContext } from "@/context/WebSocketConnect";
 
 const EditorModal = () => {
@@ -16,8 +16,7 @@ const EditorModal = () => {
   const [selectedHost, setSelectedHost] = useState<string | null>(null);
   const stompClient = useContext(WebSocketContext);
 
-  const onChangeHostSuccess = (data: any) => {
-    console.log("호스트 변경 성공");
+  const onChangeHostSuccess = () => {
     setModalOpen("editor");
   };
 
@@ -40,7 +39,6 @@ const EditorModal = () => {
         newHostNickname: selectedHost,
       };
 
-      console.log(hostData);
       changeHostMutation.mutate(hostData);
     }
   };

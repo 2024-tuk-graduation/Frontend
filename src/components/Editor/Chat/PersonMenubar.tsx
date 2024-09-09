@@ -2,7 +2,7 @@ import React from "react";
 import copyIcon from "@/assets/images/copy.svg";
 import { useCurrentPersonnelState, useEntranceCodeState, useMaxPersonnelState } from "@/store/editorRoomInfoStore";
 
-const Menubar = () => {
+const PersonMenubar = () => {
   const entryCode = useEntranceCodeState();
   const maxPersonnel = useMaxPersonnelState();
   const currentPersonnel = useCurrentPersonnelState();
@@ -19,4 +19,4 @@ const Menubar = () => {
   );
 };
 
-export default Menubar;
+export default PersonMenubar;
