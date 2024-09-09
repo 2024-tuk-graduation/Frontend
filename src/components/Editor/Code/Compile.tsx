@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { DefaultMenubar } from "..";
 import { useLanguageState } from "@/store/editorRoomInfoStore";
 import { useCodeState, useCompileActions, useInputState } from "@/store/compile";
+import { useEditorMenuActions } from "@/store/EditorMenuStore";
 
 const Compile: React.FC = () => {
   const [compileResult, setCompileResult] = useState(""); // 컴파일 결과를 저장할 상태
@@ -10,6 +10,7 @@ const Compile: React.FC = () => {
   const language = useLanguageState();
   const code = useCodeState();
   const { setInput } = useCompileActions();
+  const { setPersonMenu } = useEditorMenuActions();
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/codes`;
 
   const compileLanguage: { [key: string]: string } = {
@@ -35,10 +36,20 @@ const Compile: React.FC = () => {
     }
   };
 
+  const openQnA = () => {
+    setPersonMenu("qna");
+  };
+
   return (
     <div>
       {" "}
-      <DefaultMenubar title="컴파일" />
+      {/* <DefaultMenubar title="컴파일" /> */}
+      <div className="personnel-container">
+        <div>
+          <p>Compile</p>
+          <button onClick={openQnA}>Q&A</button>
+        </div>
+      </div>
       <div className="compile-container">
         <div className="input-container">
           <div className="input-hint">&gt;&gt;&gt;</div>

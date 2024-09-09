@@ -28,7 +28,7 @@ const Navbar = ({ page }: NavbarPropsType) => {
             <img className="navbar-icon" src={homeIcon} alt={"홈"} />
           </Link>
           <h1 className="navbar-Logo">Logo</h1>
-          <Link to={"profile"}>
+          <Link to={"/archive"}>
             <img className="navbar-icon" src={profileIcon} alt={"프로필"} />
           </Link>
         </div>

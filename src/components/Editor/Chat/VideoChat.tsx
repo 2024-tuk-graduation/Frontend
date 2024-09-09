@@ -238,18 +238,12 @@ const VideoChat = () => {
     return () => mediaStatusSubscription.unsubscribe();
   }, [stompClient.connected, host, participants, roomId]);
 
-  const { setPersonMenu } = useEditorMenuActions();
-
-  const openQnA = () => {
-    setPersonMenu("qna");
-  };
-
   return (
     <div className="video-container">
       <div className="personnel-container">
         <div>
           <p>{`참여인원 (${curentPersonnel} / ${maxPersonnel})`}</p>
-          <button onClick={openQnA}>Q&A</button>
+          {/* <button onClick={openQnA}>Q&A</button> */}
         </div>
       </div>
       <VideoCam nickname={String(cookies.rememberId)} streamRef={streamRef} videoRef={myVideoRef} remote={false} />
