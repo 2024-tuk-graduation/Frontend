@@ -47,6 +47,7 @@ const useCanvasDetail = () => {
       const subscriptions = [
         stompClient.subscribe("/sub/canvasdraw/color", (message: any) => {
           const drawColor= JSON.parse(message.body);
+          console.log(drawColor.color)
           onHandleStrokeStyle(drawColor.color)
         
         }),

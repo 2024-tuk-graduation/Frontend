@@ -1,4 +1,4 @@
-import Button from "./signUp/button";
+import Button from "./button";
 import Navbar from "./Navbar";
 import SelectButton from "./selectRoom/SelectButton";
 import BaseModal from "./modal/BaseModal";

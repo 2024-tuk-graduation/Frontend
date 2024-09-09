@@ -740,6 +740,7 @@ button {
 .search-section-container {
   width: 99%;
   height: 2rem;
+  background-color: aqua;
 }
 
 .editor-mode-container {

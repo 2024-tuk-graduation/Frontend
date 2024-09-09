@@ -27,9 +27,10 @@
 }
 
 .main-edit-area {
-  width: 200rem;
+  width: 105rem;
   height: 100%;
   display: flex;
+  background-color: aqua;
   flex-direction: column;
 }
 
@@ -41,5 +42,7 @@
   display: flex;
   width: 99%;
   height: calc(100% - 5.5rem);
+
   border: $gray 1px solid;
+  //background-color: aqua;
 }

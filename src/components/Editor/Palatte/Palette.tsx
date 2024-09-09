@@ -1,9 +1,14 @@
 import { highlighterColorPlatte, penColorPlatte } from "@/data";
-import { useLineWidthState, usePenTypeState, useStrokeStyleState } from "@/store/canvas";
-import React, { useRef } from "react";
+import { useCanvasActions, useLineWidthState, usePenTypeState, useStrokeStyleState } from "@/store/canvas";
+import React, { useContext, useRef } from "react";
+
 import palette from "@/assets/images/palette.svg";
 import { penType } from "@/data/penType";
 import ColorPalette from "./ColorPalette";
+import { useCookies } from "react-cookie";
+import { useHostState } from "@/store/editorRoomInfoStore";
+import { WebSocketContext } from "@/context/WebSocketConnect";
+import useCanvas from "@/hooks/useCanvas";
 import useCanvasDetail from "@/hooks/useCanvasDetail";
 
 const Palette = () => {

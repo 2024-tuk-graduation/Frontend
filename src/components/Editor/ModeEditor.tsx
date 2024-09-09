@@ -1,9 +1,9 @@
 import { useModeState } from "@/store/editorRoomInfoStore";
 import React from "react";
-import { CodeEditor } from "@/components/Editor";
-import { BlankCanvas } from "@/components/Editor";
-import { PdfView } from "@/components/Editor";
-import { FileItemTitle } from "@/components/Editor";
+import CodeEditor from "./Code/CodeEditor";
+import BlankCanvas from "./Blank/ BlankCanvas";
+import { PdfView } from ".";
+import FileItemTitle from "./FileItemTitle";
 
 const ModeEditor = () => {
   const mode = useModeState();

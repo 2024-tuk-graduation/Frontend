@@ -1,4 +1,5 @@
 import useCanvasDetail from "@/hooks/useCanvasDetail";
+import { useCanvasActions } from "@/store/canvas";
 import React from "react";
 
 const ColorPalette = ({ palette }: { palette: string[] }) => {

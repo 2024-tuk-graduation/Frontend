@@ -5,12 +5,12 @@ import { WebSocketContext } from "@/context/WebSocketConnect";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
-import { FileItemTitle } from "@/components/Editor";
+import FileItemTitle from "../FileItemTitle";
 import useCanvas from "@/hooks/useCanvas";
-import { EditorRoundButton } from "@/components/Editor";
+import EditorRoundButton from "../EditorRoundButton";
 import pencilImg from "@/assets/images/pencil.svg";
 import codeImg from "@/assets/images/code3.svg";
-import { Clear } from "@/components/Editor";
+import Clear from "../Palatte/Clear";
 
 const CodeEditor = () => {
   const monaco = useMonaco();
@@ -38,7 +38,7 @@ const CodeEditor = () => {
     if (host !== String(cookies.rememberId)) {
       stompClient.subscribe("/sub/canvasdraw/codeMode", (res) => {
         const data = JSON.parse(res.body);
-
+        console.log(data);
         setIsDrawingMode(data.codeMode);
       });
     }
@@ -48,6 +48,7 @@ const CodeEditor = () => {
     (value, event) => {
       if (host === String(cookies.rememberId)) {
         stompClient.send(`/pub/code`, JSON.stringify({ codeContent: value }));
+        console.log("코드 전송");
       }
       setCode(value);
     },
@@ -55,11 +56,11 @@ const CodeEditor = () => {
   );
 
   useEffect(() => {
-    if (editorRef.current && editCodeTitle && codeFileList) {
+    if (editorRef.current) {
       const codeContent = getEditCodeFile(editCodeTitle, codeFileList);
       editorRef.current.setValue(codeContent);
     }
-  }, [editCodeTitle, codeFileList]);
+  }, [editCodeTitle, codeFileList, getEditCodeFile]);
 
   useEffect(() => {
     if (host === String(cookies.rememberId)) {
@@ -80,7 +81,7 @@ const CodeEditor = () => {
     if (stompClient.connected) {
       const subscription = stompClient.subscribe("/sub/code", (res) => {
         const data = JSON.parse(res.body);
-
+        console.log(data);
         if (host !== String(cookies.rememberId)) {
           editorRef.current?.setValue(data.codeContent);
         }
@@ -100,6 +101,7 @@ const CodeEditor = () => {
 
   const toggleDrawingMode = () => {
     if (host == String(cookies.rememberId)) {
+      console.log("여기는??");
       setIsDrawingMode((prevMode) => !prevMode);
       resizeCanvas();
       stompClient.send("/pub/canvasdraw/codeMode", JSON.stringify({ codeMode: !isDrawingMode }));

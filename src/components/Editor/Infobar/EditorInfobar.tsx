@@ -5,22 +5,29 @@ import Record from "./Record";
 import AddFile from "./AddFile";
 import Time from "./Time";
 import Save from "./Save";
-import { useEditorRoomInfoActions, useModeState, useHostState } from "@/store/editorRoomInfoStore";
+import {
+  useEditorRoomInfoActions,
+  useModeState,
+  useHostState,
+  usePersonnelInfoState,
+} from "@/store/editorRoomInfoStore";
 import { useModalActions } from "@/store/modalStore";
 import { useCookies } from "react-cookie";
+import { Editor } from "@monaco-editor/react";
 import EditorModal from "@/components/modal/EditorModal";
-import { modes } from "@/data/modes";
 
 const EditorInfobar = () => {
   const { setMode } = useEditorRoomInfoActions();
   const mode = useModeState();
   const { setModalOpen } = useModalActions();
   const currentHost = useHostState();
-  const [cookies] = useCookies(["rememberId"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["rememberId"]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setMode(event.target.value);
   };
+
+  const modeContent = ["blank", "pdf", "code"];
 
   const handleNowEditor = () => {
     if (currentHost === String(cookies.rememberId)) {
@@ -32,7 +39,7 @@ const EditorInfobar = () => {
     <div className="editor-infobar-container">
       <div>
         <div className="editor-switch">
-          {modes.map((i) => (
+          {modeContent.map((i) => (
             <RadioButton key={i} checkedValue={mode} onChange={handleChange} mode={i} />
           ))}
           <div className="editor-switch__indicator" />
