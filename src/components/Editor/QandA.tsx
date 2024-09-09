@@ -176,11 +176,11 @@ const QandA: React.FC = () => {
   };
 
   return (
-    <div className="video-container">
+    <div>
       <div className="personnel-container">
         <div>
           <p>Q&A</p>
-          <button onClick={openChat}>Video</button>
+          <button onClick={openChat}>Compile</button>
         </div>
       </div>
 

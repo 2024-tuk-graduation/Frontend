@@ -9,6 +9,7 @@ import { useEditorRoomInfoActions, useModeState, useHostState } from "@/store/ed
 import { useModalActions } from "@/store/modalStore";
 import { useCookies } from "react-cookie";
 import EditorModal from "@/components/modal/EditorModal";
+import { modes } from "@/data/modes";
 
 const EditorInfobar = () => {
   const { setMode } = useEditorRoomInfoActions();

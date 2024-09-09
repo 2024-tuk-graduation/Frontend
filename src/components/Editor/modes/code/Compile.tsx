@@ -42,8 +42,8 @@ const Compile: React.FC = () => {
 
   return (
     <div>
-      {" "}
-      <DefaultMenubar title="컴파일" />
+      {/* {" "}
+      <DefaultMenubar title="컴파일" /> */}
       <div className="personnel-container">
         <div>
           <p>Compile</p>
