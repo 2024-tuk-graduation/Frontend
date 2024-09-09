@@ -1,12 +1,10 @@
-import Chat from "./Chat/VideoChat";
-import CodeEditor  from "./Code/CodeEditor";
-import Compile from "./Code/Compile";
-import EditorInfobar from "./Infobar/EditorInfobar"
-import EditorRoundButton from "./EditorRoundButton";
-import Memo from "./Memo";
-import Menubar from "./PersonMenubar";
-import Palette from "./Palatte/Palette";
-import TitleBar from "./TitleBar";
-import DefaultMenubar from"./DefaultMenubar"
-import PdfView from "./Pdf/PdfView";
-export {PdfView , DefaultMenubar,Memo,Menubar,Palette,TitleBar,Chat , CodeEditor,Compile,EditorInfobar ,EditorRoundButton ,}
+import DefaultMenubar from "./DefaultMenubar"
+import EditorRoundButton from "./EditorRoundButton"
+import FileItemTitle from "./FileItemTitle"
+import Memo from "./Memo"
+import QandA from "./QandA"
+import { MyVideoStatus,PersonMenubar,RemoteVideoStatus,VideoCam,VideoChat } from "./chat"
+import { AddFile,EditorInfobar,EntranceCode,RadioButton,Record,Save,Time } from "./infobar"
+import { BlankCanvas,CodeEditor,Compile,PdfView,ModeEditor } from "./modes"
+import { Clear,ColorPalette,Palette } from "./palatte"
+export {DefaultMenubar , EditorRoundButton,FileItemTitle, Memo,QandA, MyVideoStatus,PersonMenubar,RemoteVideoStatus,VideoCam,VideoChat,AddFile,EditorInfobar,EntranceCode,RadioButton,Record,Save,Time, BlankCanvas,CodeEditor,Compile,PdfView,ModeEditor, Clear,ColorPalette,Palette }

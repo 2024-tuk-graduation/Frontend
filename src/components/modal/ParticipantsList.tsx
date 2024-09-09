@@ -4,13 +4,8 @@ import { usePersonnelInfoState, useHostState } from "@/store/editorRoomInfoStore
 const ParticipantsList = React.memo(({ onSelect }: { onSelect: (participant: string) => void }) => {
   const personnelInfo = usePersonnelInfoState();
   const currentHost = useHostState();
-
-  console.log("personnelInfo : ", personnelInfo);
-  console.log("currentHost : ", currentHost);
-
   const handleSelect = (participant: string) => {
     onSelect(participant);
-    console.log("선택된 참가자 : ", participant);
   };
 
   return (

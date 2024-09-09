@@ -19,8 +19,6 @@ const SignUp: React.FC = () => {
       const selectedFile = e.target.files[0];
       setFile(selectedFile); // 파일 상태 업데이트
       setShowDefaultProfile(false); // 기본 프로필 보여주는 상태 업데이트
-      console.log("file", file);
-      console.log("handleProfileImageChange 함수 실행");
     }
   };
 
@@ -117,7 +115,7 @@ const SignUp: React.FC = () => {
         {/* 로고 및 이미지 */}
 
         <div className="logo-container">
-          <img className="img" src={ex9} alt="bg" />
+          {/* <img className="img" src={ex9} alt="bg" /> */}
           <p className="logo">puzzlearn</p>
         </div>
 

@@ -1,30 +1,22 @@
 import React, { useEffect, useState } from "react";
-import EditorModal from "@/components/modal/EditorModal";
-import { EditorInfobar, EditorRoundButton, Palette } from "@/components/Editor";
-import chatIcon from "@/assets/images/chat.svg";
-import personnelIcon from "@/assets/images/personnel.svg";
-import Compile from "@/components/Editor/Code/Compile";
-import Chat from "@/components/Editor/Chat/VideoChat";
-import QandA from "@/components/Editor/QandA";
+import { EditorInfobar, Palette } from "@/components/Editor";
+import { Compile } from "@/components/Editor";
+import { VideoChat } from "@/components/Editor";
+import { QandA } from "@/components/Editor";
 import { WebSocketConnnect } from "@/context";
-import { Memo } from "@/components/Editor";
-import ModeEditor from "@/components/Editor/ModeEditor";
+import { ModeEditor } from "@/components/Editor";
 import { Navbar } from "@/components";
-import { useEditorRoomInfoActions, useEntranceCodeState, usePdfFileListState } from "@/store/editorRoomInfoStore";
+import { useEditorRoomInfoActions, useEntranceCodeState } from "@/store/editorRoomInfoStore";
 import { editorRoomInfoApi } from "@/hooks/services/queries/useEditorRoomInfo";
 import { useQuery } from "@tanstack/react-query";
 import useFiles from "@/hooks/useFiles";
 import { useSelectFileActions } from "@/store/selectFile";
-import { useEditorMenuActions, usePersonMenuState } from "@/store/EditorMenuStore";
-import chatIcon from "@/assets/images/chat.svg";
-import qna1 from "@/assets/images/qna1.svg";
+import { usePersonMenuState } from "@/store/EditorMenuStore";
 
 const Editor = () => {
-  const { setPersonMenu } = useEditorMenuActions();
   const entranceCode = useEntranceCodeState();
   const { handleCodeFiles } = useFiles();
-  const [modeEditor, setModeEditor] = useState(false);
-  const pdfFileList = usePdfFileListState();
+  const [, setModeEditor] = useState(false);
   const { setEditPdfFile } = useSelectFileActions();
   const personMenu = usePersonMenuState();
   const {
@@ -38,6 +30,7 @@ const Editor = () => {
     setTemplate,
     setRoomId,
   } = useEditorRoomInfoActions();
+
   const { isLoading, data, isError } = useQuery({
     queryKey: ["roomInfo", entranceCode],
     queryFn: () => {
@@ -61,23 +54,15 @@ const Editor = () => {
         setRoomId(newData.roomId);
         if (newData.pdfUrls) {
           setPdfFileList(newData.pdfUrls);
+          setEditPdfFile(newData.pdfUrls[0]?.fileName);
         }
-        console.log(newData.codeUrls);
-        await handleCodeFiles(newData.codeUrls.urls);
 
+        await handleCodeFiles(newData.codeUrls.urls);
         setModeEditor(true);
       }
     };
-
     updateRoomInfo();
   }, [data]);
-
-  useEffect(() => {
-    if (pdfFileList.length > 0) {
-      setEditPdfFile(pdfFileList[0]?.fileName);
-    }
-
-  }, [pdfFileList]);
 
   return (
     <WebSocketConnnect>
@@ -85,19 +70,17 @@ const Editor = () => {
         <Navbar page={"editor"} />
         <div className="editor-container editor">
           <EditorInfobar />
-          {/* <EditorModal /> */}
           <Palette />
           <div className="editor-detail-container">
             <div className="editor-memo-area">
-              <Memo />
+              {/* <Memo /> */}
               <Compile />
             </div>
-
             <div className="main-edit-area">
               <ModeEditor />
             </div>
             <div>
-              {personMenu.chat && <Chat />}
+              {personMenu.chat && <VideoChat />}
               {personMenu.qna && <QandA />}
             </div>
           </div>

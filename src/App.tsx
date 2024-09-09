@@ -25,7 +25,7 @@ export default function App() {
         </BrowserRouter>
         /
       </CookiesProvider>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }
