@@ -20,7 +20,9 @@ const FileItemTitle = ({ fileName, fileType }: FileItemTitlePropsType) => {
       <div>
         <img src={`${fileType === "pdf" ? pdfLogo : PythonLogo} `} />{" "}
       </div>
-      <p>{fileName}</p>
+      <div>
+        <p>{fileName}</p>
+      </div>
     </div>
   );
 };

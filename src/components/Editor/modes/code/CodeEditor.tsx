@@ -5,13 +5,12 @@ import { WebSocketContext } from "@/context/WebSocketConnect";
 import { useCookies } from "react-cookie";
 import { useCompileActions } from "@/store/compile";
 import { useCodeState, useSelectFileActions } from "@/store/selectFile";
-import FileItemTitle from "../FileItemTitle";
+import { FileItemTitle } from "@/components/Editor";
 import useCanvas from "@/hooks/useCanvas";
-import EditorRoundButton from "../EditorRoundButton";
+import { EditorRoundButton } from "@/components/Editor";
 import pencilImg from "@/assets/images/pencil.svg";
 import codeImg from "@/assets/images/code3.svg";
-import Clear from "../Palatte/Clear";
-
+import { Clear } from "@/components/Editor";
 const CodeEditor = () => {
   const monaco = useMonaco();
   const editorRef = useRef<any>(null);
@@ -56,11 +55,11 @@ const CodeEditor = () => {
   );
 
   useEffect(() => {
-    if (editorRef.current) {
+    if (editorRef.current && editCodeTitle && codeFileList) {
       const codeContent = getEditCodeFile(editCodeTitle, codeFileList);
       editorRef.current.setValue(codeContent);
     }
-  }, [editCodeTitle, codeFileList, getEditCodeFile]);
+  }, [editCodeTitle, codeFileList]);
 
   useEffect(() => {
     if (host === String(cookies.rememberId)) {
@@ -81,7 +80,6 @@ const CodeEditor = () => {
     if (stompClient.connected) {
       const subscription = stompClient.subscribe("/sub/code", (res) => {
         const data = JSON.parse(res.body);
-        console.log(data);
         if (host !== String(cookies.rememberId)) {
           editorRef.current?.setValue(data.codeContent);
         }
@@ -101,7 +99,6 @@ const CodeEditor = () => {
 
   const toggleDrawingMode = () => {
     if (host == String(cookies.rememberId)) {
-      console.log("여기는??");
       setIsDrawingMode((prevMode) => !prevMode);
       resizeCanvas();
       stompClient.send("/pub/canvasdraw/codeMode", JSON.stringify({ codeMode: !isDrawingMode }));

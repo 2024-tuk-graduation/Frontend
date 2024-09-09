@@ -62,7 +62,7 @@ const Login: React.FC = () => {
         {/* 로고 및 이미지 */}
 
         <div className="logo-container">
-          <img className="img" src={ex9} alt="bg" />
+          {/* <img className="img" src={ex9} alt="bg" /> */}
           <p className="logo">puzzlearn</p>
         </div>
 

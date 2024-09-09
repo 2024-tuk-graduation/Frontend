@@ -9,7 +9,7 @@ const useFiles = () => {
   const handleCodeFiles = async ( files  : string[] ) => {
 
     if (files.length===0) {
-      addCodeFile('example1', "");
+      addCodeFile('example', "");
     } else {
 
       const fetchPromises = files.map((url: string) =>
@@ -39,7 +39,6 @@ const useFiles = () => {
   useEffect(()=>{
     setEditCodeFile(codeFileList[0]?.title);
 
-    console.log(codeFileList,"dlrjwls")
 
   },[codeFileList[0]])
 
