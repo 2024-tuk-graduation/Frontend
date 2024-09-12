@@ -3,7 +3,6 @@ import axios from "axios";
 import { useLanguageState } from "@/store/editorRoomInfoStore";
 import { useCodeState, useCompileActions, useInputState } from "@/store/compile";
 import { useEditorMenuActions } from "@/store/EditorMenuStore";
-import { DefaultMenubar } from "@/components/Editor";
 const Compile: React.FC = () => {
   const [compileResult, setCompileResult] = useState(""); // 컴파일 결과를 저장할 상태
   const input = useInputState();
@@ -14,7 +13,7 @@ const Compile: React.FC = () => {
   const serverURL = `${import.meta.env.VITE_APP_API_URL}/codes`;
 
   const compileLanguage: { [key: string]: string } = {
-    py: "python3",
+    py: "python",
     js: "nodejs",
     c: "c",
   };
@@ -22,8 +21,8 @@ const Compile: React.FC = () => {
   const handleCompile = async () => {
     // 서버에 요청할 컴파일 데이터
     const CompileData = {
-      language: compileLanguage[language],
-      version: "latest",
+      lang: compileLanguage[language],
+      // version: "latest",
       code: code,
       input: input === "" ? null : input,
     };
