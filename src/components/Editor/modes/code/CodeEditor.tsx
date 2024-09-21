@@ -134,8 +134,8 @@ const CodeEditor = () => {
           options={{
             zIndex: isDrawingMode ? 1 : 9999,
             border: "#000",
-            fontSize: 15,
-            lineHeight: 20,
+            fontSize: 50,
+            lineHeight: 60,
             readOnly: edit,
           }}
         />
